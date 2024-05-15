@@ -13,6 +13,7 @@ export const useCommonStore = defineStore('common', () => {
    const districts = ref([]);
    const schools = ref([]);
    const directions = ref([]);
+   const universitiesDtmId = ref([]);
 
    async function getTestTypesHome() {
       loading.value = true;
@@ -41,6 +42,18 @@ export const useCommonStore = defineStore('common', () => {
          directions.value = response.results;
       } catch (error) {
          console.log(error.response.data);
+      }
+   };
+
+   const getUniversitiesDtmId = async (id, params) => {
+      loading.value = true;
+      try {
+         const response = await api.get(`tests/universities/dtm/${id}/`, { params });
+         universitiesDtmId.value = response;
+      } catch (error) {
+         console.log(error.response.data);
+      } finally {
+         loading.value = false;
       }
    };
 
@@ -91,6 +104,7 @@ export const useCommonStore = defineStore('common', () => {
       getDistricts,
       getRegions,
       getSchools,
+      getUniversitiesDtmId,
       testTypesHome,
       statistics,
       universities,
@@ -98,6 +112,7 @@ export const useCommonStore = defineStore('common', () => {
       regions,
       districts,
       schools,
+      universitiesDtmId,
       loading
    };
 });

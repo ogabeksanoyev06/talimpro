@@ -1,12 +1,13 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Button from '~/components/ui/button/Button.vue';
 import { useResultStore } from '~/stores/ResultStore';
 
 const resultStore = useResultStore();
 
 const route = useRoute();
+const router = useRouter();
 const selectedQuestion = ref({});
 const testNumber = useCookie('testNumber', { default: () => 0 });
 
@@ -145,6 +146,9 @@ onBeforeUnmount(() => {
                   </TableBody>
                </Table>
             </div>
+            <NuxtLink :to="{ path: '/compare', query: { dtmTestId: route.query.test_id } }" class="mx-auto">
+               <Button class="w-fit" @click="goToCompareLink">Solishtirish</Button>
+            </NuxtLink>
          </div>
       </div>
    </div>
