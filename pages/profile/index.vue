@@ -163,7 +163,7 @@ watchEffect(() => {
                            <SelectContent>
                               <SelectGroup>
                                  <SelectLabel>Tanlang</SelectLabel>
-                                 <SelectItem v-for="(region, i) in regions" :key="i + 2" :value="region.id">
+                                 <SelectItem v-for="region in regions" :key="region.id" :value="region.id">
                                     {{ region.name }}
                                  </SelectItem>
                               </SelectGroup>

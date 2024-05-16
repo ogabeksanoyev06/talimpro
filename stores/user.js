@@ -30,30 +30,31 @@ export const useUserStore = defineStore('user', () => {
          user.value = formatUserData(response);
       } catch (error) {
          handleError(error);
-      } finally {
       }
    };
 
    const createFormData = () => {
       const formData = new FormData();
       Object.entries(user.value).forEach(([key, value]) => {
-         if (value !== null && value !== 'undefined' && key !== 'phone') {
-            formData.append(key, value);
+         if (value !== null && value !== undefined) {
+            console.log(key, value);
+            if (key === 'phone') {
+               formData.append(key, '998' + value);
+            } else {
+               formData.append(key, value);
+            }
          }
       });
-      if (user.value.phone !== null) {
-         formData.append('phone', '998' + user.value.phone);
-      }
       return formData;
    };
 
    const updateUserProfile = async () => {
       loading.value = true;
+      const formData = createFormData();
+
       try {
-         const formData = createFormData();
          const response = await api.patch('users/profile/', formData);
          user.value = formatUserData(response);
-         fetchUser();
          $toast.success('Profile muvaffaqiyatli o`zgartirildi');
       } catch (error) {
          handleError(error);

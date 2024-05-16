@@ -9,6 +9,9 @@ import { useCommonStore } from '~/stores/common';
 const testStore = useTestStore();
 const commonStore = useCommonStore();
 
+const { dtmTestBlogsMainSubjects, dtmTestBlogsMandatorySubjects, loading } = storeToRefs(testStore);
+const { regions, universities, directions } = storeToRefs(commonStore);
+
 // common
 commonStore.getRegions();
 
@@ -16,22 +19,22 @@ const testLanguage = ref([{ id: 0, name: 'O`zbek' }]);
 
 const educationType = [
    {
-      id: 'daytime',
+      id: 'kunduzgi',
       name: 'Kunduzgi',
       disabled: false
    },
    {
       id: 'sirtqi',
       name: 'Sirtqi',
-      disabled: true
+      disabled: false
    },
    {
-      id: 'evening',
+      id: 'kechki',
       name: 'Kechki',
-      disabled: true
+      disabled: false
    },
    {
-      id: 'remote',
+      id: 'masofaviy',
       name: 'Masofaviy',
       disabled: true
    }
@@ -40,7 +43,7 @@ const educationType = [
 const regionId = ref('');
 const selectedUniversity = ref('');
 const selectedTestLanguage = ref(0);
-const selectedEducationType = ref('daytime');
+const selectedEducationType = ref('kunduzgi');
 const selectedDirection = ref('');
 
 const isSelectedUniversityNotEmpty = computed(() => {
@@ -55,11 +58,11 @@ function startTest() {
 }
 
 const totalCompulsoryBall = computed(() => {
-   return testStore.dtmTestBlogsMandatorySubjects.value?.reduce((total, subject) => total + subject.ball * subject.question_count, 0);
+   return dtmTestBlogsMandatorySubjects.value?.reduce((total, subject) => total + subject.ball * subject.question_count, 0);
 });
 
 const totalBasicBall = computed(() => {
-   return testStore.dtmTestBlogsMainSubjects.value?.reduce((total, subject) => total + subject.ball * subject.question_count, 0);
+   return dtmTestBlogsMainSubjects.value?.reduce((total, subject) => total + subject.ball * subject.question_count, 0);
 });
 
 watch(regionId, async (newValue) => {
@@ -67,9 +70,9 @@ watch(regionId, async (newValue) => {
    await commonStore.getUniversities({ region: newValue });
 });
 
-watch(selectedUniversity, async (newValue) => {
+watch([selectedUniversity, selectedEducationType], async (newValue) => {
    selectedDirection.value = '';
-   await commonStore.getUniversityDirection({ university: selectedUniversity.value, edu_lang: 'O`zbek' });
+   await commonStore.getUniversityDirection({ university: selectedUniversity.value, form_of_education: selectedEducationType.value, edu_lang: 'O`zbek' });
 });
 
 watch(selectedDirection, async (newValue) => {
@@ -90,7 +93,7 @@ watch(selectedDirection, async (newValue) => {
                   <SelectContent>
                      <SelectGroup>
                         <SelectLabel>Tanlang</SelectLabel>
-                        <SelectItem v-for="region in commonStore.regions" :key="region.id" :value="region.id"> {{ region.name }} </SelectItem>
+                        <SelectItem v-for="region in regions" :key="region.id" :value="region.id"> {{ region.name }} </SelectItem>
                      </SelectGroup>
                   </SelectContent>
                </Select>
@@ -104,7 +107,7 @@ watch(selectedDirection, async (newValue) => {
                   <SelectContent>
                      <SelectGroup>
                         <SelectLabel>Tanlang</SelectLabel>
-                        <SelectItem v-for="item in commonStore.universities" :key="item.id" :value="item.id"> {{ item.name }} </SelectItem>
+                        <SelectItem v-for="item in universities" :key="item.id" :value="item.id"> {{ item.name }} </SelectItem>
                      </SelectGroup>
                   </SelectContent>
                </Select>
@@ -146,7 +149,7 @@ watch(selectedDirection, async (newValue) => {
                   <SelectContent>
                      <SelectGroup>
                         <SelectLabel>Tanlang</SelectLabel>
-                        <SelectItem v-for="direction in commonStore.directions" :key="direction.id" :value="direction.id">
+                        <SelectItem v-for="direction in directions" :key="direction.id" :value="direction.id">
                            {{ direction.name }}
                         </SelectItem>
                      </SelectGroup>
@@ -174,7 +177,7 @@ watch(selectedDirection, async (newValue) => {
                      <TableCell class="p-4 font-medium"> {{ item.question_count }} </TableCell>
                      <TableCell class="p-4 font-medium"> {{ item.ball }} </TableCell>
                   </TableRow>
-                  <TableRow class="!border-b">
+                  <TableRow class="!border-b bg-muted">
                      <TableCell colSpan="2" class="p-4 font-bold"> Umumiy ball </TableCell>
                      <TableCell colSpan="2" class="p-4 font-bold"> {{ totalCompulsoryBall }} </TableCell>
                   </TableRow>
@@ -194,11 +197,11 @@ watch(selectedDirection, async (newValue) => {
                      <TableCell class="p-4 font-medium"> {{ item.question_count }} </TableCell>
                      <TableCell class="p-4 font-medium"> {{ item.ball }} </TableCell>
                   </TableRow>
-                  <TableRow class="!border-b">
+                  <TableRow class="!border-b border-card-foreground bg-muted">
                      <TableCell colSpan="2" class="p-4 font-bold"> Umumiy ball </TableCell>
                      <TableCell colSpan="2" class="p-4 font-bold"> {{ totalBasicBall }} </TableCell>
                   </TableRow>
-                  <TableRow class="!border-b">
+                  <TableRow class="!border-b border-card-foreground">
                      <TableCell colSpan="2" class="p-4 font-bold"> 5ta fan bo'yicha umumiy ball </TableCell>
                      <TableCell colSpan="2" class="p-4 font-bold"> {{ totalBasicBall + totalCompulsoryBall }} </TableCell>
                   </TableRow>

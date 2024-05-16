@@ -103,7 +103,7 @@ watch([limit, offset, selectedEducationType, search], async () => {
    <div class="py-6">
       <div class="container">
          <div class="flex flex-col justify-center items-center space-y-4 mb-4">
-            <div class="border border-green-500 max-w-[200px] w-full rounded-full text-center" style="font-size: x-large">
+            <div class="border border-green-500 max-w-[200px] w-full rounded-full text-center" style="font-size: xx-large">
                <span>{{ universitiesDtmId?.total_ball }}</span>
                <span style="font-size: medium">/189</span>
             </div>
