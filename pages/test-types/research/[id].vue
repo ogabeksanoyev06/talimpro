@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import Button from '~/components/ui/button/Button.vue';
 import { useTestStore } from '~/stores/test';
@@ -6,6 +8,7 @@ import { useTestStore } from '~/stores/test';
 const route = useRoute();
 
 const testStore = useTestStore();
+const { researches, loading } = storeToRefs(testStore);
 
 const research_id = ref('');
 
@@ -62,10 +65,10 @@ testStore.getResearchById(route.params.id);
       <div class="container">
          <div class="flex flex-col justify-center sm:justify-start space-y-3">
             <h1 class="text-center sm:text-left text-2xl font-bold sm:text-3xl">
-               {{ testStore.researches.title }}
+               {{ researches?.title }}
             </h1>
             <p class="text-center sm:text-left text-sm text-muted-foreground sm:text-base max-w-[900px]">
-               {{ testStore.researches.short_description }}
+               {{ researches?.short_description }}
             </p>
          </div>
          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
@@ -86,7 +89,7 @@ testStore.getResearchById(route.params.id);
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
             <div
                class="rounded-xl border border-border bg-card text-card-foreground shadow cursor-pointer min-h-[130px] hover:shadow-none transition-all duration-300 bg-[url('https://www.fozilov.uz/assets/Light.png')] bg-[length:200px_200px]"
-               v-for="item in testStore.researches?.specifications"
+               v-for="item in researches?.specifications"
                :key="item.id"
                @click="selectedSpecification(item)"
                :class="{ 'border-primary': selected_specification === item.id }"
@@ -115,7 +118,7 @@ testStore.getResearchById(route.params.id);
                   width="1em"
                   height="1em"
                   viewBox="0 0 256 256"
-                  v-if="testStore.loading"
+                  v-if="loading"
                >
                   <path
                      fill="currentColor"

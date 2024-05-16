@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { Button } from '@/components/ui/button';
 import Label from '~/components/ui/label/Label.vue';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTestStore } from '~/stores/test';
 
 const testStore = useTestStore();
+const { classes, schoolTestSciences, loading } = storeToRefs(testStore);
 
 const questionsCount = ref(5);
 
@@ -78,8 +80,8 @@ function selectedScience(id) {
 
 async function setSchoolClassId() {
    await testStore.getClasses();
-   if (testStore.classes.length > 0 && testStore.classes[0].id) {
-      selectedClass.value = testStore.classes[0].id;
+   if (classes.length > 0 && classes[0].id) {
+      selectedClass.value = classes[0].id;
    }
 }
 
@@ -133,7 +135,7 @@ onMounted(async () => {
                   <SelectContent>
                      <SelectGroup>
                         <SelectLabel>Sinfni tanlang</SelectLabel>
-                        <SelectItem v-for="item in testStore.classes" :key="item.id" :value="item.id">
+                        <SelectItem v-for="item in classes" :key="item.id" :value="item.id">
                            {{ item.number }}
                         </SelectItem>
                      </SelectGroup>
@@ -174,7 +176,7 @@ onMounted(async () => {
             </div>
          </div>
          <div class="flex flex-wrap gap-3 border-b border-border pb-8">
-            <Button v-for="item in testStore.schoolTestSciences.results" :key="item.id" @click="selectedScience(item.id)" :variant="item.id === activeScience ? '' : 'outline'">
+            <Button v-for="item in schoolTestSciences.results" :key="item.id" @click="selectedScience(item.id)" :variant="item.id === activeScience ? '' : 'outline'">
                {{ item.name }}
             </Button>
          </div>
@@ -191,7 +193,7 @@ onMounted(async () => {
                   width="1em"
                   height="1em"
                   viewBox="0 0 256 256"
-                  v-if="testStore.loading"
+                  v-if="loading"
                >
                   <path
                      fill="currentColor"

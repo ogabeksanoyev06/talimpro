@@ -1,9 +1,12 @@
 <script setup>
+import { storeToRefs } from 'pinia';
+
 definePageMeta({ layout: 'cabinet' });
 
 const courseStore = useCourseStore();
+const { boughtCourses, loading } = storeToRefs(courseStore);
 
-courseStore.getBoughtCourses();
+await courseStore.getBoughtCourses();
 </script>
 
 <template>
@@ -11,7 +14,7 @@ courseStore.getBoughtCourses();
       <h3 class="text-base sm:text-xl font-semibold tracking-tight mb-4">Mening kurslarim</h3>
       <div class="grid grid-cols-1 gap-6">
          <NuxtLink
-            v-for="item in courseStore.boughtCourses"
+            v-for="item in boughtCourses"
             :key="item.id"
             :to="`/courses/${item.course.id}`"
             class="flex flex-col border-b border-gray-300 bg-secondary gap-2 p-3 sm:p-6 md:p-10 cursor-pointer relative group rounded-xl"

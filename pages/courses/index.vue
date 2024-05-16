@@ -1,44 +1,37 @@
 <script setup>
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import Badge from '~/components/ui/badge/Badge.vue';
 import Button from '~/components/ui/button/Button.vue';
 import { useCourseStore } from '~/stores/courses';
 
 const courseStore = useCourseStore();
-
-const fetchData = async () => {
-   await courseStore.getCategories();
-   courseStore.setCategoryId();
-};
-
-onMounted(fetchData);
+const { courses, categories, selectedCategory, loading } = storeToRefs(courseStore);
 
 const selectCategory = (categoryId) => {
    courseStore.selectCategory(categoryId);
 };
+
+onMounted(async () => {
+   await courseStore.getCategories();
+   courseStore.setCategoryId();
+});
 </script>
 
 <template>
-   <div class="py-8 sm:py-12">
+   <div class="py-8">
       <div class="container">
          <div class="flex flex-wrap justify-center sm:justify-start gap-2 mb-8">
-            <Button
-               v-for="item in courseStore.categories"
-               :key="item.id"
-               :variant="item.id === courseStore.selectedCategory ? 'default' : 'outline'"
-               @click="selectCategory(item.id)"
-            >
+            <Button v-for="item in categories" :key="item.id" :variant="item.id === selectedCategory ? 'default' : 'outline'" @click="selectCategory(item.id)">
                {{ item.name }}
             </Button>
          </div>
-         <p v-if="!courseStore.loading && courseStore.courses?.length === 0" class="mb-8 text-center font-bold text-base">Tanlangan kategoriya bo'yicha kurslar mavjud emas</p>
+         <p v-if="categories.length > 0 && courses?.length === 0" class="mb-8 text-center font-bold text-base">Tanlangan kategoriya bo'yicha kurslar mavjud emas</p>
          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" v-else>
-            <NuxtLink v-for="(item, index) in courseStore.courses" :key="index" :to="`/courses/${item.id}`">
+            <NuxtLink v-for="(item, index) in courses" :key="index" :to="`/courses/${item.id}`">
                <div class="flex flex-col overflow-hidden rounded-md border group bg-card hover:shadow-sm">
                   <div class="relative aspect-video">
-                     <img
-                        src="https://fozilov.uz/_next/image?url=https%3A%2F%2Fbvhkgdnpywojzhtsbvbm.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fimages%2F3bb5e088-4de1-4781-8564-4aff4990c5a8-mdx3jd.webp&w=1920&q=75"
-                        alt=""
-                     />
+                     <img :src="item.image" :alt="item.title" />
                   </div>
                   <div class="flex flex-col gap-y-4 p-4 group-hover:bg-muted/25 transition-all">
                      <div class="space-y-2">

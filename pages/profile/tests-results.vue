@@ -5,6 +5,9 @@ import { useTestStore } from '~/stores/test';
 definePageMeta({ layout: 'cabinet' });
 
 const testStore = useTestStore();
+const { testResults, loading } = storeToRefs(testStore);
+
+
 
 const router = useRouter();
 
@@ -29,7 +32,7 @@ const goToLink = (test_id, test_type) => {
    }
 };
 
-testStore.getTestResults();
+await testStore.getTestResults();
 </script>
 
 <template>
@@ -47,7 +50,7 @@ testStore.getTestResults();
                </TableRow>
             </TableHeader>
             <TableBody class="text-center">
-               <TableRow v-for="(item, i) in testStore.testResults" :key="i" class="first:bg-muted first:text-foreground first:hover:bg-muted">
+               <TableRow v-for="(item, i) in testResults" :key="i" class="first:bg-muted first:text-foreground first:hover:bg-muted">
                   <TableCell class="p-4 font-medium">
                      <span>{{ i + 1 }}</span>
                   </TableCell>

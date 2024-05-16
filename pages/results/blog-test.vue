@@ -1,10 +1,12 @@
 <script setup>
-import { onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import Button from '~/components/ui/button/Button.vue';
 import { useResultStore } from '~/stores/ResultStore';
 
 const resultStore = useResultStore();
+const { testResultId, answerLabels } = storeToRefs(resultStore);
 
 const route = useRoute();
 const selectedQuestion = ref({});
@@ -18,30 +20,8 @@ const getActiveTestNumber = (number) => {
 };
 
 const selectedQuestions = () => {
-   selectedQuestion.value = resultStore.testResultId[0]?.questions[testNumber.value];
+   selectedQuestion.value = testResultId.value[0]?.questions[testNumber.value];
 };
-
-const typeName = computed(() => {
-   let typeValue = '';
-   const testType = resultStore.testResultId[0]?.blogs?.test_type;
-   switch (testType) {
-      case test.TYPE_DTM:
-         typeValue = 'DTM test';
-         break;
-      case test.TYPE_BLOG:
-         typeValue = 'Blog test';
-         break;
-      case test.TYPE_SCHOOL:
-         typeValue = 'Maktab o`quvchilari uchun test';
-         break;
-      case test.TYPE_RESEARCH:
-         typeValue = 'Xalqaro tadqiqot test';
-         break;
-      default:
-         break;
-   }
-   return typeValue;
-});
 
 onMounted(async () => {
    await resultStore.getResultTestId({
@@ -59,7 +39,7 @@ onBeforeUnmount(() => {
 <template>
    <div class="py-8 sm:py-12">
       <div class="container">
-         <div v-for="(item, i) in resultStore.testResultId" :key="i" class="flex flex-col space-y-6">
+         <div v-for="(item, i) in testResultId" :key="i" class="flex flex-col space-y-6">
             <div class="inline-flex justify-center w-full">
                <p class="text-[18px] text-center shadow-[0_0px_10px_rgba(0,0,0,.15)] font-bold py-3 px-6">
                   {{ selectedQuestion.science }}
@@ -79,18 +59,18 @@ onBeforeUnmount(() => {
                   <TableBody class="text-center">
                      <TableRow>
                         <TableCell class="p-4 font-medium">
-                           <span>{{ typeName }}</span>
+                           <span>Blog test</span>
                         </TableCell>
                         <TableCell>
-                           <span>{{ resultStore.testResultId[0]?.blogs?.science }}</span>
+                           <span>{{ testResultId[0]?.blogs?.science }}</span>
                         </TableCell>
                         <TableCell class="p-4">
-                           <span>{{ resultStore.testResultId[0]?.blogs?.question_count }}</span>
+                           <span>{{ testResultId[0]?.blogs?.question_count }}</span>
                         </TableCell>
                         <TableCell class="p-4">
-                           <span>{{ resultStore.testResultId[0]?.blogs?.max_ball }}</span>
+                           <span>{{ testResultId[0]?.blogs?.max_ball }}</span>
                         </TableCell>
-                        <TableCell class="p-4 flex justify-center"> {{ resultStore.testResultId[0]?.blogs?.total_ball }} </TableCell>
+                        <TableCell class="p-4 flex justify-center"> {{ testResultId[0]?.blogs?.total_ball }} </TableCell>
                      </TableRow>
                   </TableBody>
                </Table>
@@ -124,7 +104,7 @@ onBeforeUnmount(() => {
                         }"
                      >
                         <span class="font-semibold">
-                           {{ resultStore.answerLabels[aIndex] + ')' }}
+                           {{ answerLabels[aIndex] + ')' }}
                         </span>
                         <span v-html="answer"> </span>
                      </li>

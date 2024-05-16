@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -8,6 +9,7 @@ import { useAuthStore } from '@/stores/AuthStore';
 definePageMeta({ layout: 'auth' });
 
 const authStore = useAuthStore();
+const { loading } = storeToRefs(authStore);
 
 const user = ref({
    username: '',
@@ -241,7 +243,7 @@ const registerToSystem = () => {
                      </VField>
                   </div>
                </div>
-               <Button type="submit" :disabled="authStore.loading">Ro'yxatdan o'tish</Button>
+               <Button type="submit" :disabled="loading">Ro'yxatdan o'tish</Button>
             </div>
          </form>
       </VForm>

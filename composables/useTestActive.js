@@ -43,14 +43,15 @@ export const useActiveTest = () => {
          questions: response.questions.map((question) => {
             return {
                id: question.id,
-               question: question.question,
-               answers: [question.answer1, question.answer2, question.answer3, question.answer4],
+               question: parseQuestion(question.question),
+               answers: [parseQuestion(question.answer1), parseQuestion(question.answer2), parseQuestion(question.answer3), parseQuestion(question.answer4)],
                correctAnswer: question.correct_answer,
                isPicked: question.is_picked,
                answer: question.answer
             };
          })
       };
+      console.log(tests.value);
    };
 
    const schoolTestFormattedQuestions = (response) => {
@@ -101,8 +102,8 @@ export const useActiveTest = () => {
                   return {
                      dtmtest_blog: item.dtmtest_blog,
                      id: question.id,
-                     question: question.question,
-                     answers: [question.answer1, question.answer2, question.answer3, question.answer4],
+                     question: parseQuestion(question.question),
+                     answers: [parseQuestion(question.answer1), parseQuestion(question.answer2), parseQuestion(question.answer3), parseQuestion(question.answer4)],
                      correctAnswer: question.correct_answer,
                      isPicked: question.is_picked,
                      answer: question.answer,

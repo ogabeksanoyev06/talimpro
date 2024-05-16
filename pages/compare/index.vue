@@ -1,10 +1,14 @@
 <script setup>
+import { ref, onMounted, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Pagination, PaginationEllipsis, PaginationList, PaginationListItem } from '@/components/ui/pagination';
 import { useCommonStore } from '@/stores/common';
 
 const route = useRoute();
+
 const commonStore = useCommonStore();
+const { universitiesDtmId, regions, universities } = storeToRefs(commonStore);
 
 const limits = [
    {
@@ -54,13 +58,13 @@ const selectedEducationType = ref('daytime');
 const offset = ref(1);
 const limit = ref(10);
 
-commonStore.getRegions();
-commonStore.getUniversities();
-
 await commonStore.getUniversitiesDtmId(route.query.dtmTestId, {
    limit: limit.value,
    offset: offset.value
 });
+
+commonStore.getRegions();
+commonStore.getUniversities();
 
 const selectOffsetValue = (index) => {
    offset.value = index;
@@ -77,19 +81,19 @@ watch(universityId, async (newUniversityId) => {
       await commonStore.getUniversitiesDtmId(newUniversityId, {
          limit: limit.value,
          offset: offset.value,
-         education_type: selectedEducationType.value,
-         search: search.value
+         // education_type: selectedEducationType.value,
+         // search: search.value
       });
    }
 });
 
 watch([limit, offset, selectedEducationType, search], async () => {
-   if (universityId.value) {
-      await commonStore.getUniversitiesDtmId(universityId.value, {
+   if (route.query.dtmTestId) {
+      await commonStore.getUniversitiesDtmId(route.query.dtmTestId, {
          limit: limit.value,
-         offset: offset.value,
-         education_type: selectedEducationType.value,
-         search: search.value
+         offset: offset.value
+         // education_type: selectedEducationType.value,
+         // search: search.value
       });
    }
 });
@@ -100,7 +104,7 @@ watch([limit, offset, selectedEducationType, search], async () => {
       <div class="container">
          <div class="flex flex-col justify-center items-center space-y-4 mb-4">
             <div class="border border-green-500 max-w-[200px] w-full rounded-full text-center" style="font-size: x-large">
-               <span>{{ commonStore.universitiesDtmId?.total_ball }}</span>
+               <span>{{ universitiesDtmId?.total_ball }}</span>
                <span style="font-size: medium">/189</span>
             </div>
             <p class="text-base sm:text-lg font-bold text-center">
@@ -283,7 +287,7 @@ watch([limit, offset, selectedEducationType, search], async () => {
                </TableRow>
             </TableHeader>
             <TableBody class="text-start">
-               <TableRow v-for="item in commonStore.universitiesDtmId?.universities.results" :key="item.id">
+               <TableRow v-for="item in universitiesDtmId?.universities?.results" :key="item.id">
                   <TableCell class="p-4"> {{ item.university_region }}</TableCell>
                   <TableCell class="p-4"> {{ item.university_name }}</TableCell>
                   <TableCell class="p-4"> {{ item.name }}</TableCell>
@@ -307,7 +311,7 @@ watch([limit, offset, selectedEducationType, search], async () => {
                      </SelectTrigger>
                      <SelectContent>
                         <SelectGroup>
-                           <SelectItem v-for="item in commonStore.regions" :key="item.id" :value="item.id">
+                           <SelectItem v-for="item in regions" :key="item.id" :value="item.id">
                               {{ item.name }}
                            </SelectItem>
                         </SelectGroup>
@@ -324,7 +328,7 @@ watch([limit, offset, selectedEducationType, search], async () => {
                      </SelectTrigger>
                      <SelectContent>
                         <SelectGroup>
-                           <SelectItem v-for="item in commonStore.universities" :key="item.id" :value="item.id">
+                           <SelectItem v-for="item in universities" :key="item.id" :value="item.id">
                               {{ item.name }}
                            </SelectItem>
                         </SelectGroup>
@@ -351,7 +355,7 @@ watch([limit, offset, selectedEducationType, search], async () => {
             </div>
          </div>
          <div class="flex justify-end mt-4">
-            <Pagination v-slot="{ page }" :total="commonStore.universitiesDtmId?.universities_total_count" :sibling-count="1" show-edges :default-page="1">
+            <Pagination v-slot="{ page }" :total="universitiesDtmId?.universities_total_count" :sibling-count="1" show-edges :default-page="1">
                <PaginationList v-slot="{ items }" class="flex items-center gap-1">
                   <template v-for="(item, index) in items">
                      <PaginationListItem v-if="item.type === 'page'" :key="index" :value="item.value" as-child>

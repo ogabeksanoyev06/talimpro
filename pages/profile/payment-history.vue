@@ -1,4 +1,5 @@
 <script setup>
+import { storeToRefs } from 'pinia';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { usePaymentStore } from '~/stores/payment';
 
@@ -7,8 +8,9 @@ definePageMeta({
 });
 
 const paymenStore = usePaymentStore();
+const { payments_history, loading } = storeToRefs(paymenStore);
 
-paymenStore.getPaymentsHistory();
+await paymenStore.getPaymentsHistory();
 </script>
 
 <template>
@@ -26,7 +28,7 @@ paymenStore.getPaymentsHistory();
                </TableRow>
             </TableHeader>
             <TableBody class="text-center">
-               <TableRow v-for="(item, index) in paymenStore.payments_history.results" :key="index">
+               <TableRow v-for="(item, index) in payments_history?.results" :key="index">
                   <TableCell class="p-4 font-medium">
                      <span>{{ index + 1 }}</span>
                   </TableCell>

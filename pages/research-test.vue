@@ -1,13 +1,15 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import { useTestStore } from '~/stores/test';
 import Button from '~/components/ui/button/Button.vue';
 
 const router = useRouter();
 
 const testStore = useTestStore();
+const { testTypes, testId, loading } = storeToRefs(testStore);
 
-testStore.getTestTypes({ category_type: 'research' });
+await testStore.getTestTypes({ category_type: 'research' });
 
 const handleTestStart = (research_id) => {
    router.push(`/test-types/research/${research_id}`);
@@ -23,7 +25,7 @@ const handleTestStart = (research_id) => {
          </div>
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             <div
-               v-for="item in testStore.testTypes"
+               v-for="item in testTypes"
                :key="item.id"
                class="relative rounded-xl bg-card border-b border-border dark:border-white p-4 md:p-6 flex flex-col cursor-pointer transition-300 hover:shadow-card h-full gap-2 md:gap-4"
             >
@@ -34,7 +36,7 @@ const handleTestStart = (research_id) => {
                   </p>
                </div>
                <div class="flex flex-col gap-2 sm:flex-row sm:justify-between">
-                  <Button v-if="item.is_free || item.bought" @click="handleTestStart(item.id)" :disabled="testStore.loading && item.id === testStore.testId">
+                  <Button v-if="item.is_free || item.bought" @click="handleTestStart(item.id)" :disabled="loading && item.id === testId">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -54,7 +56,7 @@ const handleTestStart = (research_id) => {
                      </svg>
                      Testni boshlash
                   </Button>
-                  <Button v-if="!item.is_free && !item.bought" @click="testStore.buyExams(item.id, 'research')" :disabled="testStore.loading && item.id === testStore.testId">
+                  <Button v-if="!item.is_free && !item.bought" @click="testStore.buyExams(item.id, 'research')" :disabled="loading && item.id === testId">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -65,7 +67,7 @@ const handleTestStart = (research_id) => {
                         width="1em"
                         height="1em"
                         viewBox="0 0 256 256"
-                        v-if="testStore.loading && item.id === testStore.testId"
+                        v-if="loading && item.id === testId"
                      >
                         <path
                            fill="currentColor"

@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter, useRoute } from 'vue-router';
 import AppFooter from '~/components/layouts/default/AppFooter.vue';
 import AppHeader from '~/components/layouts/default/AppHeader.vue';
 
 const userStore = useUserStore();
+const { user, fullNameInitial, fullName } = storeToRefs(userStore);
 
 const router = useRouter();
 
@@ -12,7 +14,7 @@ const route = useRoute();
 
 const currentRoute = computed(() => route.path);
 
-const menu = ref([
+const menu = [
    {
       title: 'Asosiy malumotlar',
       path: '/profile'
@@ -33,11 +35,9 @@ const menu = ref([
       title: 'Test natijalari',
       path: '/profile/tests-results'
    }
-]);
+];
 
-const user = computed(() => userStore.user);
-
-userStore.fetchUser();
+await userStore.fetchUser();
 </script>
 
 <template>
@@ -55,7 +55,7 @@ userStore.fetchUser();
                                  class="relative overflow-hidden shrink-0 before:border before:border-solid before:border-black/10 before:absolute before:inset-0 w-10 h-10 rounded-full before:rounded-full"
                               >
                                  <div class="flex items-center justify-center text-card h-full w-full text-base object-cover bg-primary">
-                                    {{ userStore.fullNameInitial }}
+                                    {{ fullNameInitial }}
                                  </div>
                                  <div class="w-full h-full object-cover bg-white">
                                     <img
@@ -68,7 +68,7 @@ userStore.fetchUser();
                            </div>
                            <div class="flex flex-col">
                               <div class="sm:text-base lg:text-xl font-bold">
-                                 {{ userStore.fullName }}
+                                 {{ fullName }}
                               </div>
                               <div class="text-sm text-muted-foreground">{{ phoneFormat(user?.phone) }}</div>
                            </div>

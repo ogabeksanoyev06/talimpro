@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import AppHeader from '@/components/layouts/default/AppHeader.vue';
 import CourseSidebar from '@/components/shared/CourseSidebar.vue';
 
 const courseStore = useCourseStore();
+const { course } = storeToRefs(courseStore);
 
 const route = useRoute();
 
@@ -25,7 +27,7 @@ onMounted(async () => {
                   <slot />
                </div>
                <div class="h-min xl:col-span-2">
-                  <CourseSidebar :course="courseStore.course" :courseId="course_id" />
+                  <CourseSidebar :course="course" :courseId="course_id" />
                </div>
             </div>
          </div>

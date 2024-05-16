@@ -1,5 +1,6 @@
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watchEffect, computed } from 'vue';
+import { storeToRefs } from 'pinia';
 import { Button } from '@/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { useUserStore } from '~/stores/user';
@@ -7,7 +8,7 @@ import { useCommonStore } from '~/stores/common';
 
 definePageMeta({ layout: 'cabinet' });
 
-const usertype = ref([
+const usertype = [
    {
       value: 'applicant',
       name: 'Abituriyent'
@@ -16,37 +17,27 @@ const usertype = ref([
       value: 'pupil',
       name: "O'quvchi"
    }
-   // {
-   //    value: 'teacher',
-   //    name: "O'qituvchi"
-   // }
-]);
+];
 
 const userStore = useUserStore();
 const commonStore = useCommonStore();
 
-const user = computed(() => userStore.user);
-const loading = computed(() => userStore.loading);
+const { user, loading } = storeToRefs(userStore);
+const { regions, districts, schools } = storeToRefs(commonStore);
 
 commonStore.getRegions();
 
-watch(
-   () => user.value.region,
-   (newValue, oldValue) => {
-      if (newValue !== oldValue && newValue !== null && newValue !== undefined) {
-         commonStore.getDistricts(user.value.region);
-      }
+watchEffect(() => {
+   if (user.value.region !== null && user.value.region !== undefined) {
+      commonStore.getDistricts(user.value.region);
    }
-);
+});
 
-watch(
-   () => user.value.district,
-   (newValue, oldValue) => {
-      if (newValue !== oldValue && newValue !== null && newValue !== undefined) {
-         commonStore.getSchools(user.value.district);
-      }
+watchEffect(() => {
+   if (user.value.district !== null && user.value.district !== undefined) {
+      commonStore.getSchools(user.value.district);
    }
-);
+});
 </script>
 
 <template>
@@ -63,6 +54,7 @@ watch(
                            id="username"
                            type="text"
                            placeholder="Fodalanuvchi nomi"
+                           :disabled="loading"
                            :class="errors.length > 0 ? 'focus-visible:border-destructive border-destructive' : ''"
                            v-model="user.username"
                         />
@@ -76,6 +68,7 @@ watch(
                            id="first_name"
                            type="text"
                            placeholder="Fodalanuvchi nomi"
+                           :disabled="loading"
                            :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''"
                            v-model="user.first_name"
                         />
@@ -89,6 +82,7 @@ watch(
                            id="last_name"
                            type="text"
                            placeholder="Fodalanuvchi nomi"
+                           :disabled="loading"
                            :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''"
                            v-model="user.last_name"
                         />
@@ -102,6 +96,7 @@ watch(
                            id="father_name"
                            type="text"
                            placeholder="Fodalanuvchi nomi"
+                           :disabled="loading"
                            :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''"
                            v-model="user.father_name"
                         />
@@ -111,7 +106,14 @@ watch(
                   <div class="flex flex-col space-y-2">
                      <VField name="email" rules="email" v-model="user.email" v-slot="{ errors }">
                         <Label for="email">Email</Label>
-                        <Input id="email" type="text" placeholder="Email" :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''" v-model="user.email" />
+                        <Input
+                           id="email"
+                           type="text"
+                           placeholder="Email"
+                           :disabled="loading"
+                           :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''"
+                           v-model="user.email"
+                        />
                         <span class="text-xs text-destructive">{{ errors[0] }}</span>
                      </VField>
                   </div>
@@ -123,6 +125,7 @@ watch(
                               id="phone"
                               type="text"
                               placeholder="Telefon raqam"
+                              :disabled="loading"
                               class="pl-14"
                               :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''"
                               v-model="user.phone"
@@ -135,7 +138,7 @@ watch(
                   <div class="flex flex-col space-y-2">
                      <VField name="usertype">
                         <Label for="usertype">Yo'nalish </Label>
-                        <Select v-model="user.type">
+                        <Select v-model="user.type" :disabled="loading">
                            <SelectTrigger>
                               <SelectValue placeholder="Yo'nalishni tanlang" />
                            </SelectTrigger>
@@ -153,14 +156,14 @@ watch(
                   <div class="flex flex-col space-y-2">
                      <VField name="region">
                         <Label for="region">Viloyat</Label>
-                        <Select v-model="user.region">
+                        <Select v-model="user.region" :disabled="loading">
                            <SelectTrigger>
                               <SelectValue placeholder="Viloyatni tanlang" />
                            </SelectTrigger>
                            <SelectContent>
                               <SelectGroup>
                                  <SelectLabel>Tanlang</SelectLabel>
-                                 <SelectItem v-for="(region, i) in commonStore.regions" :key="i + 2" :value="region.id">
+                                 <SelectItem v-for="(region, i) in regions" :key="i + 2" :value="region.id">
                                     {{ region.name }}
                                  </SelectItem>
                               </SelectGroup>
@@ -171,14 +174,14 @@ watch(
                   <div class="flex flex-col space-y-2">
                      <VField name="district">
                         <Label for="district">Tuman</Label>
-                        <Select v-model="user.district" :disabled="user.region === ''">
+                        <Select v-model="user.district" :disabled="user.region === '' || loading">
                            <SelectTrigger>
                               <SelectValue placeholder="Tumanni tanlang" />
                            </SelectTrigger>
                            <SelectContent>
                               <SelectGroup>
                                  <SelectLabel>Tanlang</SelectLabel>
-                                 <SelectItem v-for="district in commonStore.districts" :key="district.id" :value="district.id">
+                                 <SelectItem v-for="district in districts" :key="district.id" :value="district.id">
                                     {{ district.name }}
                                  </SelectItem>
                               </SelectGroup>
@@ -189,14 +192,14 @@ watch(
                   <div class="flex flex-col space-y-2">
                      <VField name="school">
                         <Label for="school">Maktab</Label>
-                        <Select v-model="user.school" :disabled="user.district === ''">
+                        <Select v-model="user.school" :disabled="user.district === '' || loading">
                            <SelectTrigger>
                               <SelectValue placeholder="Maktabni tanlang" />
                            </SelectTrigger>
                            <SelectContent>
                               <SelectGroup>
                                  <SelectLabel>Tanlang</SelectLabel>
-                                 <SelectItem v-for="school in commonStore.schools" :key="school.id" :value="school.id">
+                                 <SelectItem v-for="school in schools" :key="school.id" :value="school.id">
                                     {{ school.name }}
                                  </SelectItem>
                               </SelectGroup>
@@ -206,7 +209,7 @@ watch(
                   </div>
                </div>
 
-               <Button type="submit" class="w-full sm:w-auto">
+               <Button type="submit" class="w-full sm:w-auto" :disabled="loading">
                   <svg
                      xmlns="http://www.w3.org/2000/svg"
                      xmlns:xlink="http://www.w3.org/1999/xlink"

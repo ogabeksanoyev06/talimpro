@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
                </div>
             </div>
             <div class="border-b border-t rounded-lg border-gray-400 py-4">
-               <div class="text-base font-medium px-8">
+               <div class="text-base font-medium px-4">
                   <span style="font-size: 1.1rem">{{ testActiveNumber + 1 }}. </span>
                   <span v-html="selectedQuestion?.question"></span>
                </div>

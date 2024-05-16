@@ -1,18 +1,19 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-
-const courseStore = useCourseStore();
+import { useCourseStore } from '~/stores/courses';
 
 const route = useRoute();
 
+const courseStore = useCourseStore();
+const { course, loading } = storeToRefs(courseStore);
+
 const course_id = ref(route.params.slug);
 
-onMounted(async () => {
-   await courseStore.getCoursesId(course_id.value);
-});
+await courseStore.getCoursesId(course_id.value);
 </script>
 
 <template>
@@ -47,12 +48,12 @@ onMounted(async () => {
                   </svg>
                </NuxtLink>
                <div class="flex items-center justify-center">
-                  <h1 class="text-2xl md:text-4xl font-bold">{{ courseStore.course.title }}</h1>
+                  <h1 class="text-2xl md:text-4xl font-bold">{{ course.title }}</h1>
                </div>
             </div>
-            <div class="grid xl:grid-cols-5 gap-6">
-               <div class="xl:order-1 xl:col-span-3">
-                  <div class="flex flex-col gap-y-6">
+            <div class="grid grid-cols-1 gap-6 xl:grid-cols-5">
+               <div class="xl:col-span-3">
+                  <div class="sticky top-24 flex flex-col gap-y-6">
                      <div class="relative col-span-3 aspect-video overflow-hidden rounded-md bg-primary/20">
                         <div class="absolute inset-x-0 inset-y-0 h-full w-full">
                            <iframe
@@ -64,91 +65,14 @@ onMounted(async () => {
                            ></iframe>
                         </div>
                      </div>
-                     <div class="flex flex-col space-y-4">
-                        <h3 class="text-xl font-bold">Kurs kontenti</h3>
-                        <div class="flex flex-col">
-                           <Accordion type="single" class="w-full border border-t-0 rounded-t-none first:border-t border-border" collapsible>
-                              <AccordionItem v-for="Cmodule in courseStore.course.modules" :key="Cmodule.id" :value="Cmodule.id">
-                                 <AccordionTrigger class="flex w-full items-center justify-between p-4 font-bold transition-all text-sm md:text-base">
-                                    {{ Cmodule.name }}
-                                 </AccordionTrigger>
-                                 <AccordionContent class="px-4 text-sm">
-                                    <div class="pb-4 pt-0 space-y-2">
-                                       <div
-                                          v-for="(lesson, indexL) in Cmodule.lessons"
-                                          :key="indexL"
-                                          class="relative border px-4 pl-6 py-3 flex items-center justify-between font-medium after:absolute after:w-1 after:h-1 after:bg-black after:rounded-full after:left-3 after:top-1/2 after:-mt-[2px]"
-                                       >
-                                          {{ lesson.name }}
-                                       </div>
-                                    </div>
-                                 </AccordionContent>
-                              </AccordionItem>
-                           </Accordion>
-                        </div>
-                     </div>
-                     <div class="flex flex-col space-y-4">
-                        <h3 class="text-xl font-bold">Siz nimani o'rganasiz</h3>
-                        <div class="border border-border bg-card rounded-md p-4">
-                           <div class="grid gap-4 grid-cols-1 md:grid-cols-2 md:gap-6 items-start">
-                              <div class="flex items-center space-x-2" v-for="item in courseStore.course.planed_skills" :key="item">
-                                 <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-badge-check"
-                                 >
-                                    <path
-                                       d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
-                                    />
-                                    <path d="m9 12 2 2 4-4" />
-                                 </svg>
-                                 <div class="flex flex-col space-y-1 flex-1">
-                                    <span class="text-base font-bold">{{ item.name }}</span>
-                                    <span class="tracking-wider">{{ item.description }}</span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="flex flex-col space-y-4">
-                        <h3 class="text-xl font-bold">Kurs kim uchun</h3>
-                        <div class="border border-border bg-card rounded-md p-4">
-                           <div class="flex flex-col space-y-2">
-                              <div class="flex items-center" v-for="item in courseStore.course.who_is_course_for" :key="item.id">
-                                 <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-dot flex-shrink-0"
-                                 >
-                                    <circle cx="12.1" cy="12.1" r="1"></circle>
-                                 </svg>
-                                 <p class="tracking-wider flex-1">NuxtJS framewrokini o'rganishni istaganlar uchun</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
                   </div>
                </div>
-               <div class="xl:order-2 xl:col-span-2">
-                  <div class="sticky top-20 flex flex-col justify-between border rounded-md bg-card">
+               <div class="xl:col-span-2">
+                  <div class="flex flex-col justify-between rounded-md border h-auto bg-card">
                      <div class="flex-1 space-y-4 p-4 sm:p-6">
                         <h3 class="text-xl font-bold">Kurs haqida</h3>
                         <p>
-                           {{ courseStore.course.description }}
+                           {{ course.description }}
                         </p>
                      </div>
                      <div>
@@ -172,7 +96,7 @@ onMounted(async () => {
                                           d="M5 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1zm0 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1zm6-6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm0 6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM2 5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3zm3-2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"
                                        ></path>
                                     </svg>
-                                    <span class="truncate">{{ courseStore.course.modules_count }} ta modul</span>
+                                    <span class="truncate">{{ course.modules_count }} ta modul</span>
                                  </div>
                                  <div class="flex items-center gap-x-2">
                                     <svg
@@ -191,7 +115,7 @@ onMounted(async () => {
                                           <path d="M18 4H4.6a.6.6 0 0 0-.6.6V18m8.909-6.455a.6.6 0 0 0-.909.515v3.88a.6.6 0 0 0 .909.515l3.233-1.94a.6.6 0 0 0 0-1.03z"></path>
                                        </g>
                                     </svg>
-                                    <span class="truncate">{{ courseStore.course.lessons_count }} ta video</span>
+                                    <span class="truncate">{{ course.lessons_count }} ta video</span>
                                  </div>
                               </div>
                               <div class="flex items-center gap-x-2">
@@ -218,20 +142,20 @@ onMounted(async () => {
                            </div>
                            <div>
                               <div class="text-sm">Kurs narxi:</div>
-                              <div class="text-2xl font-bold">{{ currencyFormat(courseStore.course.price) }} UZS</div>
+                              <div class="text-2xl font-bold">{{ currencyFormat(course.price) }} UZS</div>
                            </div>
                         </div>
                         <div class="flex flex-wrap items-center justify-between border-t gap-4 p-4 sm:p-6">
                            <div class="flex items-center gap-x-3">
                               <img alt="" width="36" height="36" class="rounded-full" src="https://github.com/radix-vue.png" />
-                              <span class="font-medium">{{ courseStore.course.teacher?.first_name + ' ' + courseStore.course.teacher?.last_name }}</span>
+                              <span class="font-medium">{{ course.teacher?.first_name + ' ' + course.teacher?.last_name }}</span>
                            </div>
                            <div class="flex items-center justify-between gap-2">
                               <nuxt-link :to="`/courses/${course_id}/lessons`">
                                  <Button variant="outline"> Kirish</Button>
                               </nuxt-link>
 
-                              <Dialog v-if="!courseStore.course?.is_bought">
+                              <Dialog v-if="!course?.is_bought">
                                  <DialogTrigger as-child>
                                     <Button> Sotib olish </Button>
                                  </DialogTrigger>
@@ -283,7 +207,7 @@ onMounted(async () => {
                                              width="1em"
                                              height="1em"
                                              viewBox="0 0 256 256"
-                                             v-if="courseStore.loading"
+                                             v-if="loading"
                                           >
                                              <path
                                                 fill="currentColor"
@@ -296,6 +220,81 @@ onMounted(async () => {
                                  </DialogContent>
                               </Dialog>
                            </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="rounded-md border bg-card p-6">
+               <div class="flex flex-col space-y-4">
+                  <h3 class="text-xl font-bold">Kurs kontenti</h3>
+                  <div class="flex flex-col">
+                     <Accordion type="single" class="w-full border-border" collapsible>
+                        <AccordionItem v-for="Cmodule in course.modules" :key="Cmodule.id" :value="Cmodule.id">
+                           <AccordionTrigger class="w-full p-4 font-medium bg-muted">
+                              {{ Cmodule.name }}
+                           </AccordionTrigger>
+                           <AccordionContent class="pt-0">
+                              <div v-for="(lesson, indexL) in Cmodule.lessons" :key="indexL" class="px-4 py-2">{{ indexL + 1 + '.' }} {{ lesson.name }}</div>
+                           </AccordionContent>
+                        </AccordionItem>
+                     </Accordion>
+                  </div>
+               </div>
+            </div>
+            <div class="rounded-md border bg-card p-6">
+               <div class="flex flex-col space-y-4">
+                  <h3 class="text-xl font-bold">Siz nimani o'rganasiz</h3>
+                  <div class="border border-border bg-card rounded-md p-4">
+                     <div class="grid gap-4 grid-cols-1 md:grid-cols-2 md:gap-6 items-start">
+                        <div class="flex items-center space-x-2" v-for="item in course.planed_skills" :key="item">
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-badge-check"
+                           >
+                              <path
+                                 d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+                              />
+                              <path d="m9 12 2 2 4-4" />
+                           </svg>
+                           <div class="flex flex-col space-y-1 flex-1">
+                              <span class="text-base font-bold">{{ item.name }}</span>
+                              <span class="tracking-wider">{{ item.description }}</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="rounded-md border bg-card p-6">
+               <div class="flex flex-col space-y-4">
+                  <h3 class="text-xl font-bold">Kurs kim uchun</h3>
+                  <div class="border border-border bg-card rounded-md p-4">
+                     <div class="flex flex-col space-y-2">
+                        <div class="flex items-center" v-for="item in course.who_is_course_for" :key="item.id">
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-dot flex-shrink-0"
+                           >
+                              <circle cx="12.1" cy="12.1" r="1"></circle>
+                           </svg>
+                           <p class="tracking-wider flex-1">NuxtJS framewrokini o'rganishni istaganlar uchun</p>
                         </div>
                      </div>
                   </div>

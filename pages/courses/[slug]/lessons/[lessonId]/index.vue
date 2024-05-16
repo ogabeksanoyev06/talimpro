@@ -1,26 +1,26 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 
 definePageMeta({ pageTransition: false, layoutTransition: false, layout: 'lessons' });
 
-const courseStore = useCourseStore();
-
 const route = useRoute();
+
+const courseStore = useCourseStore();
+const { lesson, loading } = storeToRefs(courseStore);
 
 const lesson_id = ref(route.params.lessonId);
 
-onMounted(async () => {
-   await courseStore.getLessonsId(lesson_id.value);
-});
+await courseStore.getLessonsId(lesson_id.value);
 </script>
 
 <template>
-   <div class="sticky top-20">
+   <div class="sticky top-24">
       <div class="space-y-4">
          <div class="relative aspect-video overflow-hidden border bg-muted">
             <div class="absolute inset-x-0 inset-y-0 h-full w-full">
-               <div class="absolute inset-0 flex flex-col items-center justify-center bg-muted gap-y-4" v-if="courseStore.loading && courseStore.lesson.is_free">
+               <div class="absolute inset-0 flex flex-col items-center justify-center bg-muted gap-y-4" v-if="loading && lesson.is_free">
                   <svg
                      stroke="currentColor"
                      fill="none"
@@ -43,7 +43,7 @@ onMounted(async () => {
                      <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
                   </svg>
                </div>
-               <div class="absolute inset-0 flex flex-col items-center justify-center bg-muted gap-y-4" v-if="!courseStore.lesson.is_free">
+               <div class="absolute inset-0 flex flex-col items-center justify-center bg-muted gap-y-4" v-if="!lesson.is_free">
                   <svg
                      xmlns="http://www.w3.org/2000/svg"
                      xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -72,11 +72,11 @@ onMounted(async () => {
                </div>
             </div>
          </div>
-         <h2 class="text-2xl font-bold">{{ courseStore.lesson.name }}</h2>
+         <h2 class="text-2xl font-bold">{{ lesson.name }}</h2>
          <div class="flex flex-wrap gap-4">
             <a
                target="_blank"
-               v-for="(material, i) in courseStore.lesson.materials"
+               v-for="(material, i) in lesson.materials"
                :key="i"
                :href="material.file"
                class="flex flex-col justify-center items-center space-y-1 group text-center border border-border border-dashed min-w-[150px] py-2 px-4"

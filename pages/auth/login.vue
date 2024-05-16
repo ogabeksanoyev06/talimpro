@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useAuthStore } from '@/stores/AuthStore';
@@ -7,6 +8,7 @@ import { useAuthStore } from '@/stores/AuthStore';
 definePageMeta({ layout: 'auth' });
 
 const authStore = useAuthStore();
+const { loading } = storeToRefs(authStore);
 
 const form = ref({ username: '', password: '' });
 
@@ -181,14 +183,14 @@ const resetToPassword = () => {
                                        <span class="text-xs text-red-600">{{ errors[0] }}</span>
                                     </VField>
                                  </div>
-                                 <Button type="submit" :disabled="authStore.loading">Yangilash</Button>
+                                 <Button type="submit" :disabled="loading">Yangilash</Button>
                               </div>
                            </form>
                         </VForm>
                      </DialogContent>
                   </Dialog>
                </div>
-               <Button type="submit" class="w-full" :disabled="authStore.loading"> Tizimga kirish </Button>
+               <Button type="submit" class="w-full" :disabled="loading"> Tizimga kirish </Button>
             </div>
          </form>
       </VForm>

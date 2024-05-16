@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 import Button from '~/components/ui/button/Button.vue';
 import { useResultStore } from '~/stores/ResultStore';
 
 const resultStore = useResultStore();
+const { testResultId, answerLabels } = storeToRefs(resultStore);
 
 const route = useRoute();
 const router = useRouter();
@@ -19,15 +21,15 @@ const getActiveTestNumber = (number) => {
 };
 
 const selectedQuestions = () => {
-   selectedQuestion.value = resultStore.testResultId?.questions[testNumber.value];
+   selectedQuestion.value = testResultId.value?.questions[testNumber.value];
 };
 
 const totalBasic = computed(() => {
-   return resultStore.testResultId.value?.blogs?.filter((blog) => blog.type === 'basic' && blog.total_ball > 0).reduce((sum, blog) => sum + blog.total_ball, 0);
+   return testResultId.value?.blogs?.filter((blog) => blog.type === 'basic' && blog.total_ball > 0).reduce((sum, blog) => sum + blog.total_ball, 0);
 });
 
 const totalCompulsory = computed(() => {
-   return resultStore.testResultId.value?.blogs?.filter((blog) => blog.type === 'compulsory' && blog.total_ball > 0).reduce((sum, blog) => sum + blog.total_ball, 0);
+   return testResultId.value?.blogs?.filter((blog) => blog.type === 'compulsory' && blog.total_ball > 0).reduce((sum, blog) => sum + blog.total_ball, 0);
 });
 
 onMounted(async () => {
@@ -79,7 +81,7 @@ onBeforeUnmount(() => {
                         }"
                      >
                         <span class="font-semibold">
-                           {{ resultStore.answerLabels[aIndex] + ')' }}
+                           {{ answerLabels[aIndex] + ')' }}
                         </span>
                         <span v-html="answer"> </span>
                      </li>
@@ -89,7 +91,7 @@ onBeforeUnmount(() => {
             <div>
                <ul class="flex flex-wrap gap-1 justify-center">
                   <Button
-                     v-for="(question, index) in resultStore.testResultId?.questions"
+                     v-for="(question, index) in testResultId?.questions"
                      :key="index"
                      :variant="
                         question.is_correct && question.is_picked && question.answer

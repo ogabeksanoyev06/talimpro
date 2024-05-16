@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTestStore } from '~/stores/test';
 
 const testStore = useTestStore();
+const { blogTestSubjects, loading } = storeToRefs(testStore);
 
 const questionsCount = ref(5);
 
@@ -15,7 +17,7 @@ const scienceId = ref(null);
 
 const subjectList = ref([]);
 
-const questionsCountSelect = ref([
+const questionsCountSelect = [
    {
       id: 5,
       name: 5
@@ -40,9 +42,9 @@ const questionsCountSelect = ref([
       id: 30,
       name: 30
    }
-]);
+];
 
-const questionLevelList = ref([
+const questionLevelList = [
    {
       id: 'beginner',
       name: 'Oson',
@@ -58,7 +60,7 @@ const questionLevelList = ref([
       name: 'Qiyin',
       disabled: true
    }
-]);
+];
 
 function selectedScience(id) {
    scienceId.value = id;
@@ -83,7 +85,10 @@ function startTest() {
    };
    testStore.startBlogTest(paramtersModel);
 }
-testStore.getBlogTestSciences();
+
+onMounted(async () => {
+   await testStore.getBlogTestSciences();
+});
 </script>
 
 <template>
@@ -100,7 +105,7 @@ testStore.getBlogTestSciences();
          <div class="mt-6" v-if="scienceId">
             <h4 class="text-xl font-semibold mb-4">Mavzuni tanlang</h4>
             <div class="flex flex-col space-y-2">
-               <div class="flex items-center space-x-4" v-for="item in testStore.blogTestSubjects" :key="item.id">
+               <div class="flex items-center space-x-4" v-for="item in blogTestSubjects" :key="item.id">
                   <Checkbox :id="item.id" :checked="subjectList.includes(item.id)" @update:checked="handleChange(item.id)" />
                   <label
                      :for="item.id"
@@ -144,7 +149,7 @@ testStore.getBlogTestSciences();
             </div>
          </div>
          <div class="flex justify-center mt-6">
-            <Button @click="startTest" :disabled="!scienceId || !subjectList.length > 0 || !selectedLevel || !questionsCount || loading">
+            <Button @click="startTest" :disabled="(!scienceId && !subjectList.length > 0 && !selectedLevel && !questionsCount) || loading">
                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
