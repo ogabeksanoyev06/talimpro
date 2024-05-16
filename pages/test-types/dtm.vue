@@ -6,6 +6,10 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { useTestStore } from '~/stores/test';
 import { useCommonStore } from '~/stores/common';
 
+definePageMeta({
+   middleware: ['auth']
+});
+
 const testStore = useTestStore();
 const commonStore = useCommonStore();
 

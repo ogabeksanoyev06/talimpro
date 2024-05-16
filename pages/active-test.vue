@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-// definePageMeta({
-//    middleware: ['auth']
-// });
+definePageMeta({
+   middleware: ['auth']
+});
 
 const selectedQuestion = ref({});
 

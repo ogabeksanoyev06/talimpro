@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command';
 import { useAuthStore } from '@/stores/AuthStore';
+import { storeToRefs } from 'pinia';
 
 const menu = [
    {
@@ -93,15 +94,17 @@ const pages = [
 ];
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
+
+const { isAuthenticated } = storeToRefs(authStore);
+const { user, loading } = storeToRefs(authStore);
 
 const open = ref(false);
 
 const route = useRoute();
-
 const router = useRouter();
 
 const colorMode = useColorMode();
-
 const isDark = computed({
    get() {
       return colorMode.value === 'dark';
@@ -119,12 +122,9 @@ function goToLink(route) {
    router.push({ path: route });
 }
 
-const userStore = useUserStore();
-
-const user = computed(() => userStore.user);
-const loading = computed(() => userStore.loading);
-
-userStore.fetchUser();
+if (isAuthenticated.value) {
+   await userStore.fetchUser();
+}
 </script>
 
 <template>
@@ -215,7 +215,7 @@ userStore.fetchUser();
                      </svg>
                   </Button>
                </div>
-               <NuxtLink to="/auth/login" v-if="!authStore.isAuthenticated">
+               <NuxtLink to="/auth/login" v-if="!isAuthenticated">
                   <Button variant="ghost" size="icon">
                      <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -235,7 +235,7 @@ userStore.fetchUser();
                      </svg>
                   </Button>
                </NuxtLink>
-               <DropdownMenu v-if="authStore.isAuthenticated">
+               <DropdownMenu v-if="isAuthenticated">
                   <DropdownMenuTrigger>
                      <div
                         class="relative ml-1 overflow-hidden shrink-0 before:border before:border-solid before:border-white before:opacity-20 before:absolute before:inset-0 w-10 h-10 rounded-full before:rounded-full cursor-pointer"
@@ -244,11 +244,11 @@ userStore.fetchUser();
                            <div
                               class="relative overflow-hidden shrink-0 before:border before:border-solid before:border-black/10 before:absolute before:inset-0 w-10 h-10 rounded-full before:rounded-full"
                            >
-                              <div class="flex items-center justify-center text-card h-full w-full text-base object-cover bg-primary" v-if="!user.photo">
+                              <div class="flex items-center justify-center text-card h-full w-full text-base object-cover bg-primary" v-if="!user?.photo">
                                  {{ userStore.fullNameInitial }}
                               </div>
                               <div class="w-full h-full object-cover bg-white" v-else>
-                                 <img alt="avatar-image" class="object-cover w-full h-full" :src="user.photo" />
+                                 <img alt="avatar-image" class="object-cover w-full h-full" :src="user?.photo" />
                               </div>
                            </div>
                         </div>

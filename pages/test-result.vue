@@ -1,11 +1,9 @@
 <script setup>
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-const testResult = useCookie('testResult');
+definePageMeta({ middleware: 'auth' });
 
-// definePageMeta({
-//    middleware: ['auth']
-// });
+const testResult = useCookie('testResult');
 
 const totalBasic = computed(() => {
    return testResult.value?.blogs

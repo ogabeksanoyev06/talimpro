@@ -6,6 +6,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useCourseStore } from '~/stores/courses';
 
+definePageMeta({ middleware: 'auth' });
+
 const route = useRoute();
 
 const courseStore = useCourseStore();

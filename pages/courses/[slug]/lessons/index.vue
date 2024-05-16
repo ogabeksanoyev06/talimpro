@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { useCourseStore } from '~/stores/courses';
 
-definePageMeta({ layout: 'lessons' });
+definePageMeta({ layout: 'lessons', middleware: 'auth' });
 
 const courseStore = useCourseStore();
 const { course, loading } = storeToRefs(courseStore);

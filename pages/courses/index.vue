@@ -5,6 +5,8 @@ import Badge from '~/components/ui/badge/Badge.vue';
 import Button from '~/components/ui/button/Button.vue';
 import { useCourseStore } from '~/stores/courses';
 
+
+
 const courseStore = useCourseStore();
 const { courses, categories, selectedCategory, loading } = storeToRefs(courseStore);
 

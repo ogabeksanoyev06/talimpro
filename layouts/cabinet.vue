@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter, useRoute } from 'vue-router';
+import { useUserStore } from '~/stores/user';
 import AppFooter from '~/components/layouts/default/AppFooter.vue';
 import AppHeader from '~/components/layouts/default/AppHeader.vue';
 

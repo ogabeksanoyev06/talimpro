@@ -6,7 +6,7 @@ import { Input } from '~/components/ui/input';
 import { useUserStore } from '~/stores/user';
 import { useCommonStore } from '~/stores/common';
 
-definePageMeta({ layout: 'cabinet' });
+definePageMeta({ layout: 'cabinet', middleware: 'auth' });
 
 const usertype = [
    {

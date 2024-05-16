@@ -6,6 +6,10 @@ import Label from '~/components/ui/label/Label.vue';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTestStore } from '~/stores/test';
 
+definePageMeta({
+   middleware: ['auth']
+});
+
 const testStore = useTestStore();
 const { classes, schoolTestSciences, loading } = storeToRefs(testStore);
 

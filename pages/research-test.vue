@@ -4,6 +4,10 @@ import { storeToRefs } from 'pinia';
 import { useTestStore } from '~/stores/test';
 import Button from '~/components/ui/button/Button.vue';
 
+definePageMeta({
+   middleware: ['auth']
+});
+
 const router = useRouter();
 
 const testStore = useTestStore();

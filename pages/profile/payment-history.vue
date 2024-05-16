@@ -3,9 +3,7 @@ import { storeToRefs } from 'pinia';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { usePaymentStore } from '~/stores/payment';
 
-definePageMeta({
-   layout: 'cabinet'
-});
+definePageMeta({ layout: 'cabinet', middleware: 'auth' });
 
 const paymenStore = usePaymentStore();
 const { payments_history, loading } = storeToRefs(paymenStore);

@@ -5,6 +5,8 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Pagination, PaginationEllipsis, PaginationList, PaginationListItem } from '@/components/ui/pagination';
 import { useCommonStore } from '@/stores/common';
 
+definePageMeta({ middleware: 'auth' });
+
 const route = useRoute();
 
 const commonStore = useCommonStore();
@@ -80,7 +82,7 @@ watch(universityId, async (newUniversityId) => {
    if (newUniversityId) {
       await commonStore.getUniversitiesDtmId(newUniversityId, {
          limit: limit.value,
-         offset: offset.value,
+         offset: offset.value
          // education_type: selectedEducationType.value,
          // search: search.value
       });

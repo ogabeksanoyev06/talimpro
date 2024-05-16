@@ -1,9 +1,7 @@
 <script setup>
 import { usePaymentStore } from '~/stores/payment';
 
-definePageMeta({
-   layout: 'cabinet'
-});
+definePageMeta({ layout: 'cabinet', middleware: 'auth' });
 
 const paymentStore = usePaymentStore();
 

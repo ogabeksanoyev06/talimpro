@@ -6,6 +6,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTestStore } from '~/stores/test';
 
+definePageMeta({
+   middleware: ['auth']
+});
+
 const testStore = useTestStore();
 const { blogTestSubjects, loading } = storeToRefs(testStore);
 

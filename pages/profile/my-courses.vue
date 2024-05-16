@@ -1,7 +1,7 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 
-definePageMeta({ layout: 'cabinet' });
+definePageMeta({ layout: 'cabinet', middleware: 'auth' });
 
 const courseStore = useCourseStore();
 const { boughtCourses, loading } = storeToRefs(courseStore);

@@ -2,7 +2,7 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useTestStore } from '~/stores/test';
 
-definePageMeta({ layout: 'cabinet' });
+definePageMeta({ layout: 'cabinet', middleware: 'auth' });
 
 const testStore = useTestStore();
 const { testResults, loading } = storeToRefs(testStore);

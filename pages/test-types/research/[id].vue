@@ -5,6 +5,10 @@ import { useRoute } from 'vue-router';
 import Button from '~/components/ui/button/Button.vue';
 import { useTestStore } from '~/stores/test';
 
+definePageMeta({
+   middleware: ['auth']
+});
+
 const route = useRoute();
 
 const testStore = useTestStore();

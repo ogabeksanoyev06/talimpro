@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 
-definePageMeta({ pageTransition: false, layoutTransition: false, layout: 'lessons' });
+definePageMeta({ layout: 'lessons', middleware: 'auth' });
 
 const route = useRoute();
 
