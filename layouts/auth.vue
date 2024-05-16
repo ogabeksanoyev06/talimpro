@@ -1,7 +1,7 @@
 <template>
    <div class="relative">
       <main class="min-h-screen flex flex-col">
-         <div class="relative flex items-center w-full h-20 justify-center overflow-hidden rounded-md">
+         <div class="relative flex items-center w-full h-20 sm:h-28 justify-center overflow-hidden rounded-md">
             <div class="absolute top-0 z-[-2] h-screen w-screen bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
             <div class="flex flex-col items-center justify-center gap-y-3 sm:gap-y-4">
                <nuxt-link to="/" class="flex items-center justify-center gap-x-4">
@@ -10,7 +10,7 @@
                </nuxt-link>
             </div>
          </div>
-         <div class="container">
+         <div class="container flex-1 flex items-center">
             <nuxt-link to="/" class="md:absolute md:top-10 md:left-10 flex h-10 w-10 items-center justify-center gap-x-3 rounded-full border bg-card hover:bg-muted">
                <svg
                   xmlns="http://www.w3.org/2000/svg"

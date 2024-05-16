@@ -5,7 +5,7 @@ import Button from '~/components/ui/button/Button.vue';
 import { useTestStore } from '~/stores/test';
 
 definePageMeta({
-   middleware: 'auth'
+   middleware: ['auth']
 });
 
 const router = useRouter();
@@ -28,6 +28,7 @@ const handleTestStart = async (test_type) => {
          break;
    }
 };
+
 await testStore.getTestTypes({ category_type: 'test' });
 </script>
 
