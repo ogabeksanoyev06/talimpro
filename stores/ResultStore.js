@@ -39,9 +39,9 @@ export const useResultStore = defineStore('results', () => {
       if (type === 'dtm') {
          const questions = formattedData.flatMap((item) => item.questions);
          const blogs = formattedData.map((item) => item.blogs);
-         testResultId.value = { questions, blogs };
+         testResultId.value = { questions, blogs }; // Massivni o'ziga o'zgaruvchi sifatida ishlatish
       } else {
-         testResultId.value.push(...formattedData);
+         testResultId.value = formattedData; // Yangi ro'yxatni o'zgaruvchiga tenglab berish
       }
    };
 

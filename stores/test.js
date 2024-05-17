@@ -139,6 +139,7 @@ export const useTestStore = defineStore('test', () => {
          const response = await api.post('tests/schooltest/start/', parametersModel);
          router.push('/active-test');
       } catch (error) {
+         $toast.error(error.response.data.message);
          if (error.response.data.code === 400) {
             router.push('/active-test');
          }
@@ -153,6 +154,8 @@ export const useTestStore = defineStore('test', () => {
          const response = await api.post('tests/blogtest/start/', parametersModel);
          router.push('/active-test');
       } catch (error) {
+         $toast.error(error.response.data.message);
+
          if (error.response.data.code === 400) {
             router.push('/active-test');
          }
@@ -167,9 +170,13 @@ export const useTestStore = defineStore('test', () => {
          const response = await api.post(`tests/researchtest/start/`, parametersModel);
          router.push('/active-test');
       } catch (error) {
+         $toast.error(error.response.data.message);
+
          if (error.response.data.code === 400) {
             router.push('/active-test');
          }
+         $toast.error(error.response.data.message);
+         console.log(error.response.server_error.message);
       } finally {
          loading.value = false;
       }
@@ -181,6 +188,8 @@ export const useTestStore = defineStore('test', () => {
          const response = await api.post(`tests/dtmtest/start/`, parametersModel);
          router.push('/active-test');
       } catch (error) {
+         $toast.error(error.response.data.message);
+
          if (error.response.data.code === 400) {
             router.push('/active-test');
          }

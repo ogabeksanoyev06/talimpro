@@ -14,8 +14,8 @@ export const parseQuestion = (question) => {
       { search: /<em>(.*?)<\/em>/g, replace: '*$1*' }, // Italic text
       { search: /<i>(.*?)<\/i>/g, replace: '*$1*' }, // Italic text
       { search: /<u>(.*?)<\/u>/g, replace: '__$1__' }, // Underlined text
-      { search: /<sup>(.*?)<\/sup>/g, replace: '^($1)' }, // Superscript text
-      { search: /<sub>(.*?)<\/sub>/g, replace: '_($1)' }, // Subscript text
+      { search: /\^(\(.*?\))\{([^\{\}]+?)\}/g, replace: '<sup>$1</sup>$2' }, // Superscript text
+      { search: /\_(\(.*?\))\{([^\{\}]+?)\}/g, replace: '<sub>$1</sub>$2' }, // Subscript text
       { search: /<h1>(.*?)<\/h1>/g, replace: '# $1' }, // Header 1
       { search: /<h2>(.*?)<\/h2>/g, replace: '## $1' }, // Header 2
       { search: /<h3>(.*?)<\/h3>/g, replace: '### $1' }, // Header 3

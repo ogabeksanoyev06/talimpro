@@ -202,7 +202,7 @@ export const useActiveTest = () => {
          $toast.success(response.message);
          testTimer.value = response.data.left_time;
       } catch (error) {
-         $toast.error(error.response.data.message);
+         // $toast.error(error.response.data.message);
          testFinish();
       }
    };
@@ -234,6 +234,7 @@ export const useActiveTest = () => {
          }
       } catch (error) {
          $toast.error(error.response.data.message);
+         navigateTo('/');
          hasActiveTest.value = false;
       } finally {
          loading.value = false;

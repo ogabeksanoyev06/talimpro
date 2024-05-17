@@ -12,24 +12,30 @@ export const useUserStore = defineStore('user', () => {
       ...data,
       phone: data.phone ? data.phone.slice(3) : data.phone,
       region: data.region ? data.region.id : data.region,
-      district: data.district ? data.district.id : data.district,
-      school: data.school ? data.school.id : data.school
+      district: data.district ? data.district.id : null,
+      school: data.school ? data.school.id : null
    });
 
    const handleError = (error) => {
       const errorData = error.response?.data || {};
-      Object.entries(errorData).forEach(([key, values]) => {
-         $toast.error(`${key}: ${values.join(', ')}`);
-      });
-      $toast.error(error.message || "Aniq xatolik haqida ma'lumot yo'q");
+      if (errorData) {
+         Object.entries(errorData).forEach(([key, values]) => {
+            $toast.error(`${key}: ${values.join(', ')}`);
+         });
+      } else {
+         $toast.error(error.message || "Aniq xatolik haqida ma'lumot yo'q");
+      }
    };
 
    const fetchUser = async () => {
+      loading.value = true;
       try {
          const response = await api.get('users/profile/');
          user.value = formatUserData(response);
       } catch (error) {
          handleError(error);
+      } finally {
+         loading.value = false;
       }
    };
 
@@ -37,7 +43,6 @@ export const useUserStore = defineStore('user', () => {
       const formData = new FormData();
       Object.entries(user.value).forEach(([key, value]) => {
          if (value !== null && value !== undefined) {
-            console.log(key, value);
             if (key === 'phone') {
                formData.append(key, '998' + value);
             } else {
@@ -55,7 +60,8 @@ export const useUserStore = defineStore('user', () => {
       try {
          const response = await api.patch('users/profile/', formData);
          user.value = formatUserData(response);
-         $toast.success('Profile muvaffaqiyatli o`zgartirildi');
+         fetchUser();
+         $toast.success('Profil muvaffaqiyatli o`zgartirildi');
       } catch (error) {
          handleError(error);
       } finally {

@@ -15,7 +15,7 @@ const { classes, schoolTestSciences, loading } = storeToRefs(testStore);
 
 const questionsCount = ref(5);
 
-const selectedClass = ref(null);
+const selectedClass = ref(1);
 
 const selectedLevel = ref('beginner');
 
@@ -101,12 +101,13 @@ function startTest() {
 
 const isTestDisabled = computed(() => !activeScience.value || !selectedClass.value || !selectedLevel.value || !questionsCount.value);
 
-watch([selectedClass, educationLang], async ([classValue, langValue]) => {
-   await testStore.getSchoolTestSciences({ school_class: classValue, education_lang: langValue });
+watch([selectedClass, educationLang], async () => {
+   await testStore.getSchoolTestSciences({ school_class: selectedClass.value, education_lang: educationLang.value });
 });
 
 onMounted(async () => {
    await setSchoolClassId();
+   await testStore.getSchoolTestSciences({ school_class: selectedClass.value, education_lang: educationLang.value });
 });
 </script>
 
@@ -186,7 +187,7 @@ onMounted(async () => {
          </div>
 
          <div class="flex justify-center mt-12">
-            <Button :disabled="isTestDisabled" @click="startTest">
+            <Button :disabled="isTestDisabled || loading" @click="startTest">
                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"

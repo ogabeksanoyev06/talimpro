@@ -2,12 +2,12 @@
 import { ref, onMounted, computed, watch } from 'vue';
 import { Button } from '@/components/ui/button';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/user';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command';
 import { useAuthStore } from '@/stores/AuthStore';
+import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
 
 const menu = [
@@ -97,7 +97,7 @@ const authStore = useAuthStore();
 const userStore = useUserStore();
 
 const { isAuthenticated } = storeToRefs(authStore);
-const { user, loading } = storeToRefs(authStore);
+const { user, fullNameInitial, loading } = storeToRefs(userStore);
 
 const open = ref(false);
 
@@ -152,15 +152,15 @@ if (isAuthenticated.value) {
             </nuxt-link>
             <div class="flex-1 justify-center flex whitespace-nowrap">
                <nav class="flex p-1 rounded-full bg-muted">
-                  <nuxt-link
-                     :to="{ path: item.route }"
+                  <NuxtLink
                      v-for="(item, index) in menu"
                      :key="index"
+                     :to="{ path: item.route }"
                      class="px-8 py-2 text-base rounded-full hover:bg-foreground/5"
                      :class="{ 'bg-card hover:!bg-card ': item.route === route.path }"
                   >
                      {{ item.name }}
-                  </nuxt-link>
+                  </NuxtLink>
                </nav>
             </div>
          </div>
@@ -245,7 +245,7 @@ if (isAuthenticated.value) {
                               class="relative overflow-hidden shrink-0 before:border before:border-solid before:border-black/10 before:absolute before:inset-0 w-10 h-10 rounded-full before:rounded-full"
                            >
                               <div class="flex items-center justify-center text-card h-full w-full text-base object-cover bg-primary" v-if="!user?.photo">
-                                 {{ userStore.fullNameInitial }}
+                                 {{ fullNameInitial }}
                               </div>
                               <div class="w-full h-full object-cover bg-white" v-else>
                                  <img alt="avatar-image" class="object-cover w-full h-full" :src="user?.photo" />

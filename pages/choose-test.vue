@@ -5,7 +5,7 @@ import Button from '~/components/ui/button/Button.vue';
 import { useTestStore } from '~/stores/test';
 
 definePageMeta({
-   middleware: ['auth']
+   middleware: 'auth'
 });
 
 const router = useRouter();

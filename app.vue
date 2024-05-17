@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
    <div>
       <NuxtLoadingIndicator color="#000" :height="5" />

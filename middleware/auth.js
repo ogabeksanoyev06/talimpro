@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware((to) => {
    const token = useCookie('access_token');
 
    if (token.value && (to.path === '/auth/login' || to.path === '/auth/register')) {
