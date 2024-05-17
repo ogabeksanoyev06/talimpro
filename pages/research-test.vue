@@ -1,8 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useTestStore } from '~/stores/test';
 import Button from '~/components/ui/button/Button.vue';
+import { useTestStore } from '~/stores/test';
+import { useActiveTestStore } from '~/stores/ActiveTestStore';
 
 definePageMeta({
    middleware: ['auth']
@@ -11,12 +12,19 @@ definePageMeta({
 const router = useRouter();
 
 const testStore = useTestStore();
+const activeTestStore = useActiveTestStore();
+
 const { testTypes, testId, loading } = storeToRefs(testStore);
+const { hasActiveTest } = storeToRefs(activeTestStore);
 
 await testStore.getTestTypes({ category_type: 'research' });
 
 const handleTestStart = (research_id) => {
-   router.push(`/test-types/research/${research_id}`);
+   if (hasActiveTest.value) {
+      navigateTo('/active-test');
+   } else {
+      router.push(`/test-types/research/${research_id}`);
+   }
 };
 </script>
 

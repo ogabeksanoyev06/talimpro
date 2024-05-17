@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import Button from '~/components/ui/button/Button.vue';
 import { useTestStore } from '~/stores/test';
+import { useActiveTestStore } from '~/stores/ActiveTestStore';
 
 definePageMeta({
    middleware: 'auth'
@@ -11,24 +12,32 @@ definePageMeta({
 const router = useRouter();
 
 const testStore = useTestStore();
+const activeTestStore = useActiveTestStore();
+
 const { testTypes, testId, loading } = storeToRefs(testStore);
+const { hasActiveTest } = storeToRefs(activeTestStore);
 
 const handleTestStart = async (test_type) => {
-   switch (test_type) {
-      case test.TYPE_DTM:
-         router.push('/test-types/dtm');
-         break;
-      case test.TYPE_BLOG:
-         router.push('/test-types/blog');
-         break;
-      case test.TYPE_SCHOOL:
-         router.push('/test-types/school');
-         break;
-      default:
-         break;
+   if (hasActiveTest.value) {
+      navigateTo('/active-test');
+   } else {
+      switch (test_type) {
+         case test.TYPE_DTM:
+            router.push('/test-types/dtm');
+            break;
+         case test.TYPE_BLOG:
+            router.push('/test-types/blog');
+            break;
+         case test.TYPE_SCHOOL:
+            router.push('/test-types/school');
+            break;
+         default:
+            break;
+      }
    }
 };
 
+await activeTestStore.getActiveTest();
 await testStore.getTestTypes({ category_type: 'test' });
 </script>
 
