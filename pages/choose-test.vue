@@ -22,13 +22,13 @@ const handleTestStart = async (test_type) => {
       navigateTo('/active-test');
    } else {
       switch (test_type) {
-         case test.TYPE_DTM:
+         case testType.TYPE_DTM:
             router.push('/test-types/dtm');
             break;
-         case test.TYPE_BLOG:
+         case testType.TYPE_BLOG:
             router.push('/test-types/blog');
             break;
-         case test.TYPE_SCHOOL:
+         case testType.TYPE_SCHOOL:
             router.push('/test-types/school');
             break;
          default:

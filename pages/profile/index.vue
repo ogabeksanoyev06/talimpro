@@ -156,7 +156,7 @@ watchEffect(() => {
                   <div class="flex flex-col space-y-2">
                      <VField name="region">
                         <Label for="region">Viloyat</Label>
-                        <Select v-model="user.region" :disabled="loading">
+                        <Select v-model="user.region" :disabled="loading" @change="regionS">
                            <SelectTrigger>
                               <SelectValue placeholder="Viloyatni tanlang" />
                            </SelectTrigger>

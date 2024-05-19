@@ -9,7 +9,10 @@ const selectedQuestion = ref({});
 
 const testActiveNumber = useCookie('testActiveNumber', { default: () => 0 });
 
-const { tests, testTimer, testFinish, timerFormat, setTimer, selectAnswer, getActiveTest, getTestLiveTime } = useActiveTest();
+const { timerFormat, setTimer } = useTimerFormat();
+
+const activeTestStore = useActiveTestStore();
+const { tests, testTimer } = storeToRefs(activeTestStore);
 
 const answerLabels = ref(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
 
@@ -39,10 +42,10 @@ const selectedQuestions = () => {
 };
 
 onMounted(async () => {
-   await getActiveTest();
-   await getTestLiveTime();
+   await activeTestStore.getActiveTest();
+   await activeTestStore.getTestLiveTime();
+   await setTimer(testTimer.value);
    selectedQuestions();
-   setTimer();
 });
 
 onBeforeUnmount(() => {
@@ -73,7 +76,7 @@ onBeforeUnmount(() => {
                      v-for="(answer, aIndex) in selectedQuestion?.answers"
                      :key="aIndex"
                      class="text-sm relative cursor-pointer flex items-start gap-1 p-3 after:absolute after:top-0 after:left-0 after:h-full after:w-1 after:bg-blue-500/45 after:rounded-tr-sm after:rounded-br-sm after:opacity-0 before:absolute before:top-0 before:right-0 before:h-full before:w-1 before:bg-blue-500/45 before:rounded-tl-sm before:rounded-bl-sm before:opacity-0 hover:after:opacity-100 hover:before:opacity-100 transition-all duration-300 group"
-                     @click="selectAnswer(selectedQuestion.id, aIndex + 1, selectedQuestion.dtmtest_blog)"
+                     @click="activeTestStore.selectAnswer(selectedQuestion.id, aIndex + 1, selectedQuestion.dtmtest_blog)"
                      :class="selectedQuestion.answer === aIndex + 1 ? '!bg-blue-500/5 after:opacity-100 before:op ' : ''"
                   >
                      <span class="text-[1rem] font-bold pl-2 sm:pl-4"> {{ answerLabels[aIndex] + ')' }}</span>
@@ -100,7 +103,7 @@ onBeforeUnmount(() => {
                      <Button @click="next">Keyingi</Button>
                   </div>
                   <div class="md:col-span-6 flex justify-center md:justify-end">
-                     <Button variant="destructive" @click="testFinish">Yakunlash</Button>
+                     <Button variant="destructive" @click="activeTestStore.testFinish">Yakunlash</Button>
                   </div>
                </div>
             </div>

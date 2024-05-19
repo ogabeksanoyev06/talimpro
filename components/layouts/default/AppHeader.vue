@@ -121,10 +121,11 @@ function handleOpenChange() {
 function goToLink(route) {
    router.push({ path: route });
 }
-
-if (isAuthenticated.value) {
-   await userStore.fetchUser();
-}
+onMounted(async () => {
+   if (isAuthenticated.value) {
+      await userStore.fetchUser();
+   }
+});
 </script>
 
 <template>
@@ -147,8 +148,8 @@ if (isAuthenticated.value) {
          </div>
          <div class="mr-4 lg:mr-1 hidden lg:flex lg:flex-1">
             <nuxt-link to="/" class="flex items-center gap-x-4">
-               <img alt="logo" fetchpriority="high" height="40" src="/assets/svg/logo-light.svg" v-if="colorMode.preference === 'light'" />
-               <img alt="logo" fetchpriority="high" height="40" src="/assets/svg/logo-dark.svg" v-if="colorMode.preference === 'dark'" />
+               <img alt="logo" fetchpriority="high" height="40" width="100" src="/assets/svg/logo-light.svg" v-if="colorMode.preference === 'light'" />
+               <img alt="logo" fetchpriority="high" height="40" width="100" src="/assets/svg/logo-dark.svg" v-if="colorMode.preference === 'dark'" />
             </nuxt-link>
             <div class="flex-1 justify-center flex whitespace-nowrap">
                <nav class="flex p-1 rounded-full bg-muted">

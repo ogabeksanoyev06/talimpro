@@ -1,4 +1,4 @@
-export const test = {
+export const testType = {
    TYPE_DTM: 'dtm',
    TYPE_BLOG: 'blog',
    TYPE_SCHOOL: 'school',

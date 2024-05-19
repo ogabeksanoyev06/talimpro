@@ -1,38 +1,19 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useApi } from '@/composables/useApi';
+import { useTimerFormat } from '@/composables/useTimerFormat';
 
 export const useActiveTestStore = defineStore('active-test', () => {
    const api = useApi();
    const { $toast } = useNuxtApp();
 
-   const testResult = ref(null);
+   const { setTimer } = useTimerFormat();
+
    const testTimer = ref(0);
+   const testResult = ref(null);
    const loading = ref(false);
    const tests = ref({});
    const hasActiveTest = ref(false);
-
-   const setTimer = () => {
-      const interval = setInterval(() => {
-         if (testTimer.value <= 0) {
-            testFinish();
-            clearInterval(interval);
-         } else {
-            testTimer.value--;
-         }
-      }, 1000);
-   };
-
-   const timerFormat = (time) => {
-      let sec_num = parseInt(time, 10);
-      let hours = Math.floor(sec_num / 3600);
-      let minutes = Math.floor((sec_num - hours * 3600) / 60);
-      let seconds = sec_num - hours * 3600 - minutes * 60;
-
-      const format = (num) => (num < 10 ? `0${num}` : num);
-
-      return `${format(hours)}:${format(minutes)}:${format(seconds)}`;
-   };
 
    const formatQuestions = (questions, subjectName, type) => {
       return questions.map((question) => ({
@@ -86,10 +67,10 @@ export const useActiveTestStore = defineStore('active-test', () => {
 
    const testFinish = async () => {
       const endpoint = {
-         [test.TYPE_DTM]: 'tests/dtmtest/done/',
-         [test.TYPE_BLOG]: 'tests/blogtest/done/',
-         [test.TYPE_SCHOOL]: 'tests/schooltest/done/',
-         [test.TYPE_RESEARCH]: 'tests/researchtest/done/'
+         [testType.TYPE_DTM]: 'tests/dtmtest/done/',
+         [testType.TYPE_BLOG]: 'tests/blogtest/done/',
+         [testType.TYPE_SCHOOL]: 'tests/schooltest/done/',
+         [testType.TYPE_RESEARCH]: 'tests/researchtest/done/'
       }[tests.value.type];
 
       if (!endpoint) {
@@ -103,7 +84,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
          answer: null,
          picked: null,
          finishing: true,
-         ...(tests.value.type === test.TYPE_RESEARCH && { test_type_id: tests.value.testTypeId })
+         ...(tests.value.type === testType.TYPE_RESEARCH && { test_type_id: tests.value.testTypeId })
       };
 
       try {
@@ -118,10 +99,10 @@ export const useActiveTestStore = defineStore('active-test', () => {
 
    const selectAnswer = async (questionId, answer, blogId) => {
       const endpoint = {
-         [test.TYPE_DTM]: 'tests/dtmtest/done/',
-         [test.TYPE_BLOG]: 'tests/blogtest/done/',
-         [test.TYPE_SCHOOL]: 'tests/schooltest/done/',
-         [test.TYPE_RESEARCH]: 'tests/researchtest/done/'
+         [testType.TYPE_DTM]: 'tests/dtmtest/done/',
+         [testType.TYPE_BLOG]: 'tests/blogtest/done/',
+         [testType.TYPE_SCHOOL]: 'tests/schooltest/done/',
+         [testType.TYPE_RESEARCH]: 'tests/researchtest/done/'
       }[tests.value.type];
 
       if (!endpoint) {
@@ -135,7 +116,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
          answer,
          picked: true,
          finishing: false,
-         ...(tests.value.type === test.TYPE_DTM && { blog_id: blogId })
+         ...(tests.value.type === testType.TYPE_DTM && { blog_id: blogId })
       };
 
       try {
@@ -171,13 +152,13 @@ export const useActiveTestStore = defineStore('active-test', () => {
       try {
          const response = await api.get('tests/active-tests/');
          switch (response.type) {
-            case test.TYPE_BLOG:
-            case test.TYPE_SCHOOL:
-            case test.TYPE_RESEARCH:
+            case testType.TYPE_BLOG:
+            case testType.TYPE_SCHOOL:
+            case testType.TYPE_RESEARCH:
                formatTestData(response, response.type);
                hasActiveTest.value = true;
                break;
-            case test.TYPE_DTM:
+            case testType.TYPE_DTM:
                dtmTestFormattedQuestions(response);
                hasActiveTest.value = true;
                break;
@@ -199,7 +180,6 @@ export const useActiveTestStore = defineStore('active-test', () => {
       testResult,
       testTimer,
       setTimer,
-      timerFormat,
       testFinish,
       selectAnswer,
       getTestLiveTime,

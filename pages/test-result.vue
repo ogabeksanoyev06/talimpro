@@ -23,16 +23,16 @@ const typeName = computed(() => {
    let typeValue = '';
    const testType = testResult.value?.type || testResult.value?.blogs[0]?.type;
    switch (testType) {
-      case test.TYPE_DTM:
+      case testType.TYPE_DTM:
          typeValue = 'DTM test';
          break;
-      case test.TYPE_BLOG:
+      case testType.TYPE_BLOG:
          typeValue = 'Blog test';
          break;
-      case test.TYPE_SCHOOL:
+      case testType.TYPE_SCHOOL:
          typeValue = 'Maktab o`quvchilari uchun test';
          break;
-      case test.TYPE_RESEARCH:
+      case testType.TYPE_RESEARCH:
          typeValue = 'Xalqaro tadqiqot test';
          break;
       default:
@@ -47,7 +47,7 @@ const typeName = computed(() => {
       <div class="container">
          <h3 class="text-xl text-center mb-3 font-semibold">{{ typeName }}</h3>
          <div class="border">
-            <Table v-if="testResult?.type === test.TYPE_RESEARCH" class="whitespace-nowrap">
+            <Table v-if="testResult?.type === testType.TYPE_RESEARCH" class="whitespace-nowrap">
                <TableBody>
                   <TableRow class="">
                      <TableHead class="p-3 text-center"> Yo'nalish nomi </TableHead>
@@ -65,7 +65,7 @@ const typeName = computed(() => {
                   </TableRow>
                </TableBody>
             </Table>
-            <Table v-if="testResult?.type === test.TYPE_BLOG" class="whitespace-nowrap">
+            <Table v-if="testResult?.type === testType.TYPE_BLOG" class="whitespace-nowrap">
                <TableBody>
                   <TableRow class="text-base">
                      <TableHead class="p-3 text-center"> Fan nomi </TableHead>
@@ -83,7 +83,7 @@ const typeName = computed(() => {
                   </TableRow>
                </TableBody>
             </Table>
-            <Table v-if="testResult?.type === test.TYPE_SCHOOL" class="whitespace-nowrap">
+            <Table v-if="testResult?.type === testType.TYPE_SCHOOL" class="whitespace-nowrap">
                <TableBody>
                   <TableRow class="text-base">
                      <TableHead class="p-3 text-center"> Fan nomi </TableHead>
@@ -101,7 +101,7 @@ const typeName = computed(() => {
                   </TableRow>
                </TableBody>
             </Table>
-            <Table class="text-center whitespace-nowrap" v-if="testResult?.blogs?.length > 0 && testResult.blogs[0].type === test.TYPE_DTM">
+            <Table class="text-center whitespace-nowrap" v-if="testResult?.blogs?.length > 0 && testResult.blogs[0].type === testType.TYPE_DTM">
                <TableBody>
                   <TableRow class="text-base">
                      <TableHead class="p-3 text-center"> Blog fanlari </TableHead>

@@ -23,7 +23,7 @@ export const useApi = () => {
    api.interceptors.response.use(
       (response) => response.data ?? { noData: 'empty data' },
       async (error) => {
-         if (error.response && error.response.status === 403 && !error.config._retry) {
+         if (error.response && error.response.status === 401 && !error.config._retry) {
             const refreshToken = useCookie('refresh_token').value;
             if (refreshToken) {
                try {

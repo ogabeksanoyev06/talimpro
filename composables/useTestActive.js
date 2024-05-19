@@ -125,16 +125,16 @@ export const useActiveTest = () => {
          finishing: true
       };
       switch (tests.value.type) {
-         case test.TYPE_DTM:
+         case testType.TYPE_DTM:
             endpoint = 'tests/dtmtest/done/';
             break;
-         case test.TYPE_BLOG:
+         case testType.TYPE_BLOG:
             endpoint = 'tests/blogtest/done/';
             break;
-         case test.TYPE_SCHOOL:
+         case testType.TYPE_SCHOOL:
             endpoint = 'tests/schooltest/done/';
             break;
-         case test.TYPE_RESEARCH:
+         case testType.TYPE_RESEARCH:
             endpoint = 'tests/researchtest/done/';
             payload.test_type_id = tests.value.test_type_id;
             break;
@@ -162,17 +162,17 @@ export const useActiveTest = () => {
          finishing: false
       };
       switch (tests.value.type) {
-         case test.TYPE_DTM:
+         case testType.TYPE_DTM:
             endpoint = 'tests/dtmtest/done/';
             payload.blog_id = blog_id;
             break;
-         case test.TYPE_BLOG:
+         case testType.TYPE_BLOG:
             endpoint = 'tests/blogtest/done/';
             break;
-         case test.TYPE_SCHOOL:
+         case testType.TYPE_SCHOOL:
             endpoint = 'tests/schooltest/done/';
             break;
-         case test.TYPE_RESEARCH:
+         case testType.TYPE_RESEARCH:
             endpoint = 'tests/researchtest/done/';
             break;
          default:
@@ -212,19 +212,19 @@ export const useActiveTest = () => {
       try {
          const response = await api.get('tests/active-tests/');
          switch (response.type) {
-            case test.TYPE_BLOG:
+            case testType.TYPE_BLOG:
                blogTestFormattedQuestions(response);
                hasActiveTest.value = true;
                break;
-            case test.TYPE_SCHOOL:
+            case testType.TYPE_SCHOOL:
                schoolTestFormattedQuestions(response);
                hasActiveTest.value = true;
                break;
-            case test.TYPE_RESEARCH:
+            case testType.TYPE_RESEARCH:
                researchTestFormattedQuestions(response);
                hasActiveTest.value = true;
                break;
-            case test.TYPE_DTM:
+            case testType.TYPE_DTM:
                dtmTestFormattedQuestions(response);
                hasActiveTest.value = true;
                break;

@@ -117,16 +117,16 @@ export const useTestResults = () => {
       try {
          const response = await api.get(`tests/tests-history/${data.id}/?type=${data.type}`);
          switch (data.type) {
-            case test.TYPE_DTM:
+            case testType.TYPE_DTM:
                formatDtmTest(response, data.type);
                break;
-            case test.TYPE_BLOG:
+            case testType.TYPE_BLOG:
                formatBlogTest(response, data.type);
                break;
-            case test.TYPE_SCHOOL:
+            case testType.TYPE_SCHOOL:
                formatSchoolTest(response, data.type);
                break;
-            case test.TYPE_RESEARCH:
+            case testType.TYPE_RESEARCH:
                formatResearchTest(response, data.type);
                break;
             default:

@@ -7,16 +7,14 @@ definePageMeta({ layout: 'cabinet', middleware: 'auth' });
 const testStore = useTestStore();
 const { testResults, loading } = storeToRefs(testStore);
 
-
-
 const router = useRouter();
 
 const goToLink = (test_id, test_type) => {
    const routes = {
-      [test.TYPE_DTM]: '/results/dtm-test',
-      [test.TYPE_BLOG]: '/results/blog-test',
-      [test.TYPE_SCHOOL]: '/results/school-test',
-      [test.TYPE_RESEARCH]: '/results/research-test'
+      [testType.TYPE_DTM]: '/results/dtm-test',
+      [testType.TYPE_BLOG]: '/results/blog-test',
+      [testType.TYPE_SCHOOL]: '/results/school-test',
+      [testType.TYPE_RESEARCH]: '/results/research-test'
    };
 
    const path = routes[test_type];

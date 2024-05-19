@@ -2,13 +2,14 @@ import { ref } from 'vue';
 import { useActiveTestStore } from '@/stores/ActiveTestStore';
 
 export const useTimerFormat = () => {
-   const testTimer = ref(0);
    const activeTestStore = useActiveTestStore();
 
-   const setTimer = () => {
+   const { testTimer } = storeToRefs(activeTestStore);
+
+   const setTimer = async () => {
       const interval = setInterval(() => {
          if (testTimer.value <= 0) {
-            // activeTestStore.testFinish();
+            activeTestStore.testFinish();
             clearInterval(interval);
          } else {
             testTimer.value--;
@@ -28,7 +29,6 @@ export const useTimerFormat = () => {
    };
 
    return {
-      testTimer,
       setTimer,
       timerFormat
    };
