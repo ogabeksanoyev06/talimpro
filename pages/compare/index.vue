@@ -60,14 +60,6 @@ const selectedEducationType = ref('daytime');
 const offset = ref(1);
 const limit = ref(10);
 
-await commonStore.getUniversitiesDtmId(route.query.dtmTestId, {
-   limit: limit.value,
-   offset: offset.value
-});
-
-commonStore.getRegions();
-commonStore.getUniversities();
-
 const selectOffsetValue = (index) => {
    offset.value = index;
 };
@@ -98,6 +90,15 @@ watch([limit, offset, selectedEducationType, search], async () => {
          // search: search.value
       });
    }
+});
+
+onMounted(async () => {
+   await commonStore.getUniversitiesDtmId(route.query.dtmTestId, {
+      limit: limit.value,
+      offset: offset.value
+   });
+   commonStore.getRegions();
+   commonStore.getUniversities();
 });
 </script>
 

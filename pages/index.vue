@@ -1,9 +1,9 @@
 <script setup>
 import HeroBanner from '@/components/pages/HeroBanner.vue';
-import AppCounts from '~/components/pages/AppCounts.vue';
-import CtaBanner from '~/components/pages/CtaBanner.vue';
-import TestTypes from '~/components/pages/TestTypes.vue';
-import AppFeatures from '~/components/pages/AppFeatures.vue';
+import AppCounts from '@/components/pages/AppCounts.vue';
+import CtaBanner from '@/components/pages/CtaBanner.vue';
+import TestTypes from '@/components/pages/TestTypes.vue';
+import AppFeatures from '@/components/pages/AppFeatures.vue';
 import img1 from '../assets/images/5.jpg';
 import img2 from '../assets/images/6.jpg';
 import img3 from '../assets/images/7.jpg';

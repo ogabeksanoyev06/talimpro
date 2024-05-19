@@ -1,10 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useCommonStore } from '@/stores/common';
 
-const { getStatistics, statistics, loading } = useCommon();
+const commonStore = useCommonStore();
 
-onMounted(() => {
-   getStatistics();
+const { statistics, loading } = storeToRefs(commonStore);
+
+onMounted(async () => {
+   await commonStore.getStatistics();
 });
 </script>
 
@@ -15,7 +18,7 @@ onMounted(() => {
             <div class="flex items-center gap-6 p-3 bg-card border rounded-md sm:p-4">
                <img alt="" loading="lazy" class="w-20 h-20 sm:w-24 sm:h-24" src="/assets/svg/students.svg" />
                <dl class="flex flex-col gap-y-2">
-                  <dt class="text-2xl font-medium sm:text-4xl">{{ statistics.users_count }} +</dt>
+                  <dt class="text-2xl font-medium sm:text-4xl">{{ statistics?.users_count }} +</dt>
                   <dd class="text-base sm:text-lg">Umumiy foydalanuvchilar</dd>
                </dl>
             </div>

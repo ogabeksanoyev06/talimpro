@@ -25,7 +25,13 @@ const commonStore = useCommonStore();
 const { user, loading } = storeToRefs(userStore);
 const { regions, districts, schools } = storeToRefs(commonStore);
 
-commonStore.getRegions();
+const handleFileUpload = (event) => {
+   const file = event.target.files[0];
+   if (file) {
+      user.value.photo = file;
+      userStore.updateUserProfile();
+   }
+};
 
 watchEffect(() => {
    if (user.value.region !== null && user.value.region !== undefined) {
@@ -38,6 +44,10 @@ watchEffect(() => {
       commonStore.getSchools(user.value.district);
    }
 });
+
+onMounted(async () => {
+   await commonStore.getRegions();
+});
 </script>
 
 <template>
@@ -46,6 +56,50 @@ watchEffect(() => {
       <VForm v-slot="{ handleSubmit }">
          <form @submit.prevent="handleSubmit(userStore.updateUserProfile)">
             <div>
+               <div class="w-full rounded-lg relative flex justify-center items-center gap-1 flex-col">
+                  <div class="w-20 h-20 bg-white-150 rounded-full border border-white flex flex-col items-center justify-center text-center overflow-hidden">
+                     <div class="relative inline-block flex-center w-full h-full bg-white">
+                        <input id="photo" type="file" name="file" class="w-0 h-0 absolute" accept="image/png, image/jpeg, image/webp" @change="handleFileUpload" />
+                        <div class="relative w-full h-full group">
+                           <label
+                              for="photo"
+                              class="absolute w-full h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-[20] md:opacity-0 md:group-hover:opacity-100 icon-pencil-edit text-white text-2xl leading-6 flex items-center justify-center cursor-pointer"
+                           >
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path
+                                    d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13"
+                                    stroke="#fff"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                 />
+                                 <path
+                                    d="M16.0399 3.02001L8.15988 10.9C7.85988 11.2 7.55988 11.79 7.49988 12.22L7.06988 15.23C6.90988 16.32 7.67988 17.08 8.76988 16.93L11.7799 16.5C12.1999 16.44 12.7899 16.14 13.0999 15.84L20.9799 7.96001C22.3399 6.60001 22.9799 5.02001 20.9799 3.02001C18.9799 1.02001 17.3999 1.66001 16.0399 3.02001Z"
+                                    stroke="#fff"
+                                    stroke-width="2"
+                                    stroke-miterlimit="10"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                 />
+                                 <path
+                                    d="M14.9102 4.1499C15.5802 6.5399 17.4502 8.4099 19.8502 9.0899"
+                                    stroke="#fff"
+                                    stroke-width="2"
+                                    stroke-miterlimit="10"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                 />
+                              </svg>
+                           </label>
+                           <div class="absolute top-0 left-0 z-10 w-full h-full bg-[#121C2599] transition-all duration-500 md:opacity-0 md:group-hover:opacity-100"></div>
+                           <div class="h-full">
+                              <img src="https://cdn.commeta.uz/static/review/static/front/images/default/user-default.png" class="w-full h-full object-cover" />
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <button class="text-sm leading-130 text-red hover:text-red-300 transition-300 opacity-0 pointer-events-none transition-300">O‘chirish</button>
+               </div>
                <div class="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 mb-8">
                   <div class="flex flex-col space-y-2">
                      <VField name="username" rules="required|max:60|min:3" v-model="user.username" v-slot="{ errors }">

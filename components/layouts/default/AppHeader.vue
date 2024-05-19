@@ -255,23 +255,16 @@ onMounted(async () => {
                         </div>
                      </div>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" class="whitespace-nowrap">
+                  <DropdownMenuContent align="end" class="whitespace-nowrap mt-3 w-48">
                      <nuxt-link :to="{ path: '/profile' }">
-                        <DropdownMenuItem class="cursor-pointer">
-                           <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="lucide lucide-user-icon mr-2 h-4 w-4"
-                           >
-                              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="12" cy="7" r="4"></circle>
+                        <DropdownMenuItem class="flex cursor-pointer items-center gap-x-2">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
+                              <g fill="currentColor">
+                                 <path d="M192 96a64 64 0 1 1-64-64a64 64 0 0 1 64 64" opacity="0.2" />
+                                 <path
+                                    d="M230.92 212c-15.23-26.33-38.7-45.21-66.09-54.16a72 72 0 1 0-73.66 0c-27.39 8.94-50.86 27.82-66.09 54.16a8 8 0 1 0 13.85 8c18.84-32.56 52.14-52 89.07-52s70.23 19.44 89.07 52a8 8 0 1 0 13.85-8M72 96a56 56 0 1 1 56 56a56.06 56.06 0 0 1-56-56"
+                                 />
+                              </g>
                            </svg>
                            Mening profilim
                         </DropdownMenuItem>
@@ -297,27 +290,33 @@ onMounted(async () => {
                         </DropdownMenuItem>
                      </nuxt-link>
                      <nuxt-link :to="{ path: '/profile/my-courses' }">
-                        <DropdownMenuItem class="cursor-pointer">
+                        <DropdownMenuItem class="flex cursor-pointer items-center gap-x-2">
                            <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="lucide lucide-folder-pen h-4 w-4 mr-2"
+                              xmlns:xlink="http://www.w3.org/1999/xlink"
+                              aria-hidden="true"
+                              role="img"
+                              font-size="16"
+                              class="iconify iconify--ph"
+                              width="1em"
+                              height="1em"
+                              viewBox="0 0 256 256"
                            >
-                              <path d="M8.4 10.6a2 2 0 0 1 3 3L6 19l-4 1 1-4Z" />
-                              <path d="M2 11.5V5a2 2 0 0 1 2-2h3.9c.7 0 1.3.3 1.7.9l.8 1.2c.4.6 1 .9 1.7.9H20a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9.5" />
+                              <g fill="currentColor">
+                                 <path
+                                    d="M232 80v88.89a7.11 7.11 0 0 1-7.11 7.11H200v-64a8 8 0 0 0-8-8h-72L90.13 81.6a8 8 0 0 0-4.8-1.6H64V56a8 8 0 0 1 8-8h45.33a8 8 0 0 1 4.8 1.6L152 72h72a8 8 0 0 1 8 8"
+                                    opacity=".2"
+                                 ></path>
+                                 <path
+                                    d="M224 64h-69.33l-27.74-20.8a16.12 16.12 0 0 0-9.6-3.2H72a16 16 0 0 0-16 16v16H40a16 16 0 0 0-16 16v112a16 16 0 0 0 16 16h152.89A15.13 15.13 0 0 0 208 200.89V184h16.89A15.13 15.13 0 0 0 240 168.89V80a16 16 0 0 0-16-16m-32 136H40V88h45.33l29.87 22.4a8 8 0 0 0 4.8 1.6h72Zm32-32h-16v-56a16 16 0 0 0-16-16h-69.33L94.93 75.2a16.12 16.12 0 0 0-9.6-3.2H72V56h45.33l29.87 22.4A8 8 0 0 0 152 80h72Z"
+                                 ></path>
+                              </g>
                            </svg>
                            Mening kurslarim
                         </DropdownMenuItem>
                      </nuxt-link>
                      <nuxt-link :to="{ path: '/profile/tests-results' }">
-                        <DropdownMenuItem class="cursor-pointer">
+                        <DropdownMenuItem class="flex cursor-pointer items-center gap-x-2">
                            <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="24"
@@ -328,7 +327,7 @@ onMounted(async () => {
                               stroke-width="2"
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              class="w-4 h-4 mr-2"
+                              class="w-4 h-4"
                            >
                               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                            </svg>
@@ -336,44 +335,50 @@ onMounted(async () => {
                         </DropdownMenuItem>
                      </nuxt-link>
                      <nuxt-link :to="{ path: '/profile/payment-history' }">
-                        <DropdownMenuItem class="cursor-pointer">
-                           <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="lucide lucide-circle-dollar-sign w-4 h-4 mr-2"
-                           >
-                              <circle cx="12" cy="12" r="10" />
-                              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
-                              <path d="M12 18V6" />
+                        <DropdownMenuItem class="flex cursor-pointer items-center gap-x-2">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
+                              <g fill="currentColor">
+                                 <path
+                                    d="M16 69.21v120c91.64-44.77 132.36 42.35 224-2.42v-120c-91.64 44.77-132.36-42.35-224 2.42M128 152a24 24 0 1 1 24-24a24 24 0 0 1-24 24"
+                                    opacity="0.2"
+                                 />
+                                 <path
+                                    d="M244.24 60a8 8 0 0 0-7.75-.4c-42.93 21-73.59 11.16-106 .78c-34-10.89-69.25-22.14-117.95 1.64A8 8 0 0 0 8 69.24v119.93a8 8 0 0 0 11.51 7.19c42.93-21 73.59-11.16 106.05-.78c19.24 6.15 38.84 12.42 61 12.42c17.09 0 35.73-3.72 56.91-14.06a8 8 0 0 0 4.49-7.18V66.83a8 8 0 0 0-3.72-6.83M232 181.67c-40.6 18.17-70.25 8.69-101.56-1.32c-19.24-6.15-38.84-12.42-61-12.42a122 122 0 0 0-45.4 9V74.33c40.6-18.17 70.25-8.69 101.56 1.32S189.14 96 232 79.09ZM128 96a32 32 0 1 0 32 32a32 32 0 0 0-32-32m0 48a16 16 0 1 1 16-16a16 16 0 0 1-16 16M56 96v48a8 8 0 0 1-16 0V96a8 8 0 1 1 16 0m144 64v-48a8 8 0 1 1 16 0v48a8 8 0 1 1-16 0"
+                                 />
+                              </g>
                            </svg>
                            To'lovlar tarixi
                         </DropdownMenuItem>
                      </nuxt-link>
-                     <DropdownMenuItem class="cursor-pointer group" @click="authStore.logout">
+                     <div class="-mx-1 my-1 h-px bg-muted"></div>
+                     <DropdownMenuItem class="flex cursor-pointer items-center gap-x-2" @click="authStore.logout">
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
-                           width="24"
-                           height="24"
+                           xmlns:xlink="http://www.w3.org/1999/xlink"
+                           aria-hidden="true"
+                           role="img"
+                           font-size="16"
+                           class="text-destructive iconify iconify--lets-icons"
+                           width="1em"
+                           height="1em"
                            viewBox="0 0 24 24"
-                           fill="none"
-                           stroke="currentColor"
-                           stroke-width="2"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           class="lucide lucide-log-out w-4 h-4 mr-2 rotate-180"
                         >
-                           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                           <polyline points="16 17 21 12 16 7" />
-                           <line x1="21" x2="9" y1="12" y2="12" />
+                           <defs>
+                              <mask id="iconifyReact10">
+                                 <g fill="none">
+                                    <circle cx="6" cy="6" r="6" fill="#fff" fill-opacity=".25" transform="matrix(0 -1 -1 0 20 18)"></circle>
+                                    <path stroke="silver" stroke-opacity=".25" stroke-width=".6" d="M7.7 12a6.3 6.3 0 1 1 12.6 0a6.3 6.3 0 0 1-12.6 0Z"></path>
+                                    <path stroke="#fff" stroke-width="1.2" d="M8 18.928A8 8 0 1 0 8 5.072"></path>
+                                    <path
+                                       fill="#fff"
+                                       d="m2 12l-.469-.375l-.3.375l.3.375zm9 .6a.6.6 0 1 0 0-1.2zM5.531 6.625l-4 5l.938.75l4-5zm-4 5.75l4 5l.938-.75l-4-5zM2 12.6h9v-1.2H2z"
+                                    ></path>
+                                 </g>
+                              </mask>
+                           </defs>
+                           <path fill="currentColor" d="M0 0h24v24H0z" mask="url(#iconifyReact10)"></path>
                         </svg>
-                        Hisobdan Chiqish
+                        <span class="text-destructive">Chiqish</span>
                      </DropdownMenuItem>
                   </DropdownMenuContent>
                </DropdownMenu>

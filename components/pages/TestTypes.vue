@@ -1,7 +1,12 @@
 <script setup>
+import { useCommonStore } from '@/stores/common';
 const commonStore = useCommonStore();
 
-commonStore.getTestTypesHome();
+const { testTypesHome } = storeToRefs(commonStore);
+
+onMounted(async () => {
+   await commonStore.getTestTypesHome();
+});
 </script>
 
 <template>
@@ -12,7 +17,7 @@ commonStore.getTestTypesHome();
             <p class="text-lg text-muted-foreground"></p>
          </div>
          <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3 sm:gap-6 justify-center">
-            <div v-for="item in commonStore.testTypesHome" :key="item.id">
+            <div v-for="item in testTypesHome" :key="item.id">
                <div class="flex items-center bg-card border rounded-md group min-h-[170px]">
                   <dl class="flex flex-col gap-y-2 p-3 sm:p-4 sm:col-span-9">
                      <dt class="text-base sm:text-lg font-bold">{{ item.title }}</dt>

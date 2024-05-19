@@ -10,7 +10,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
    const { setTimer } = useTimerFormat();
 
    const testTimer = ref(0);
-   const testResult = ref(null);
+   const testResult = useCookie('testResult');
    const loading = ref(false);
    const tests = ref({});
    const hasActiveTest = ref(false);
@@ -18,8 +18,8 @@ export const useActiveTestStore = defineStore('active-test', () => {
    const formatQuestions = (questions, subjectName, type) => {
       return questions.map((question) => ({
          id: question.id,
-         question: question.question,
-         answers: [question.answer1, question.answer2, question.answer3, question.answer4],
+         question: parseQuestion(question.question),
+         answers: [parseQuestion(question.answer1), parseQuestion(question.answer2), parseQuestion(question.answer3), parseQuestion(question.answer4)],
          correctAnswer: question.correct_answer,
          isPicked: question.is_picked,
          answer: question.answer
@@ -52,10 +52,10 @@ export const useActiveTestStore = defineStore('active-test', () => {
                   return {
                      dtmtest_blog: item.dtmtest_blog,
                      id: question.id,
-                     question: question.question,
-                     answers: [question.answer1, question.answer2, question.answer3, question.answer4],
+                     question: parseQuestion(question.question),
+                     answers: [parseQuestion(question.answer1), parseQuestion(question.answer2), parseQuestion(question.answer3), parseQuestion(question.answer4)],
                      correctAnswer: question.correct_answer,
-                     isPicked: question.is_picked,
+                     isPicked: question.picked,
                      answer: question.answer,
                      science: science
                   };
@@ -71,7 +71,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
          [testType.TYPE_BLOG]: 'tests/blogtest/done/',
          [testType.TYPE_SCHOOL]: 'tests/schooltest/done/',
          [testType.TYPE_RESEARCH]: 'tests/researchtest/done/'
-      }[tests.value.type];
+      }[tests.value?.type];
 
       if (!endpoint) {
          console.error('Unknown test type');
@@ -84,7 +84,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
          answer: null,
          picked: null,
          finishing: true,
-         ...(tests.value.type === testType.TYPE_RESEARCH && { test_type_id: tests.value.testTypeId })
+         ...(tests.value?.type === testType.TYPE_RESEARCH && { test_type_id: tests.value?.testTypeId })
       };
 
       try {
@@ -136,8 +136,8 @@ export const useActiveTestStore = defineStore('active-test', () => {
    const getTestLiveTime = async () => {
       try {
          const response = await api.post('tests/get-test-live-time/', {
-            test_type: tests.value.type,
-            test_id: tests.value.testId
+            test_type: tests.value?.type,
+            test_id: tests.value?.testId
          });
          $toast.success(response.message);
          testTimer.value = response.data.left_time;
@@ -168,6 +168,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
          }
       } catch (error) {
          hasActiveTest.value = false;
+         console.log(error.response, 'sasasas');
       } finally {
          loading.value = false;
       }

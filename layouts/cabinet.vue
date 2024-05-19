@@ -1,14 +1,12 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useUserStore } from '~/stores/user';
 import AppFooter from '~/components/layouts/default/AppFooter.vue';
 import AppHeader from '~/components/layouts/default/AppHeader.vue';
 
 const userStore = useUserStore();
 const { user, fullNameInitial, fullName } = storeToRefs(userStore);
-
-const router = useRouter();
 
 const route = useRoute();
 
@@ -37,7 +35,14 @@ const menu = [
    }
 ];
 
-await userStore.fetchUser();
+// const { data, error } = useAsyncData('user', async () => {
+//    await userStore.fetchUser();
+//    return user.value;
+// });
+
+onMounted(async () => {
+   await userStore.fetchUser();
+});
 </script>
 
 <template>

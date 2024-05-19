@@ -19,7 +19,7 @@ export const useUserStore = defineStore('user', () => {
    const handleError = (error) => {
       const errorData = error.response?.data || {};
       if (errorData) {
-         Object.entries(errorData)?.forEach(([key, values]) => {
+         Object.entries(errorData).forEach(([key, values]) => {
             $toast.error(`${key}: ${values.join(', ')}`);
          });
       } else {
@@ -41,7 +41,7 @@ export const useUserStore = defineStore('user', () => {
 
    const createFormData = () => {
       const formData = new FormData();
-      Object.entries(user.value)?.forEach(([key, value]) => {
+      Object.entries(user.value).forEach(([key, value]) => {
          if (value !== null && value !== undefined) {
             if (key === 'phone') {
                formData.append(key, '998' + value);
@@ -56,9 +56,10 @@ export const useUserStore = defineStore('user', () => {
    const updateUserProfile = async () => {
       loading.value = true;
       const formData = createFormData();
+
       try {
          const response = await api.patch('users/profile/', formData);
-         console.log(response);
+         // user.value = formatUserData(response);
          fetchUser();
          $toast.success('Profil muvaffaqiyatli o`zgartirildi');
       } catch (error) {
