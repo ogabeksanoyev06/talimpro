@@ -57,7 +57,7 @@ await testStore.getTestResults();
                      <span>{{ item.type }}</span>
                   </TableCell>
                   <TableCell class="p-4">
-                     <span>{{ item.total_ball?.toFixed(1) }}</span>
+                     <span>{{ item.total_ball ? item.total_ball?.toFixed(1) : 0 }}</span>
                   </TableCell>
                   <TableCell class="p-4 flex justify-center">
                      <svg

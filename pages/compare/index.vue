@@ -36,7 +36,7 @@ const limits = [
 ];
 const educationType = [
    {
-      value: 'daytime',
+      value: 'kunduzgi',
       name: 'Kunduzgi'
    },
    {
@@ -44,7 +44,7 @@ const educationType = [
       name: 'Sirtqi'
    },
    {
-      value: 'evening',
+      value: 'kechki',
       name: 'Kechki'
    },
    {
@@ -52,11 +52,53 @@ const educationType = [
       name: 'Masofaviy'
    }
 ];
+const educationLanguage = [
+   {
+      value: 'O`zbek',
+      name: 'O`zbek'
+   },
+   {
+      value: 'Rus',
+      name: 'Rus'
+   },
+   {
+      value: 'Qoraqalpoq',
+      name: 'Qoraqalpoq'
+   },
+   {
+      value: 'Ingliz',
+      name: 'Ingliz'
+   },
+   {
+      value: 'Tojik',
+      name: 'Tojik'
+   },
+   {
+      value: 'Qozoq',
+      name: 'Qozoq'
+   },
+   {
+      value: 'Turkman',
+      name: 'Turkman'
+   },
+   {
+      value: 'Koreys',
+      name: 'Koreys'
+   },
+   {
+      value: 'Nemis',
+      name: 'Nemis'
+   },
+   {
+      value: 'Frantsuz',
+      name: 'Frantsuz'
+   }
+];
 
-const search = ref('');
 const regionId = ref();
 const universityId = ref();
-const selectedEducationType = ref('daytime');
+const selectedEducationType = ref('kunduzgi');
+const selectedEducationLang = ref('O`zbek');
 const offset = ref(1);
 const limit = ref(10);
 
@@ -64,39 +106,25 @@ const selectOffsetValue = (index) => {
    offset.value = index;
 };
 
-watch(regionId, async (newRegionId) => {
-   if (newRegionId) {
-      await commonStore.getDistricts(newRegionId);
-   }
-});
+const fetchUniversities = async () => {
+   await commonStore.getUniversitiesDtmId(route.query.dtmTestId, {
+      limit: limit.value,
+      offset: offset.value,
+      form_of_education: selectedEducationType.value,
+      edu_lang: selectedEducationLang.value,
+      university__region: regionId.value,
+      university: universityId.value
+   });
+};
 
-watch(universityId, async (newUniversityId) => {
-   if (newUniversityId) {
-      await commonStore.getUniversitiesDtmId(newUniversityId, {
-         limit: limit.value,
-         offset: offset.value
-         // education_type: selectedEducationType.value,
-         // search: search.value
-      });
-   }
-});
-
-watch([limit, offset, selectedEducationType, search], async () => {
+watch([limit, offset, selectedEducationType, selectedEducationType, regionId, universityId], async () => {
    if (route.query.dtmTestId) {
-      await commonStore.getUniversitiesDtmId(route.query.dtmTestId, {
-         limit: limit.value,
-         offset: offset.value
-         // education_type: selectedEducationType.value,
-         // search: search.value
-      });
+      await fetchUniversities();
    }
 });
 
 onMounted(async () => {
-   await commonStore.getUniversitiesDtmId(route.query.dtmTestId, {
-      limit: limit.value,
-      offset: offset.value
-   });
+   await fetchUniversities();
    commonStore.getRegions();
    commonStore.getUniversities();
 });
@@ -114,9 +142,8 @@ onMounted(async () => {
                O'tgan yilgi turdosh yo'nalishlar bo'yicha o'tish ballari va siz to'plagan ballga nisbatatan solishtirish natijasi
             </p>
             <div class="flex flex-wrap gap-4">
-               <Button variant="outline" class="">Hammasi</Button>
-               <Button variant="outline" class="border-green-500">Grand: 0</Button>
-               <Button variant="outline" class="border-yellow-500">Kontrakt: 201</Button>
+               <Button variant="outline" class="border-green-500">Grand: {{ universitiesDtmId?.grands_count }}</Button>
+               <Button variant="outline" class="border-yellow-500">Kontrakt: {{ universitiesDtmId?.contracts_count }}</Button>
             </div>
          </div>
          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
@@ -137,12 +164,12 @@ onMounted(async () => {
                   </Select>
                </div>
             </div>
-            <div class="sm:ml-auto">
+            <!-- <div class="sm:ml-auto">
                <div class="flex flex-col space-y-2">
                   <Label for="search">Qidirish</Label>
                   <Input id="search" type="text" placeholder="" v-model="search" />
                </div>
-            </div>
+            </div> -->
          </div>
          <Table class="mb-4">
             <TableHeader class="text-start">
@@ -298,8 +325,9 @@ onMounted(async () => {
                   <TableCell class="p-4"> {{ item.grant_ball }}</TableCell>
                   <TableCell class="p-4"> {{ item.contract_ball }}</TableCell>
                   <TableCell class="p-4">
-                     <span class="text-destructive" v-if="item.status === 'inactive'">Yiqildi</span>
-                     <span class="text-green-500" v-else>Grant</span>
+                     <span class="text-green-500" v-if="item.status === 'grant'">Grant</span>
+                     <span class="text-orange-500" v-else-if="item.status === 'contract'">Kontrakt</span>
+                     <span class="text-destructive" v-else>Yiqildi</span>
                   </TableCell>
                </TableRow>
             </TableBody>
@@ -349,6 +377,23 @@ onMounted(async () => {
                      <SelectContent>
                         <SelectGroup>
                            <SelectItem v-for="item in educationType" :key="item.value" :value="item.value">
+                              {{ item.name }}
+                           </SelectItem>
+                        </SelectGroup>
+                     </SelectContent>
+                  </Select>
+               </div>
+            </div>
+            <div>
+               <div class="flex flex-col space-y-2">
+                  <Label for="lang">Til</Label>
+                  <Select id="lang" v-model="selectedEducationLang">
+                     <SelectTrigger>
+                        <SelectValue placeholder="Til" />
+                     </SelectTrigger>
+                     <SelectContent>
+                        <SelectGroup>
+                           <SelectItem v-for="item in educationLanguage" :key="item.value" :value="item.value">
                               {{ item.name }}
                            </SelectItem>
                         </SelectGroup>

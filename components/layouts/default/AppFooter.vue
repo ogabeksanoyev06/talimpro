@@ -28,8 +28,8 @@
                      <img alt="logo" fetchpriority="high" height="40" src="/assets/svg/logo-dark.svg" v-if="$colorMode.preference === 'dark'" />
                   </NuxtLink>
                   <p class="text-sm leading-relaxed mt-4">
-                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia in velit aut unde exercitationem odit natus obcaecati et architecto! Recusandae facilis unde
-                     cumque! Magnam corrupti saepe magni doloribus. Eveniet, mollitia?
+                     Bizning platformamiz orqali siz Xalqaro tajribaga ega mutaxassislar bilan birga zamonaviy kurslarni o'rganishni boshlang va davlat test standartlari asosida
+                     tuzilgan testlardan foydalanib o'z bilimingizni sinab ko'ring.
                   </p>
                   <div class="hidden lg:flex items-center gap-3">
                      <a href="" class="group relative w-10 h-10 flex items-center justify-center" target="_blank">

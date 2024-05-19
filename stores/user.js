@@ -56,6 +56,7 @@ export const useUserStore = defineStore('user', () => {
    const updateUserProfile = async () => {
       loading.value = true;
       const formData = createFormData();
+      console.log(formData);
 
       try {
          const response = await api.patch('users/profile/', formData);
