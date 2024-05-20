@@ -2,6 +2,10 @@ export default defineNuxtConfig({
    devtools: { enabled: true },
    ssr: true,
    app: {
+      head: {
+         link: [{ rel: 'icon', type: 'image/png', href: '/gerb.png' }],
+         title: 'Bilimdon uchun havola - Ta‘limPro'
+      },
       pageTransition: { name: 'page', mode: 'out-in' },
       layoutTransition: { name: 'layout', mode: 'out-in' }
    },

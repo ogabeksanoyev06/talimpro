@@ -56,14 +56,14 @@ onMounted(async () => {
       <VForm v-slot="{ handleSubmit }">
          <form @submit.prevent="handleSubmit(userStore.updateUserProfile)">
             <div>
-               <div class="w-full rounded-lg relative flex justify-center items-center gap-1 flex-col">
+               <div class="w-full rounded-lg relative flex justify-center items-center gap-1 flex-col mb-4">
                   <div class="w-20 h-20 bg-white-150 rounded-full border border-white flex flex-col items-center justify-center text-center overflow-hidden">
                      <div class="relative inline-block flex-center w-full h-full bg-white">
                         <input id="photo" type="file" name="file" class="w-0 h-0 absolute" accept="image/png, image/jpeg, image/webp" @change="handleFileUpload" />
                         <div class="relative w-full h-full group">
                            <label
                               for="photo"
-                              class="absolute w-full h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-[20] md:opacity-0 md:group-hover:opacity-100 icon-pencil-edit text-white text-2xl leading-6 flex items-center justify-center cursor-pointer"
+                              class="absolute w-full h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 z-[20] md:scale-0 md:group-hover:scale-100 md:opacity-0 md:group-hover:opacity-100 icon-pencil-edit text-white text-2xl leading-6 flex items-center justify-center cursor-pointer"
                            >
                               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                  <path
@@ -93,12 +93,14 @@ onMounted(async () => {
                            </label>
                            <div class="absolute top-0 left-0 z-10 w-full h-full bg-[#121C2599] transition-all duration-500 md:opacity-0 md:group-hover:opacity-100"></div>
                            <div class="h-full">
-                              <img src="https://cdn.commeta.uz/static/review/static/front/images/default/user-default.png" class="w-full h-full object-cover" />
+                              <div class="w-full h-full" v-if="user.photo">
+                                 <img alt="Avatar image" class="object-cover w-full h-full" :src="user.photo" />
+                              </div>
+                              <img src="https://cdn.commeta.uz/static/review/static/front/images/default/user-default.png" class="w-full h-full object-cover" v-else />
                            </div>
                         </div>
                      </div>
                   </div>
-                  <button class="text-sm leading-130 text-red hover:text-red-300 transition-300 opacity-0 pointer-events-none transition-300">O‘chirish</button>
                </div>
                <div class="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 mb-8">
                   <div class="flex flex-col space-y-2">

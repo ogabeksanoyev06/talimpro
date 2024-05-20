@@ -1,21 +1,28 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useApi } from '@/composables/useApi';
-import { useTimerFormat } from '@/composables/useTimerFormat';
 
 export const useActiveTestStore = defineStore('active-test', () => {
    const api = useApi();
    const { $toast } = useNuxtApp();
 
-   const { setTimer } = useTimerFormat();
-
    const testTimer = ref(0);
+   const timerInterval = ref(null);
    const testResult = useCookie('testResult');
    const loading = ref(false);
    const tests = ref({});
    const hasActiveTest = ref(false);
 
-   const formatQuestions = (questions, subjectName, type) => {
+   const updateTests = async () => {
+      try {
+         const response = await api.post('tests/update-tests/');
+         console.log(response);
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const formatQuestions = (questions) => {
       return questions.map((question) => ({
          id: question.id,
          question: parseQuestion(question.question),
@@ -30,7 +37,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
       const subjectName = response.name || '';
       const testId = response.time_interval.id;
       const testTypeId = response.test_type_id || null;
-      const questions = formatQuestions(response.questions, subjectName, type);
+      const questions = formatQuestions(response.questions);
 
       tests.value = {
          subjectName,
@@ -65,6 +72,16 @@ export const useActiveTestStore = defineStore('active-test', () => {
       };
    };
 
+   // Timer intervalni tozalash va timerni 0 ga qaytarish funksiyasi
+   const clearTestTimer = () => {
+      if (timerInterval.value) {
+         clearInterval(timerInterval.value);
+         timerInterval.value = null;
+      }
+      testTimer.value = 0;
+   };
+
+   // Testni tugatish funksiyasi
    const testFinish = async () => {
       const endpoint = {
          [testType.TYPE_DTM]: 'tests/dtmtest/done/',
@@ -74,7 +91,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
       }[tests.value?.type];
 
       if (!endpoint) {
-         console.error('Unknown test type');
+         console.error("Noma'lum test turi");
          return;
       }
 
@@ -90,6 +107,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
       try {
          const response = await api.post(endpoint, payload);
          testResult.value = response.result;
+         clearTestTimer(); // Timerni to'xtatish va qayta o'rnatish
          console.log(response);
          navigateTo('/test-result');
       } catch (error) {
@@ -106,7 +124,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
       }[tests.value.type];
 
       if (!endpoint) {
-         console.error('Unknown test type');
+         console.error("Noma'lum test turi");
          return;
       }
 
@@ -133,6 +151,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
       }
    };
 
+   // Testning jonli vaqtini olish funksiyasi
    const getTestLiveTime = async () => {
       try {
          const response = await api.post('tests/get-test-live-time/', {
@@ -140,13 +159,22 @@ export const useActiveTestStore = defineStore('active-test', () => {
             test_id: tests.value?.testId
          });
          $toast.success(response.message);
+         clearTestTimer(); // Har qanday mavjud intervalni tozalash
          testTimer.value = response.data.left_time;
+         timerInterval.value = setInterval(() => {
+            if (testTimer.value <= 0) {
+               testFinish();
+            } else {
+               testTimer.value--;
+            }
+         }, 1000);
       } catch (error) {
          $toast.error(error.response.data.message);
          testFinish();
       }
    };
 
+   // Active testni olish funksiyasi
    const getActiveTest = async () => {
       loading.value = true;
       try {
@@ -180,10 +208,11 @@ export const useActiveTestStore = defineStore('active-test', () => {
       hasActiveTest,
       testResult,
       testTimer,
-      setTimer,
+      timerInterval, // Bu refni qaytarish kerak
       testFinish,
       selectAnswer,
       getTestLiveTime,
-      getActiveTest
+      getActiveTest,
+      updateTests
    };
 });

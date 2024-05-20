@@ -131,28 +131,53 @@ onMounted(async () => {
 <template>
    <header class="bg-background/75 backdrop-blur border-b border-border -mb-px sticky top-0 z-50">
       <div class="container flex items-center justify-between gap-3 h-[--header-height]">
-         <div class="w-10 h-10 flex-shrink-0 border rounded-full bg-secondary hover:bg-secondary/80 flex lg:hidden justify-center items-center cursor-pointer">
-            <svg
-               xmlns="http://www.w3.org/2000/svg"
-               xmlns:xlink="http://www.w3.org/1999/xlink"
-               aria-hidden="true"
-               role="img"
-               font-size="24"
-               class="iconify iconify--material-symbols"
-               width="1em"
-               height="1em"
-               viewBox="0 0 24 24"
-            >
-               <path fill="currentColor" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z"></path>
-            </svg>
-         </div>
+         <Sheet>
+            <SheetTrigger class="w-10 h-10 flex-shrink-0 border rounded-full bg-secondary hover:bg-secondary/80 flex lg:hidden justify-center items-center cursor-pointer">
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true"
+                  role="img"
+                  font-size="24"
+                  class="iconify iconify--material-symbols"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 24 24"
+               >
+                  <path fill="currentColor" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z"></path>
+               </svg>
+            </SheetTrigger>
+            <SheetContent :side="'right'" class="flex flex-col gap-y-8">
+               <div class="flex justify-center mt-2">
+                  <NuxtLink to="/">
+                     <img alt="logo" fetchpriority="high" height="40" width="150" src="/assets/svg/logo-light.svg" v-if="colorMode.preference === 'light'" />
+                     <img alt="logo" fetchpriority="high" height="40" width="150" src="/assets/svg/logo-dark.svg" v-if="colorMode.preference === 'dark'" />
+                  </NuxtLink>
+               </div>
+               <nav class="flex flex-col rounded-md bg-muted p-1">
+                  <nuxt-link
+                     class="rounded-md px-4 py-2 hover:bg-foreground/5"
+                     v-for="(item, index) in menu"
+                     :key="index"
+                     :to="item.route"
+                     :class="{ 'bg-card hover:!bg-card ': item.route === route.path }"
+                  >
+                     {{ item.name }}
+                  </nuxt-link>
+               </nav>
+               <NuxtLink to="/auth/login" v-if="!isAuthenticated">
+                  <Button class="w-full rounded-full">Tizimga kirish</Button>
+               </NuxtLink>
+            </SheetContent>
+         </Sheet>
+
          <div class="mr-4 lg:mr-1 hidden lg:flex lg:flex-1">
             <nuxt-link to="/" class="flex items-center gap-x-4">
                <img alt="logo" fetchpriority="high" height="40" width="100" src="/assets/svg/logo-light.svg" v-if="colorMode.preference === 'light'" />
                <img alt="logo" fetchpriority="high" height="40" width="100" src="/assets/svg/logo-dark.svg" v-if="colorMode.preference === 'dark'" />
             </nuxt-link>
             <div class="flex-1 justify-center flex whitespace-nowrap">
-               <nav class="flex p-1 rounded-full bg-muted">
+               <nav class="flex p-1 rounded-full bg-muted shadow">
                   <NuxtLink
                      v-for="(item, index) in menu"
                      :key="index"
@@ -175,7 +200,6 @@ onMounted(async () => {
                   <span class="inline-flex">Tezkor qidiruv...</span>
                </Button>
             </div>
-
             <nav class="flex items-center">
                <Button variant="ghost" size="icon" class="hidden md:flex" @click="handleOpenChange">
                   <svg

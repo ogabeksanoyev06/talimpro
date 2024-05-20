@@ -11,13 +11,14 @@ definePageMeta({
 });
 
 const testStore = useTestStore();
+const activeTestStore = useActiveTestStore();
 const commonStore = useCommonStore();
 
 const { dtmTestBlogsMainSubjects, dtmTestBlogsMandatorySubjects, loading } = storeToRefs(testStore);
+const { hasActiveTest } = storeToRefs(activeTestStore);
 const { regions, universities, directions } = storeToRefs(commonStore);
 
 // common
-commonStore.getRegions();
 
 const testLanguage = ref([{ id: 0, name: 'O`zbek' }]);
 
@@ -36,11 +37,6 @@ const educationType = [
       id: 'kechki',
       name: 'Kechki',
       disabled: false
-   },
-   {
-      id: 'masofaviy',
-      name: 'Masofaviy',
-      disabled: true
    }
 ];
 
@@ -55,10 +51,14 @@ const isSelectedUniversityNotEmpty = computed(() => {
 });
 
 function startTest() {
-   const paramtersModel = {
-      blog_ids: testStore.dtmTestBlogs.map((blog) => blog.id)
-   };
-   testStore.startDtmTest(paramtersModel);
+   if (hasActiveTest.value) {
+      navigateTo('/active-test');
+   } else {
+      const paramtersModel = {
+         blog_ids: testStore.dtmTestBlogs.map((blog) => blog.id)
+      };
+      testStore.startDtmTest(paramtersModel);
+   }
 }
 
 const totalCompulsoryBall = computed(() => {
@@ -81,6 +81,10 @@ watch([selectedUniversity, selectedEducationType], async (newValue) => {
 
 watch(selectedDirection, async (newValue) => {
    await testStore.getDtmTestBlogs({ educ_direction: selectedDirection.value });
+});
+
+onMounted(() => {
+   commonStore.getRegions();
 });
 </script>
 

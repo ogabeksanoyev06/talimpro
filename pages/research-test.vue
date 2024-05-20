@@ -17,8 +17,6 @@ const activeTestStore = useActiveTestStore();
 const { testTypes, testId, loading } = storeToRefs(testStore);
 const { hasActiveTest } = storeToRefs(activeTestStore);
 
-await testStore.getTestTypes({ category_type: 'research' });
-
 const handleTestStart = (research_id) => {
    if (hasActiveTest.value) {
       navigateTo('/active-test');
@@ -26,6 +24,11 @@ const handleTestStart = (research_id) => {
       router.push(`/test-types/research/${research_id}`);
    }
 };
+
+onMounted(async () => {
+   await activeTestStore.getActiveTest();
+   await testStore.getTestTypes({ category_type: 'research' });
+});
 </script>
 
 <template>
@@ -88,7 +91,9 @@ const handleTestStart = (research_id) => {
                      </svg>
                      Sotib olish
                   </Button>
-                  <Button variant="outline">Hisobni to'ldirish</Button>
+                  <NuxtLink to="/profile/top-up-balance">
+                     <Button variant="outline">Hisobni to'ldirish</Button>
+                  </NuxtLink>
                </div>
                <div class="absolute top-1 right-1">
                   <Badge variant="outline" class="rounded-lg text-green-500">{{ currencyFormat(item.price) }} UZS</Badge>

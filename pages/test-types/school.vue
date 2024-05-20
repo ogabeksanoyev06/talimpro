@@ -11,7 +11,10 @@ definePageMeta({
 });
 
 const testStore = useTestStore();
+const activeTestStore = useActiveTestStore();
+
 const { classes, schoolTestSciences, loading } = storeToRefs(testStore);
+const { hasActiveTest } = storeToRefs(activeTestStore);
 
 const questionsCount = ref(5);
 
@@ -90,13 +93,17 @@ async function setSchoolClassId() {
 }
 
 function startTest() {
-   const paramtersModel = {
-      science_id: activeScience.value,
-      class_id: selectedClass.value,
-      test_score: selectedLevel.value,
-      test_count: questionsCount.value
-   };
-   testStore.startSchoolTest(paramtersModel);
+   if (hasActiveTest.value) {
+      navigateTo('/active-test');
+   } else {
+      const paramtersModel = {
+         science_id: activeScience.value,
+         class_id: selectedClass.value,
+         test_score: selectedLevel.value,
+         test_count: questionsCount.value
+      };
+      testStore.startSchoolTest(paramtersModel);
+   }
 }
 
 const isTestDisabled = computed(() => !activeScience.value || !selectedClass.value || !selectedLevel.value || !questionsCount.value);

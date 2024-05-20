@@ -37,8 +37,10 @@ const handleTestStart = async (test_type) => {
    }
 };
 
-await activeTestStore.getActiveTest();
-await testStore.getTestTypes({ category_type: 'test' });
+onMounted(async () => {
+   await activeTestStore.getActiveTest();
+   await testStore.getTestTypes({ category_type: 'test' });
+});
 </script>
 
 <template>
@@ -101,7 +103,9 @@ await testStore.getTestTypes({ category_type: 'test' });
                      </svg>
                      Sotib olish
                   </Button>
-                  <Button variant="outline">Hisobni to'ldirish</Button>
+                  <NuxtLink to="/profile/top-up-balance">
+                     <Button variant="outline">Hisobni to'ldirish</Button>
+                  </NuxtLink>
                </div>
                <div class="absolute top-1 right-1">
                   <Badge variant="outline" class="rounded-lg text-green-500">{{ currencyFormat(item.price) }} UZS</Badge>

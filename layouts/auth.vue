@@ -10,7 +10,7 @@
                </nuxt-link>
             </div>
          </div>
-         <div class="container flex-1 flex items-center">
+         <div class="container flex-1 flex flex-col">
             <nuxt-link to="/" class="md:absolute md:top-10 md:left-10 flex h-10 w-10 items-center justify-center gap-x-3 rounded-full border bg-card hover:bg-muted">
                <svg
                   xmlns="http://www.w3.org/2000/svg"

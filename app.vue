@@ -8,8 +8,8 @@
    </div>
 </template>
 
-<!-- <style>
+<style>
 .nuxt-loading-indicator {
    opacity: 1 !important;
 }
-</style> -->
+</style>

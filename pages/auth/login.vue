@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useAuthStore } from '@/stores/AuthStore';
 
-definePageMeta({ layout: 'auth' });
+definePageMeta({ layout: 'auth', middleware: 'auth' });
 
 const authStore = useAuthStore();
 const { loading } = storeToRefs(authStore);

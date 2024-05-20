@@ -5,8 +5,7 @@ export const useApi = () => {
    const { $toast } = useNuxtApp();
 
    const api = axios.create({
-      baseURL: config.public.apiBaseUrl,
-      headers: { 'Content-Type': 'application/json' }
+      baseURL: config.public.apiBaseUrl
    });
 
    api.interceptors.request.use(

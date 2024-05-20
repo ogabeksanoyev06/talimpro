@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
 import { useApi } from '@/composables/useApi';
 
 export const useUserStore = defineStore('user', () => {
@@ -60,8 +61,7 @@ export const useUserStore = defineStore('user', () => {
 
       try {
          const response = await api.patch('users/profile/', formData);
-         // user.value = formatUserData(response);
-         fetchUser();
+         await fetchUser();
          $toast.success('Profil muvaffaqiyatli o`zgartirildi');
       } catch (error) {
          handleError(error);

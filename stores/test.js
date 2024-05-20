@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useApi } from '@/composables/useApi';
+import { useActiveTestStore } from '@/stores/ActiveTestStore';
 import { useRouter } from 'vue-router';
 
 export const useTestStore = defineStore('test', () => {
    const api = useApi();
    const router = useRouter();
    const { $toast } = useNuxtApp();
+
 
    const loading = ref(false);
    const testTypes = ref([]);
@@ -139,10 +141,7 @@ export const useTestStore = defineStore('test', () => {
          const response = await api.post('tests/schooltest/start/', parametersModel);
          router.push('/active-test');
       } catch (error) {
-         $toast.error(error.response.data.message);
-         if (error.response.data.code === 400) {
-            router.push('/active-test');
-         }
+         $toast.error(error.response?.data?.message);
       } finally {
          loading.value = false;
       }
@@ -155,10 +154,6 @@ export const useTestStore = defineStore('test', () => {
          router.push('/active-test');
       } catch (error) {
          $toast.error(error.response.data.message);
-
-         if (error.response.data.code === 400) {
-            router.push('/active-test');
-         }
       } finally {
          loading.value = false;
       }
@@ -171,12 +166,6 @@ export const useTestStore = defineStore('test', () => {
          router.push('/active-test');
       } catch (error) {
          $toast.error(error.response.data.message);
-
-         if (error.response.data.code === 400) {
-            router.push('/active-test');
-         }
-         $toast.error(error.response.data.message);
-         console.log(error.response.server_error.message);
       } finally {
          loading.value = false;
       }
@@ -189,10 +178,6 @@ export const useTestStore = defineStore('test', () => {
          router.push('/active-test');
       } catch (error) {
          $toast.error(error.response.data.message);
-
-         if (error.response.data.code === 400) {
-            router.push('/active-test');
-         }
       } finally {
          loading.value = false;
       }

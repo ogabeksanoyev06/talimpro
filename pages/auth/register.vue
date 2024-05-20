@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuthStore } from '@/stores/AuthStore';
 
-definePageMeta({ layout: 'auth' });
+definePageMeta({ layout: 'auth', middleware: 'auth' });
 
 const authStore = useAuthStore();
 const { loading } = storeToRefs(authStore);

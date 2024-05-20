@@ -180,7 +180,7 @@
                </a>
             </div>
             <div class="flex items-center justify-center lg:justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0 lg:order-1">
-               <p class="text-sm text-center">© 2024. Bilimdon. Barcha huquqlar himoyalangan.</p>
+               <p class="text-sm text-center">© 2024. Ta'limPro. Barcha huquqlar himoyalangan.</p>
             </div>
          </div>
       </div>

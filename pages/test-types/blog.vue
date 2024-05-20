@@ -11,7 +11,10 @@ definePageMeta({
 });
 
 const testStore = useTestStore();
+const activeTestStore = useActiveTestStore();
+
 const { blogTestSubjects, loading } = storeToRefs(testStore);
+const { hasActiveTest } = storeToRefs(activeTestStore);
 
 const questionsCount = ref(5);
 
@@ -80,14 +83,19 @@ function handleChange(id) {
    }
 }
 
-function startTest() {
-   const paramtersModel = {
-      subject_list: subjectList.value,
-      science_id: scienceId.value,
-      test_score: selectedLevel.value,
-      test_count: questionsCount.value
-   };
-   testStore.startBlogTest(paramtersModel);
+async function startTest() {
+   if (hasActiveTest.value) {
+      navigateTo('/active-test');
+   } else {
+      // await activeTestStore.updateTests();
+      const paramtersModel = {
+         subject_list: subjectList.value,
+         science_id: scienceId.value,
+         test_score: selectedLevel.value,
+         test_count: questionsCount.value
+      };
+      testStore.startBlogTest(paramtersModel);
+   }
 }
 
 onMounted(async () => {

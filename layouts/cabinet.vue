@@ -55,19 +55,19 @@ onMounted(async () => {
                   <div class="sticky top-28 flex flex-col gap-y-6">
                      <div class="flex flex-col gap-y-3 p-4 bg-card border rounded-md">
                         <div class="flex items-center gap-x-3">
-                           <div class="rounded-full relative">
-                              <div
-                                 class="relative overflow-hidden shrink-0 before:border before:border-solid before:border-black/10 before:absolute before:inset-0 w-10 h-10 rounded-full before:rounded-full"
-                              >
-                                 <div class="flex items-center justify-center text-card h-full w-full text-base object-cover bg-primary">
-                                    {{ fullNameInitial }}
-                                 </div>
-                                 <div class="w-full h-full object-cover bg-white">
-                                    <img
-                                       alt="avatar-image"
-                                       class="object-cover w-full h-full"
-                                       src="https://cdn.commeta.uz/100x/https://cdn.commeta.uz/static/review/svg/avatar/anonymous.svg"
-                                    />
+                           <div
+                              class="relative ml-1 overflow-hidden shrink-0 before:border before:border-solid before:border-white before:opacity-20 before:absolute before:inset-0 w-10 h-10 rounded-full before:rounded-full cursor-pointer"
+                           >
+                              <div class="rounded-full relative">
+                                 <div
+                                    class="relative overflow-hidden shrink-0 before:border before:border-solid before:border-black/10 before:absolute before:inset-0 w-10 h-10 rounded-full before:rounded-full"
+                                 >
+                                    <div class="flex items-center justify-center text-card h-full w-full text-base object-cover bg-primary" v-if="!user?.photo">
+                                       {{ fullNameInitial }}
+                                    </div>
+                                    <div class="w-full h-full object-cover bg-white" v-else>
+                                       <img alt="avatar-image" class="object-cover w-full h-full" :src="user?.photo" />
+                                    </div>
                                  </div>
                               </div>
                            </div>

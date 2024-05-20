@@ -12,7 +12,10 @@ definePageMeta({
 const route = useRoute();
 
 const testStore = useTestStore();
+const activeTestStore = useActiveTestStore();
+
 const { researches, loading } = storeToRefs(testStore);
+const { hasActiveTest } = storeToRefs(activeTestStore);
 
 const research_id = ref('');
 
@@ -52,12 +55,16 @@ function selectedSpecification(item) {
 }
 
 function startTest() {
-   const paramtersModel = {
-      test_type_id: research_id.value,
-      specification_id: selected_specification.value,
-      question_count: questionsCount.value
-   };
-   testStore.startResearchesTest(paramtersModel);
+   if (hasActiveTest.value) {
+      navigateTo('/active-test');
+   } else {
+      const paramtersModel = {
+         test_type_id: research_id.value,
+         specification_id: selected_specification.value,
+         question_count: questionsCount.value
+      };
+      testStore.startResearchesTest(paramtersModel);
+   }
 }
 
 research_id.value = route.params.id;

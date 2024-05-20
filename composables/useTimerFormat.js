@@ -4,13 +4,13 @@ import { useActiveTestStore } from '@/stores/ActiveTestStore';
 export const useTimerFormat = () => {
    const activeTestStore = useActiveTestStore();
 
-   const { testTimer } = storeToRefs(activeTestStore);
+   const { testTimer, timerInterval } = storeToRefs(activeTestStore);
 
    const setTimer = async () => {
-      const interval = setInterval(() => {
+      timerInterval.value = setInterval(() => {
          if (testTimer.value <= 0) {
             activeTestStore.testFinish();
-            clearInterval(interval);
+            clearInterval(timerInterval.value);
          } else {
             testTimer.value--;
          }
