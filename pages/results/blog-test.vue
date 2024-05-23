@@ -37,7 +37,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-   <div class="py-8 sm:py-12">
+   <div class="py-8">
       <div class="container">
          <div v-for="(item, i) in testResultId" :key="i" class="flex flex-col space-y-6">
             <div class="inline-flex justify-center w-full">

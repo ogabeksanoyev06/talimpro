@@ -19,7 +19,7 @@ await courseStore.getCoursesId(course_id.value);
 </script>
 
 <template>
-   <div class="py-8 sm:py-12">
+   <div class="py-8">
       <div class="container">
          <div class="flex flex-col gap-y-6">
             <div class="relative flex h-40 lg:h-48 z-10 items-center justify-center overflow-hidden rounded-md border border-border">

@@ -92,7 +92,7 @@ async function setSchoolClassId() {
    }
 }
 
-function startTest() {
+async function startTest() {
    if (hasActiveTest.value) {
       navigateTo('/active-test');
    } else {
@@ -102,6 +102,7 @@ function startTest() {
          test_score: selectedLevel.value,
          test_count: questionsCount.value
       };
+      await activeTestStore.updateTests();
       testStore.startSchoolTest(paramtersModel);
    }
 }

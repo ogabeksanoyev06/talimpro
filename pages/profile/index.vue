@@ -29,6 +29,7 @@ const handleFileUpload = (event) => {
    const file = event.target.files[0];
    if (file) {
       user.value.photo = file;
+      console.log(file);
       userStore.updateUserProfile();
    }
 };
@@ -56,7 +57,7 @@ onMounted(async () => {
       <VForm v-slot="{ handleSubmit }">
          <form @submit.prevent="handleSubmit(userStore.updateUserProfile)">
             <div>
-               <div class="w-full rounded-lg relative flex justify-center items-center gap-1 flex-col mb-4">
+               <!-- <div class="w-full rounded-lg relative flex justify-center items-center gap-1 flex-col mb-4">
                   <div class="w-20 h-20 bg-white-150 rounded-full border border-white flex flex-col items-center justify-center text-center overflow-hidden">
                      <div class="relative inline-block flex-center w-full h-full bg-white">
                         <input id="photo" type="file" name="file" class="w-0 h-0 absolute" accept="image/png, image/jpeg, image/webp" @change="handleFileUpload" />
@@ -91,6 +92,26 @@ onMounted(async () => {
                                  />
                               </svg>
                            </label>
+
+                           <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-muted w-full h-full flex items-center justify-center" v-if="loading">
+                              <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 aria-hidden="true"
+                                 role="img"
+                                 font-size="48"
+                                 class="animate-spin iconify iconify--ph w-6 h-6"
+                                 width="1em"
+                                 height="1em"
+                                 viewBox="0 0 256 256"
+                              >
+                                 <path
+                                    fill="currentColor"
+                                    d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24m39.11 25.19C170.24 83.71 155 99.44 135 113.61c-2.25-24.48-8.44-49.8-38.37-67.82a87.89 87.89 0 0 1 70.5 3.4ZM40.18 133.54c28.34-20 49.57-14.68 71.87-4.39c-20.05 14.19-38.86 32.21-39.53 67.11a87.92 87.92 0 0 1-32.34-62.72m136.5 67.73c-31.45-14.55-37.47-35.58-39.71-60c12.72 5.86 26.31 10.75 41.3 10.75c11.33 0 23.46-2.8 36.63-10.08a88.2 88.2 0 0 1-38.22 59.33"
+                                 ></path>
+                              </svg>
+                           </div>
+
                            <div class="absolute top-0 left-0 z-10 w-full h-full bg-[#121C2599] transition-all duration-500 md:opacity-0 md:group-hover:opacity-100"></div>
                            <div class="h-full">
                               <div class="w-full h-full" v-if="user.photo">
@@ -101,7 +122,7 @@ onMounted(async () => {
                         </div>
                      </div>
                   </div>
-               </div>
+               </div> -->
                <div class="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 mb-8">
                   <div class="flex flex-col space-y-2">
                      <VField name="username" rules="required|max:60|min:3" v-model="user.username" v-slot="{ errors }">

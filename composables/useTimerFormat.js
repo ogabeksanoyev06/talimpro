@@ -1,21 +1,11 @@
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useActiveTestStore } from '@/stores/ActiveTestStore';
 
 export const useTimerFormat = () => {
    const activeTestStore = useActiveTestStore();
 
-   const { testTimer, timerInterval } = storeToRefs(activeTestStore);
-
-   const setTimer = async () => {
-      timerInterval.value = setInterval(() => {
-         if (testTimer.value <= 0) {
-            activeTestStore.testFinish();
-            clearInterval(timerInterval.value);
-         } else {
-            testTimer.value--;
-         }
-      }, 1000);
-   };
+   const { testTimer } = storeToRefs(activeTestStore);
 
    const timerFormat = (time) => {
       let sec_num = parseInt(time, 10);
@@ -29,7 +19,6 @@ export const useTimerFormat = () => {
    };
 
    return {
-      setTimer,
       timerFormat
    };
 };

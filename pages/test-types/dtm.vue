@@ -89,9 +89,9 @@ onMounted(() => {
 </script>
 
 <template>
-   <div class="py-8">
+   <div class="py-4">
       <div class="container">
-         <div class="grid grid-cols-12 gap-6 justify-center">
+         <div class="grid grid-cols-12 gap-4 justify-center">
             <div class="col-span-12 md:col-span-6 lg:col-span-3 flex flex-col space-y-1">
                <Label class="text-sm">Viloyat</Label>
                <Select v-model="regionId">
@@ -180,14 +180,14 @@ onMounted(() => {
                </TableHeader>
                <TableBody class="text-center">
                   <TableRow v-for="(item, i) in testStore.dtmTestBlogsMandatorySubjects" :key="i">
-                     <TableCell class="p-4 font-medium"> {{ i + 1 }} </TableCell>
-                     <TableCell class="p-4 font-medium"> {{ item.science }} (majburiy) </TableCell>
-                     <TableCell class="p-4 font-medium"> {{ item.question_count }} </TableCell>
-                     <TableCell class="p-4 font-medium"> {{ item.ball }} </TableCell>
+                     <TableCell class="p-2 font-medium"> {{ i + 1 }} </TableCell>
+                     <TableCell class="p-2 font-medium"> {{ item.science }} (majburiy) </TableCell>
+                     <TableCell class="p-2 font-medium"> {{ item.question_count }} </TableCell>
+                     <TableCell class="p-2 font-medium"> {{ item.ball }} </TableCell>
                   </TableRow>
                   <TableRow class="!border-b bg-muted">
-                     <TableCell colSpan="2" class="p-4 font-bold"> Umumiy ball </TableCell>
-                     <TableCell colSpan="2" class="p-4 font-bold"> {{ totalCompulsoryBall }} </TableCell>
+                     <TableCell colSpan="2" class="p-2 font-bold"> Umumiy ball </TableCell>
+                     <TableCell colSpan="2" class="p-2 font-bold"> {{ totalCompulsoryBall }} </TableCell>
                   </TableRow>
                </TableBody>
                <TableHeader>
@@ -200,18 +200,18 @@ onMounted(() => {
                </TableHeader>
                <TableBody class="text-center">
                   <TableRow v-for="(item, i) in testStore.dtmTestBlogsMainSubjects" :key="i">
-                     <TableCell class="p-4 font-medium"> {{ i + 1 }} </TableCell>
-                     <TableCell class="p-4 font-medium"> {{ item.science }} </TableCell>
-                     <TableCell class="p-4 font-medium"> {{ item.question_count }} </TableCell>
-                     <TableCell class="p-4 font-medium"> {{ item.ball }} </TableCell>
+                     <TableCell class="p-2 font-medium"> {{ i + 1 }} </TableCell>
+                     <TableCell class="p-2 font-medium"> {{ item.science }} </TableCell>
+                     <TableCell class="p-2 font-medium"> {{ item.question_count }} </TableCell>
+                     <TableCell class="p-2 font-medium"> {{ item.ball }} </TableCell>
                   </TableRow>
                   <TableRow class="!border-b border-card-foreground bg-muted">
-                     <TableCell colSpan="2" class="p-4 font-bold"> Umumiy ball </TableCell>
-                     <TableCell colSpan="2" class="p-4 font-bold"> {{ totalBasicBall }} </TableCell>
+                     <TableCell colSpan="2" class="p-2 font-bold"> Umumiy ball </TableCell>
+                     <TableCell colSpan="2" class="p-2 font-bold"> {{ totalBasicBall }} </TableCell>
                   </TableRow>
                   <TableRow class="!border-b border-card-foreground">
-                     <TableCell colSpan="2" class="p-4 font-bold"> 5ta fan bo'yicha umumiy ball </TableCell>
-                     <TableCell colSpan="2" class="p-4 font-bold"> {{ totalBasicBall + totalCompulsoryBall }} </TableCell>
+                     <TableCell colSpan="2" class="p-2 font-bold"> 5ta fan bo'yicha umumiy ball </TableCell>
+                     <TableCell colSpan="2" class="p-2 font-bold"> {{ totalBasicBall + totalCompulsoryBall }} </TableCell>
                   </TableRow>
                </TableBody>
             </Table>
@@ -224,7 +224,7 @@ onMounted(() => {
          </div>
 
          <div class="flex justify-center mt-6">
-            <Button @click="startTest" :disabled="!selectedDirection || testStore.loading">
+            <Button size="lg" @click="startTest" :disabled="!selectedDirection || testStore.loading">
                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"

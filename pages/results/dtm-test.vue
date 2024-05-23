@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-   <div class="py-8 sm:py-12">
+   <div class="py-8">
       <div class="container">
          <div class="flex flex-col space-y-6">
             <h3 class="text-xl font-semibold text-center">

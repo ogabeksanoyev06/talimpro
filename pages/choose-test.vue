@@ -18,6 +18,7 @@ const { testTypes, testId, loading } = storeToRefs(testStore);
 const { hasActiveTest } = storeToRefs(activeTestStore);
 
 const handleTestStart = async (test_type) => {
+   // await activeTestStore.updateTests();
    if (hasActiveTest.value) {
       navigateTo('/active-test');
    } else {
@@ -39,12 +40,15 @@ const handleTestStart = async (test_type) => {
 
 onMounted(async () => {
    await activeTestStore.getActiveTest();
+   if (!hasActiveTest.value) {
+      await activeTestStore.updateTests();
+   }
    await testStore.getTestTypes({ category_type: 'test' });
 });
 </script>
 
 <template>
-   <div class="py-8 sm:py-12 bg-gray-100 dark:bg-transparent">
+   <div class="py-8 bg-gray-100 dark:bg-transparent">
       <div class="container">
          <div class="space-y-2">
             <h1 class="text-2xl sm:text-4xl font-semibold tracking-tight">Abiturientlar va o'quvchilar uchun test topshirish tizimi</h1>

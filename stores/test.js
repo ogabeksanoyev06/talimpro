@@ -9,7 +9,6 @@ export const useTestStore = defineStore('test', () => {
    const router = useRouter();
    const { $toast } = useNuxtApp();
 
-
    const loading = ref(false);
    const testTypes = ref([]);
    const blogTestSciences = ref([]);

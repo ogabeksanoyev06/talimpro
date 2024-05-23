@@ -32,11 +32,11 @@ onMounted(async () => {
 </script>
 
 <template>
-   <div class="py-8 sm:py-10 bg-gray-100 dark:bg-transparent">
+   <div class="py-8 bg-gray-100 dark:bg-transparent">
       <div class="container">
          <div class="space-y-2">
-            <h1 class="text-2xl sm:text-4xl font-semibold tracking-tight">Abiturientlar va o'quvchilar uchun test topshirish tizimi</h1>
-            <p class="text-base sm:text-lg text-muted-foreground">DTM talablari asosida tuzilgan 40 000 ta test savollaridan foydalangan holda test topshirish imkoni</p>
+            <h1 class="text-2xl sm:text-4xl font-semibold tracking-tight">Maktab o'quvchilari uchun Xalqaro tadqiqotlar yo'nalishi bo'yicha test topshirish tizimi</h1>
+            <p class="text-base sm:text-lg text-muted-foreground">Davlat standarti asosida tuzilgan test savollaridan foydalangan holda test topshirish imkoni</p>
          </div>
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             <div

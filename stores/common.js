@@ -16,14 +16,11 @@ export const useCommonStore = defineStore('common', () => {
    const universitiesDtmId = ref([]);
 
    async function getTestTypesHome() {
-      loading.value = true;
       try {
          const response = await api.get('tests/test-types/home/');
          testTypesHome.value = response;
       } catch (error) {
          console.error('Error fetching test types:', error);
-      } finally {
-         loading.value = false;
       }
    }
 
@@ -58,14 +55,11 @@ export const useCommonStore = defineStore('common', () => {
    };
 
    async function getStatistics() {
-      loading.value = true;
       try {
          const response = await api.get('common/statistics/');
          statistics.value = response;
       } catch (error) {
          console.log(error);
-      } finally {
-         loading.value = false;
       }
    }
 

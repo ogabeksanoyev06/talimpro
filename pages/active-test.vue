@@ -1,19 +1,22 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useActiveTestStore } from '@/stores/ActiveTestStore';
 
 definePageMeta({
    middleware: ['auth']
 });
 
+const router = useRouter();
+
 const selectedQuestion = ref({});
 
 const testActiveNumber = useCookie('testActiveNumber', { default: () => 0 });
 
-const { timerFormat, setTimer } = useTimerFormat();
+const { timerFormat } = useTimerFormat();
 
 const activeTestStore = useActiveTestStore();
-const { tests, testTimer } = storeToRefs(activeTestStore);
+const { tests, testTimer, hasActiveTest } = storeToRefs(activeTestStore);
 
 const answerLabels = ref(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
 
@@ -44,8 +47,12 @@ const selectedQuestions = () => {
 
 onMounted(async () => {
    await activeTestStore.getActiveTest();
+
+   if (!hasActiveTest.value) {
+      return router.push('/profile/tests-results');
+   }
    await activeTestStore.getTestLiveTime();
-   await setTimer(testTimer.value);
+   activeTestStore.setTimer();
    selectedQuestions();
 });
 
@@ -67,8 +74,8 @@ onBeforeUnmount(() => {
                </div>
             </div>
             <div class="border-b border-t rounded-lg border-gray-400 py-4">
-               <div class="text-base font-medium px-4">
-                  <span style="font-size: 1.1rem">{{ testActiveNumber + 1 }}. </span>
+               <div class="text-sm sm:text-base px-4">
+                  <b style="font-size: 1.1rem">{{ testActiveNumber + 1 }}. </b>
                   <span v-html="selectedQuestion?.question"></span>
                </div>
                <div class="w-full h-px bg-border my-6"></div>

@@ -50,7 +50,7 @@ onMounted(async () => {
       <AppHeader />
       <main class="py-8">
          <div class="container">
-            <div class="grid gap-6 md:grid-cols-6">
+            <div class="grid gap-6 grid-cols-1 md:grid-cols-6">
                <div class="md:col-span-2">
                   <div class="sticky top-28 flex flex-col gap-y-6">
                      <div class="flex flex-col gap-y-3 p-4 bg-card border rounded-md">
@@ -90,7 +90,7 @@ onMounted(async () => {
                            v-for="(item, i) in menu"
                            :key="i"
                            :to="item.path"
-                           :class="{ 'bg-card hover:bg-card': item.path === currentRoute }"
+                           :class="{ '!bg-card hover:bg-card': item.path === currentRoute }"
                         >
                            {{ item.title }}
                         </NuxtLink>

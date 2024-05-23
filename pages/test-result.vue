@@ -7,7 +7,7 @@ const testResult = useCookie('testResult');
 
 const totalBasic = computed(() => {
    return testResult.value?.blogs
-      ?.filter((blog) => blog.dtmtest_blog?.type === 'basic')
+      ?.filter((blog) => blog?.dtmtest_blog?.type === 'basic')
       .reduce((sum, blog) => sum + blog.total_ball, 0)
       .toFixed(2);
 });
@@ -101,7 +101,7 @@ const typeName = computed(() => {
                   </TableRow>
                </TableBody>
             </Table>
-            <Table class="text-center whitespace-nowrap" v-if="testResult?.blogs?.length > 0 && testResult.blogs[0].type === testType.TYPE_DTM">
+            <Table class="text-center whitespace-nowrap" v-if="testResult?.blogs?.length > 0 && testResult?.blogs[0]?.type === testType.TYPE_DTM">
                <TableBody>
                   <TableRow class="text-base">
                      <TableHead class="p-3 text-center"> Blog fanlari </TableHead>

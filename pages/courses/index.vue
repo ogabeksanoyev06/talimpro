@@ -82,8 +82,8 @@ onMounted(async () => {
                         </div>
                      </div>
                      <div class="flex flex-wrap items-center justify-between gap-1">
-                        <div class="text-xl font-medium">{{ currencyFormat(item.price) }} UZS</div>
-                        <Badge size="lg">Tekin</Badge>
+                        <div class="text-xl font-medium" :class="item.is_free ? 'line-through' : ''">{{ currencyFormat(item.price) }} UZS</div>
+                        <Badge size="lg" v-if="item.is_free">Tekin</Badge>
                      </div>
                   </div>
                </div>

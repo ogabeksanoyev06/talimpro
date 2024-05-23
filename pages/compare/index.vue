@@ -4,13 +4,14 @@ import { storeToRefs } from 'pinia';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Pagination, PaginationEllipsis, PaginationList, PaginationListItem } from '@/components/ui/pagination';
 import { useCommonStore } from '@/stores/common';
+import AppLoading from '~/components/shared/AppLoading.vue';
 
 definePageMeta({ middleware: 'auth' });
 
 const route = useRoute();
 
 const commonStore = useCommonStore();
-const { universitiesDtmId, regions, universities } = storeToRefs(commonStore);
+const { universitiesDtmId, regions, universities, loading } = storeToRefs(commonStore);
 
 const limits = [
    {
@@ -123,15 +124,19 @@ watch([limit, offset, selectedEducationType, selectedEducationType, regionId, un
    }
 });
 
+watch(regionId, async (newValue) => {
+   await commonStore.getUniversities({ region: newValue });
+});
+
 onMounted(async () => {
    await fetchUniversities();
    commonStore.getRegions();
-   commonStore.getUniversities();
 });
 </script>
 
 <template>
-   <div class="py-6">
+   <div class="py-8">
+      <AppLoading v-if="loading" />
       <div class="container">
          <div class="flex flex-col justify-center items-center space-y-4 mb-4">
             <div class="border border-green-500 max-w-[200px] w-full rounded-full text-center" style="font-size: xx-large">
@@ -353,7 +358,7 @@ onMounted(async () => {
             <div>
                <div class="flex flex-col space-y-2">
                   <Label for="universityId">Universitet</Label>
-                  <Select id="universityId" v-model="universityId">
+                  <Select id="universityId" v-model="universityId" :disabled="!regionId">
                      <SelectTrigger>
                         <SelectValue placeholder="Universitet" />
                      </SelectTrigger>

@@ -6,18 +6,20 @@
                <div>
                   <h3 class="text-sm/6 font-semibold text-gray-900 dark:text-white">Testlar</h3>
                   <nav class="mt-6 space-y-4 flex flex-col">
-                     <NuxtLink class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium cursor-pointer"> Dtm testlari </NuxtLink>
-                     <NuxtLink class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium cursor-pointer"> Blog testlar </NuxtLink>
-                     <NuxtLink class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium cursor-pointer">
+                     <NuxtLink to="/choose-test" class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium cursor-pointer"> Dtm testlari </NuxtLink>
+                     <NuxtLink to="/choose-test" class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium cursor-pointer"> Blog testlar </NuxtLink>
+                     <NuxtLink to="/choose-test" class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium cursor-pointer">
                         Maktab o'quvchilari uchun testlar
                      </NuxtLink>
-                     <NuxtLink class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium cursor-pointer"> Xalqaro tadqiqot testlari </NuxtLink>
+                     <NuxtLink to="/research-test" class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium cursor-pointer">
+                        Xalqaro tadqiqot testlari
+                     </NuxtLink>
                   </nav>
                </div>
                <div>
                   <h3 class="text-sm/6 font-semibold text-gray-900 dark:text-white">Kurslar</h3>
                   <nav class="mt-6 space-y-4 flex flex-col">
-                     <NuxtLink class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium">Barcha kurslar </NuxtLink>
+                     <NuxtLink to="/courses" class="text-sm transition-colors hover:text-foreground/80 text-foreground/60 font-medium">Barcha kurslar </NuxtLink>
                   </nav>
                </div>
             </div>

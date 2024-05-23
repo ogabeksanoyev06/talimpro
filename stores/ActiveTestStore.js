@@ -1,17 +1,20 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useApi } from '@/composables/useApi';
 
 export const useActiveTestStore = defineStore('active-test', () => {
    const api = useApi();
    const { $toast } = useNuxtApp();
+   const router = useRouter();
 
    const testTimer = ref(0);
-   const timerInterval = ref(null);
    const testResult = useCookie('testResult');
    const loading = ref(false);
    const tests = ref({});
    const hasActiveTest = ref(false);
+   const timerInterval = ref(null);
+   const activeTestR = ref();
 
    const updateTests = async () => {
       try {
@@ -22,7 +25,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
       }
    };
 
-   const formatQuestions = (questions) => {
+   const formatQuestions = (questions, subjectName, type) => {
       return questions.map((question) => ({
          id: question.id,
          question: parseQuestion(question.question),
@@ -37,7 +40,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
       const subjectName = response.name || '';
       const testId = response.time_interval.id;
       const testTypeId = response.test_type_id || null;
-      const questions = formatQuestions(response.questions);
+      const questions = formatQuestions(response.questions, subjectName, type);
 
       tests.value = {
          subjectName,
@@ -72,16 +75,24 @@ export const useActiveTestStore = defineStore('active-test', () => {
       };
    };
 
-   // Timer intervalni tozalash va timerni 0 ga qaytarish funksiyasi
-   const clearTestTimer = () => {
+   const setTimer = async () => {
+      // Eski intervalni to'xtatamiz, agar mavjud bo'lsa
       if (timerInterval.value) {
          clearInterval(timerInterval.value);
-         timerInterval.value = null;
       }
-      testTimer.value = 0;
+
+      // Yangi intervalni yaratamiz
+      timerInterval.value = setInterval(async () => {
+         if (testTimer.value <= 2) {
+            testFinish();
+            updateTests();
+            clearInterval(timerInterval.value);
+         } else {
+            testTimer.value--;
+         }
+      }, 1000);
    };
 
-   // Testni tugatish funksiyasi
    const testFinish = async () => {
       const endpoint = {
          [testType.TYPE_DTM]: 'tests/dtmtest/done/',
@@ -89,12 +100,10 @@ export const useActiveTestStore = defineStore('active-test', () => {
          [testType.TYPE_SCHOOL]: 'tests/schooltest/done/',
          [testType.TYPE_RESEARCH]: 'tests/researchtest/done/'
       }[tests.value?.type];
-
       if (!endpoint) {
-         console.error("Noma'lum test turi");
+         console.error('Unknown test type');
          return;
       }
-
       const payload = {
          question_id: null,
          total_result_id: tests.value.testId,
@@ -103,13 +112,12 @@ export const useActiveTestStore = defineStore('active-test', () => {
          finishing: true,
          ...(tests.value?.type === testType.TYPE_RESEARCH && { test_type_id: tests.value?.testTypeId })
       };
-
       try {
          const response = await api.post(endpoint, payload);
          testResult.value = response.result;
-         clearTestTimer(); // Timerni to'xtatish va qayta o'rnatish
-         console.log(response);
-         navigateTo('/test-result');
+         clearInterval(timerInterval.value);
+         testTimer.value = 0;
+         router.push('/test-result');
       } catch (error) {
          console.log(error.response);
       }
@@ -124,7 +132,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
       }[tests.value.type];
 
       if (!endpoint) {
-         console.error("Noma'lum test turi");
+         console.error('Unknown test type');
          return;
       }
 
@@ -151,34 +159,26 @@ export const useActiveTestStore = defineStore('active-test', () => {
       }
    };
 
-   // Testning jonli vaqtini olish funksiyasi
    const getTestLiveTime = async () => {
       try {
          const response = await api.post('tests/get-test-live-time/', {
             test_type: tests.value?.type,
             test_id: tests.value?.testId
          });
-         $toast.success(response.message);
-         clearTestTimer(); // Har qanday mavjud intervalni tozalash
-         testTimer.value = response.data.left_time;
-         timerInterval.value = setInterval(() => {
-            if (testTimer.value <= 0) {
-               testFinish();
-            } else {
-               testTimer.value--;
-            }
-         }, 1000);
+         if (response.code === 200) {
+            $toast.success(response.message);
+            testTimer.value = response?.data?.left_time.toFixed(0);
+         }
       } catch (error) {
          $toast.error(error.response.data.message);
-         testFinish();
       }
    };
 
-   // Active testni olish funksiyasi
    const getActiveTest = async () => {
       loading.value = true;
       try {
          const response = await api.get('tests/active-tests/');
+         activeTestR.value = response;
          switch (response.type) {
             case testType.TYPE_BLOG:
             case testType.TYPE_SCHOOL:
@@ -196,7 +196,6 @@ export const useActiveTestStore = defineStore('active-test', () => {
          }
       } catch (error) {
          hasActiveTest.value = false;
-         console.log(error.response, 'sasasas');
       } finally {
          loading.value = false;
       }
@@ -208,11 +207,12 @@ export const useActiveTestStore = defineStore('active-test', () => {
       hasActiveTest,
       testResult,
       testTimer,
-      timerInterval, // Bu refni qaytarish kerak
+      setTimer,
       testFinish,
       selectAnswer,
       getTestLiveTime,
       getActiveTest,
-      updateTests
+      updateTests,
+      timerInterval
    };
 });
