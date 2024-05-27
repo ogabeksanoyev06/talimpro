@@ -16,7 +16,7 @@ const activeTestStore = useActiveTestStore();
 const { classes, schoolTestSciences, loading } = storeToRefs(testStore);
 const { hasActiveTest } = storeToRefs(activeTestStore);
 
-const questionsCount = ref(5);
+const questionsCount = ref(20);
 
 const selectedClass = ref(1);
 
@@ -102,7 +102,6 @@ async function startTest() {
          test_score: selectedLevel.value,
          test_count: questionsCount.value
       };
-      await activeTestStore.updateTests();
       testStore.startSchoolTest(paramtersModel);
    }
 }

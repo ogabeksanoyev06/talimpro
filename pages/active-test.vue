@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
                   <Button
                      v-for="(item, index) in tests?.questions"
                      :key="item.id"
-                     :variant="index === testActiveNumber ? 'default' : item.isPicked ? 'secondary' : 'outline'"
+                     :variant="index === testActiveNumber ? 'default' : item.is_picked ? 'secondary' : 'outline'"
                      @click="getActivetestActiveNumber(index)"
                      class="h-8 w-[40px]"
                   >

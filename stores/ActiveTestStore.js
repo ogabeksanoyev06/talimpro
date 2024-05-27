@@ -30,8 +30,8 @@ export const useActiveTestStore = defineStore('active-test', () => {
          id: question.id,
          question: parseQuestion(question.question),
          answers: [parseQuestion(question.answer1), parseQuestion(question.answer2), parseQuestion(question.answer3), parseQuestion(question.answer4)],
-         correctAnswer: question.correct_answer,
-         isPicked: question.is_picked,
+         is_correct: question.is_correct,
+         is_picked: question.is_picked,
          answer: question.answer
       }));
    };
@@ -64,8 +64,8 @@ export const useActiveTestStore = defineStore('active-test', () => {
                      id: question.id,
                      question: parseQuestion(question.question),
                      answers: [parseQuestion(question.answer1), parseQuestion(question.answer2), parseQuestion(question.answer3), parseQuestion(question.answer4)],
-                     correctAnswer: question.correct_answer,
-                     isPicked: question.picked,
+                     is_correct: question.is_correct,
+                     is_picked: question.is_picked,
                      answer: question.answer,
                      science: science
                   };
@@ -85,7 +85,6 @@ export const useActiveTestStore = defineStore('active-test', () => {
       timerInterval.value = setInterval(async () => {
          if (testTimer.value <= 2) {
             testFinish();
-            updateTests();
             clearInterval(timerInterval.value);
          } else {
             testTimer.value--;
@@ -150,7 +149,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
          $toast.success(response.message);
          tests.value.questions.forEach((question) => {
             if (question.id === questionId) {
-               question.isPicked = true;
+               question.is_picked = true;
                question.answer = answer;
             }
          });

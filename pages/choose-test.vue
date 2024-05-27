@@ -18,7 +18,6 @@ const { testTypes, testId, loading } = storeToRefs(testStore);
 const { hasActiveTest } = storeToRefs(activeTestStore);
 
 const handleTestStart = async (test_type) => {
-   // await activeTestStore.updateTests();
    if (hasActiveTest.value) {
       navigateTo('/active-test');
    } else {
@@ -40,9 +39,6 @@ const handleTestStart = async (test_type) => {
 
 onMounted(async () => {
    await activeTestStore.getActiveTest();
-   if (!hasActiveTest.value) {
-      await activeTestStore.updateTests();
-   }
    await testStore.getTestTypes({ category_type: 'test' });
 });
 </script>

@@ -111,7 +111,7 @@
       <div class="mt-8 border-t border-border/60">
          <div class="container lg:py-4 lg:flex lg:items-center lg:justify-between lg:gap-x-3 !py-6">
             <div class="lg:flex-1 lg:hidden flex items-center justify-center lg:justify-end gap-x-1.5 lg:order-3">
-               <a href="" class="group relative w-10 h-10 flex items-center justify-center" target="_blank">
+               <a href="https://t.me/+Q3MGNP-_9S9mZTU6" class="group relative w-10 h-10 flex items-center justify-center" target="_blank">
                   <svg
                      xmlns="http://www.w3.org/2000/svg"
                      width="24"

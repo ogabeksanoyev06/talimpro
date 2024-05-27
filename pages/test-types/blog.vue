@@ -87,7 +87,6 @@ async function startTest() {
    if (hasActiveTest.value) {
       navigateTo('/active-test');
    } else {
-      // await activeTestStore.updateTests();
       const paramtersModel = {
          subject_list: subjectList.value,
          science_id: scienceId.value,

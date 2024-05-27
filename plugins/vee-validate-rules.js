@@ -60,12 +60,7 @@ export default defineNuxtPlugin(() => {
       if (!value || !value.length) {
          return true;
       }
-      const containsUpperCase = /[A-Z]/.test(value);
-      const containsLowerCase = /[a-z]/.test(value);
-      const containsNumber = /\d/.test(value);
-      if (!containsUpperCase || !containsLowerCase || !containsNumber) {
-         return "Parol bosh harf, kichik harf va raqamlardan iborat bo'lishi kerak!";
-      }
+
       return true;
    });
 

@@ -50,7 +50,7 @@ onMounted(async () => {
       <AppHeader />
       <main class="py-8">
          <div class="container">
-            <div class="grid gap-6 grid-cols-1 md:grid-cols-6">
+            <div class="grid gap-6 grid-cols-1 md:grid-cols-7">
                <div class="md:col-span-2">
                   <div class="sticky top-28 flex flex-col gap-y-6">
                      <div class="flex flex-col gap-y-3 p-4 bg-card border rounded-md">
@@ -97,7 +97,7 @@ onMounted(async () => {
                      </div>
                   </div>
                </div>
-               <div class="md:col-span-4">
+               <div class="md:col-span-5">
                   <div class="p-4 bg-card border rounded-md">
                      <slot />
                   </div>

@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
    devtools: { enabled: true },
+   ssr: false,
    app: {
       head: {
          link: [{ rel: 'icon', type: 'image/png', href: '/gerb.png' }],

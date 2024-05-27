@@ -10,8 +10,8 @@ export const useResultStore = defineStore('results', () => {
    const formatQuestions = (questions, science, type) => {
       return questions.map((question) => ({
          id: question.id,
-         question: question.question,
-         answers: [question.answer1, question.answer2, question.answer3, question.answer4],
+         question: parseQuestion(question.question),
+         answers: [parseQuestion(question.answer1), parseQuestion(question.answer2), parseQuestion(question.answer3), parseQuestion(question.answer4)],
          is_correct: question.is_correct,
          is_picked: question.is_picked,
          answer: question.answer,

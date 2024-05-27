@@ -95,7 +95,7 @@ const registerToSystem = () => {
                         <Input
                            id="firstName"
                            type="text"
-                           placeholder="Og'abek"
+                           placeholder="Ism"
                            v-model="user.firstname"
                            :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''"
                         />
@@ -108,7 +108,7 @@ const registerToSystem = () => {
                         <Input
                            id="lastName"
                            type="text"
-                           placeholder="Sanoyev"
+                           placeholder="Familiya"
                            v-model="user.lastname"
                            :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''"
                         />

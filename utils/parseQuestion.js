@@ -16,12 +16,7 @@ export const parseQuestion = (question) => {
       { search: /<u>(.*?)<\/u>/g, replace: '__$1__' }, // Underlined text
       { search: /\^(\(.*?\))\{([^\{\}]+?)\}/g, replace: '<sup>$1</sup>$2' }, // Superscript text
       { search: /\_(\(.*?\))\{([^\{\}]+?)\}/g, replace: '<sub>$1</sub>$2' }, // Subscript text
-      { search: /<h1>(.*?)<\/h1>/g, replace: '# $1' }, // Header 1
-      { search: /<h2>(.*?)<\/h2>/g, replace: '## $1' }, // Header 2
-      { search: /<h3>(.*?)<\/h3>/g, replace: '### $1' }, // Header 3
-      { search: /<h4>(.*?)<\/h4>/g, replace: '#### $1' }, // Header 4
-      { search: /<h5>(.*?)<\/h5>/g, replace: '##### $1' }, // Header 5
-      { search: /<h6>(.*?)<\/h6>/g, replace: '###### $1' }, // Header 6
+
       { search: /<ul>(.*?)<\/ul>/gs, replace: (match, p1) => p1.replace(/<li>(.*?)<\/li>/g, '* $1\n') }, // Unordered list
       { search: /<ol>(.*?)<\/ol>/gs, replace: (match, p1) => p1.replace(/<li>(.*?)<\/li>/g, (m, p1, index) => `${index + 1}. ${p1}\n`) }, // Ordered list
       { search: /<table>(.*?)<\/table>/gs, replace: (match, p1) => p1.replace(/<tr>(.*?)<\/tr>/g, (m, row) => row.replace(/<td>(.*?)<\/td>/g, '$1\t').trim() + '\n') }, // Table

@@ -81,6 +81,6 @@
 
 @layer components {
    .container {
-      @apply max-w-[1300px];
+      @apply max-w-[1440px];
    }
 }

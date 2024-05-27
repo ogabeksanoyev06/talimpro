@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-   <div class="py-8">
+   <div class="py-4">
       <div class="container">
          <div class="flex flex-col space-y-6">
             <h3 class="text-xl font-semibold text-center">
@@ -115,35 +115,35 @@ onBeforeUnmount(() => {
                <Table class="text-center whitespace-nowrap">
                   <TableBody>
                      <TableRow class="text-base">
-                        <TableHead class="p-3 text-center"> Blog fanlari </TableHead>
-                        <TableHead class="p-3 text-center"> To'g'ri javoblar </TableHead>
-                        <TableHead class="p-3 text-center"> Ball </TableHead>
-                        <TableHead class="p-3 text-center">To'plangan ball </TableHead>
+                        <TableHead class="p-4"> Blog fanlari </TableHead>
+                        <TableHead class="p-4"> To'g'ri javoblar </TableHead>
+                        <TableHead class="p-4"> Ball </TableHead>
+                        <TableHead class="p-4">To'plangan ball </TableHead>
                      </TableRow>
                      <TableRow class="font-medium" v-for="item in resultStore.testResultId?.blogs" :key="item.id">
-                        <TableCell class="p-3">
+                        <TableCell class="p-4">
                            {{ item.science }}
                         </TableCell>
-                        <TableCell class="p-3">
+                        <TableCell class="p-4">
                            <span class="text-green-600" style="font-size: large"> {{ item.correct_answers }} </span>
                         </TableCell>
-                        <TableCell class="p-3"> {{ item.max_ball }} </TableCell>
-                        <TableCell class="p-3 text-green-600" style="font-size: large"> {{ item.total_ball }} </TableCell>
+                        <TableCell class="p-4"> {{ item.max_ball }} </TableCell>
+                        <TableCell class="p-4 text-green-600" style="font-size: large"> {{ item.total_ball }} </TableCell>
                      </TableRow>
                      <TableRow>
-                        <TableCell class="p-3 font-bold text-base" colspan="4"> Natijalar</TableCell>
+                        <TableCell class="p-4 font-bold text-base" colspan="4"> Natijalar</TableCell>
                      </TableRow>
                      <TableRow>
-                        <TableCell class="p-3 font-semibold text-base" colspan="2"> Asosiy fandan to'plangan ball:</TableCell>
-                        <TableCell class="p-3 font-semibold text-base" colspan="2"> {{ totalBasic }} </TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> Asosiy fandan to'plangan ball:</TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ totalBasic }} </TableCell>
                      </TableRow>
                      <TableRow>
-                        <TableCell class="p-3 font-semibold text-base" colspan="2"> Majburiy fandan to'plangan ball:</TableCell>
-                        <TableCell class="p-3 font-semibold text-base" colspan="2"> {{ totalCompulsory }} </TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> Majburiy fandan to'plangan ball:</TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ totalCompulsory }} </TableCell>
                      </TableRow>
                      <TableRow>
-                        <TableCell class="p-3 font-semibold text-base" colspan="2"> 5 ta fandan to'plangan ball:</TableCell>
-                        <TableCell class="p-3 font-semibold text-base" colspan="2"> {{ totalBasic + totalCompulsory }} </TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> 5 ta fandan to'plangan ball:</TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ totalBasic + totalCompulsory }} </TableCell>
                      </TableRow>
                   </TableBody>
                </Table>

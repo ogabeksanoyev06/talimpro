@@ -36,23 +36,27 @@ await testStore.getTestResults();
 <template>
    <div>
       <h4 class="text-base sm:text-xl font-semibold tracking-tight mb-4">Mening urunishlarim</h4>
-      <div class="border rounded-md">
+      <div class="rounded-md">
          <Table class="font-medium whitespace-nowrap">
             <TableHeader>
-               <TableRow class="font-medium whitespace-nowrap">
-                  <TableHead class="h-12 px-4 text-center"> # </TableHead>
-                  <TableHead class="h-12 px-4 text-center">Sana va vaqt</TableHead>
-                  <TableHead class="h-12 px-4 text-center">Test turi</TableHead>
-                  <TableHead class="h-12 px-4 text-center"> To'plangan ball </TableHead>
-                  <TableHead class="h-12 px-4 text-center"> Ko'rish </TableHead>
+               <TableRow class="text-base">
+                  <TableHead class="h-12 px-4 text-center font-bold text-foreground"> # </TableHead>
+                  <TableHead class="h-12 px-4 text-center font-bold text-foreground">Sana va vaqt</TableHead>
+                  <TableHead class="h-12 px-4 text-center font-bold text-foreground">Test turi</TableHead>
+                  <TableHead class="h-12 px-4 text-center font-bold text-foreground"> To'plangan ball </TableHead>
+                  <TableHead class="h-12 px-4 text-center font-bold text-foreground"> Ko'rish </TableHead>
                </TableRow>
             </TableHeader>
             <TableBody class="text-center">
-               <TableRow v-for="(item, i) in testResults" :key="i" class="first:bg-muted first:text-foreground first:hover:bg-muted">
+               <TableRow v-for="(item, i) in testResults" :key="i" class="first:bg-primary/80 first:text-accent first:hover:bg-primary">
                   <TableCell class="p-4 font-medium">
                      <span>{{ i + 1 }}</span>
                   </TableCell>
-                  <TableCell> {{ dayjs(item.started).format('DD.MM.YYYY') }} {{ dayjs(item.started).format('HH:mm') }} - {{ dayjs(item.finished).format('HH:mm') }}</TableCell>
+                  <TableCell class="flex items-center">
+                     {{ dayjs(item.started).format('DD.MM.YYYY') }}
+                     <div class="shrink-0 bg-border w-px mx-2 h-4"></div>
+                     {{ dayjs(item.started).format('HH:mm:ss') }} - {{ dayjs(item.finished).format('HH:mm:ss') }}</TableCell
+                  >
                   <TableCell class="p-4">
                      <span>{{ item.type }}</span>
                   </TableCell>
