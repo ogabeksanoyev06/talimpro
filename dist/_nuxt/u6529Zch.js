@@ -1,0 +1,1 @@
+import{Z as a,$ as i,D as o}from"./CxCRX2HS.js";import{u as c}from"./leHjnFzJ.js";import"./Be3E_yng.js";import"./D4tZ26va.js";import"./Dp98Z1pX.js";const T=a(async(r,m)=>{let t,e;const s=c();if([t,e]=i(()=>s.getActiveTest()),await t,e(),r.path==="/active-test"&&!s.hasActiveTest)return o("/profile/tests-results")});export{T as default};
