@@ -58,7 +58,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
          questions: response.questions.flatMap((item) => {
             return item.test_results
                .map((question) => {
-                  const science = item.dtmtest_blog === 1 || item.dtmtest_blog === 2 ? item.science : `${item.science} (majburiy fan)`;
+                  const science = item.dtmtest_blog?.type === 'compulsory' ? `${item.science} (majburiy fan)` : item.science;
                   return {
                      dtmtest_blog: item.dtmtest_blog,
                      id: question.id,
@@ -141,7 +141,7 @@ export const useActiveTestStore = defineStore('active-test', () => {
          answer,
          picked: true,
          finishing: false,
-         ...(tests.value.type === testType.TYPE_DTM && { blog_id: blogId })
+         ...(tests.value.type === testType.TYPE_DTM && { blog_id: blogId.id })
       };
 
       try {

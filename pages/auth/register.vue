@@ -76,11 +76,11 @@ const registerToSystem = () => {
                   </div>
                   <div class="flex flex-col space-y-2">
                      <VField name="username" rules="required|max:60|min:3" v-model="user.username" v-slot="{ errors }">
-                        <Label for="username">Foydalanuvchi nomi</Label>
+                        <Label for="username">Foylanuvchi nomi (username) </Label>
                         <Input
                            id="username"
                            type="text"
-                           placeholder="Fodalanuvchi nomi"
+                           placeholder="Fodalanuvchi nomini kiriting"
                            v-model="user.username"
                            :class="errors.length > 0 ? 'focus-visible:border-red-600 border-red-600' : ''"
                         />

@@ -88,6 +88,7 @@ export const useCourseStore = defineStore('courses', () => {
          });
          if (response.code === 200) {
             $toast.success('Kurslar muvaffaqiyatli sotib olindi');
+            await getCoursesId(courseIds[0]);
          }
       } catch (error) {
          $toast.error(error.response.data.message);

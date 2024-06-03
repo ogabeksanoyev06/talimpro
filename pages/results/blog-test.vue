@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
                         <TableCell class="p-4">
                            <span>{{ testResultId[0]?.blogs?.max_ball }}</span>
                         </TableCell>
-                        <TableCell class="p-4 flex justify-center"> {{ testResultId[0]?.blogs?.total_ball }} </TableCell>
+                        <TableCell class="p-4 flex justify-center"> {{ (testResultId[0]?.blogs?.total_ball) }} </TableCell>
                      </TableRow>
                   </TableBody>
                </Table>

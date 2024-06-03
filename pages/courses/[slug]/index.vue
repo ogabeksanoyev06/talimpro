@@ -167,13 +167,13 @@ await courseStore.getCoursesId(course_id.value);
                                        <DialogDescription> Kurs uchun faqat bir marta to'lov qilasiz va istalgan vaqtda foydalanish imkoniyatiga ega bo'lasiz. </DialogDescription>
                                     </DialogHeader>
                                     <div class="flex flex-col space-y-4 pt-4">
-                                       <div class="flex flex-col space-y-1">
+                                       <!-- <div class="flex flex-col space-y-1">
                                           <span class="font-bold">Karta raqam:</span><span class="text-2xl font-bold">5614 6800 0374 8007</span
                                           ><span class="text-sm text-slate-700 dark:text-slate-200">Sanoyev Og'abek</span>
-                                       </div>
+                                       </div> -->
                                        <div class="text-sm">
-                                          Agar sizda tizimda mavjud bo'lgan to'lov tizimi bo'lmasa ushbu kartaga kursda belgilangan to‘lovni amalga oshiring va skrinshotni
-                                          administratorga yuboring. Yaqin vaqt ichida siz bilan aloqaga chiqamiz va kerakli kursni ochib beramiz.
+                                          Agar sizda tizimda mavjud bo'lgan to'lov tizimi bo'lmasa administratorga yozing. Yaqin vaqt ichida siz bilan aloqaga chiqamiz va kerakli
+                                          kursni ochib beramiz.
                                        </div>
                                     </div>
                                     <DialogFooter class="sm:justify-between">

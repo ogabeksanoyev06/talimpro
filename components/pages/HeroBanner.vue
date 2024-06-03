@@ -11,7 +11,7 @@
                class="text-2xl font-bold text-center sm:text-4xl md:text-5xl lg:text-6xl sm:leading-snug"
                style="display: inline-block; vertical-align: top; text-decoration: inherit; text-wrap: balance"
             >
-               Bilim.uz orqali bilimingizni tez va oson oshiring.
+               Ta'limPro.uz orqali bilimingizni tez va oson oshiring.
             </h1>
             <span
                class="max-w-[750px] text-center text-lg text-muted-foreground sm:text-xl"

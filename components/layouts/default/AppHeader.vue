@@ -32,6 +32,11 @@ const menu = [
       route: '/courses',
       value: 'Kurslar'
    }
+   // {
+   //    name: 'Davlat OTMlari',
+   //    route: '/courses',
+   //    value: 'Kurslar'
+   // }
 ];
 
 const pages = [
@@ -155,7 +160,7 @@ onMounted(async () => {
                   </NuxtLink>
                </div>
                <nav class="flex flex-col rounded-md bg-muted p-1">
-                  <nuxt-link
+                  <NuxtLink
                      class="rounded-md px-4 py-2 hover:bg-foreground/5"
                      v-for="(item, index) in menu"
                      :key="index"
@@ -163,7 +168,7 @@ onMounted(async () => {
                      :class="{ 'bg-card hover:!bg-card ': item.route === route.path }"
                   >
                      {{ item.name }}
-                  </nuxt-link>
+                  </NuxtLink>
                </nav>
                <NuxtLink to="/auth/login" v-if="!isAuthenticated">
                   <Button class="w-full rounded-full">Tizimga kirish</Button>
@@ -172,10 +177,10 @@ onMounted(async () => {
          </Sheet>
 
          <div class="mr-4 lg:mr-1 hidden lg:flex lg:flex-1">
-            <nuxt-link to="/" class="flex items-center gap-x-4">
+            <NuxtLink to="/" class="flex items-center gap-x-4">
                <img alt="logo" fetchpriority="high" height="40" width="120" src="/assets/svg/logo-light.svg" v-if="colorMode.preference === 'light'" />
                <img alt="logo" fetchpriority="high" height="40" width="120" src="/assets/svg/logo-dark.svg" v-if="colorMode.preference === 'dark'" />
-            </nuxt-link>
+            </NuxtLink>
             <div class="flex-1 justify-center flex whitespace-nowrap">
                <nav class="flex p-1 rounded-full bg-muted shadow">
                   <NuxtLink

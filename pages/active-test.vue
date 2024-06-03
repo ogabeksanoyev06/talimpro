@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
 <template>
    <div class="mt-4">
       <div class="container">
-         <div class="flex flex-col gap-y-8">
+         <div class="flex flex-col gap-y-4">
             <div class="flex items-center md:justify-between flex-col md:flex-row gap-3 border-b border-t rounded-lg border-gray-400 py-2 px-4">
                <h3 class="text-xl font-semibold" v-if="tests.type === 'dtm'">
                   {{ selectedQuestion ? selectedQuestion.science : '' }}

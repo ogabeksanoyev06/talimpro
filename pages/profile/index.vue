@@ -126,11 +126,11 @@ onMounted(async () => {
                <div class="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 mb-8">
                   <div class="flex flex-col space-y-2">
                      <VField name="username" rules="required|max:60|min:3" v-model="user.username" v-slot="{ errors }">
-                        <Label for="username">Foydalanuvchi nomi</Label>
+                        <Label for="username">Foylanuvchi nomi (username) </Label>
                         <Input
                            id="username"
                            type="text"
-                           placeholder="Fodalanuvchi nomi"
+                           placeholder="Fodalanuvchi nomini kiriting"
                            :disabled="loading"
                            :class="errors.length > 0 ? 'focus-visible:border-destructive border-destructive' : ''"
                            v-model="user.username"

@@ -138,9 +138,9 @@ onMounted(async () => {
    <div class="py-8">
       <AppLoading v-if="loading" />
       <div class="container">
-         <div class="flex flex-col justify-center items-center space-y-4 mb-4">
-            <div class="border border-green-500 max-w-[200px] w-full rounded-full text-center" style="font-size: xx-large">
-               <span>{{ universitiesDtmId?.total_ball }}</span>
+         <div class="flex flex-col justify-center items-center space-y-2 mb-4">
+            <div class="border border-green-500 max-w-[150px] w-full rounded-full text-center" style="font-size: xx-large">
+               <span>{{ universitiesDtmId?.total_ball?.toFixed(1) }}</span>
                <span style="font-size: medium">/189</span>
             </div>
             <p class="text-base sm:text-lg font-bold text-center">

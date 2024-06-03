@@ -73,7 +73,7 @@ const typeName = computed(() => {
                      <TableCell class="p-4 text-center"> {{ testResult.questions?.length }} </TableCell>
                      <TableCell class="p-4 text-center"> {{ testResult.correct_ans }} </TableCell>
                      <TableCell class="p-4 text-center"> {{ testResult.incorrect_ans }} </TableCell>
-                     <TableCell class="p-4 text-center"> {{ testResult.total_ball }} </TableCell>
+                     <TableCell class="p-4 text-center"> {{ testResult?.total_ball }} </TableCell>
                   </TableRow>
                </TableBody>
             </Table>
@@ -91,7 +91,7 @@ const typeName = computed(() => {
                      <TableCell class="p-4 text-center"> {{ testResult.questions?.length }} </TableCell>
                      <TableCell class="p-4 text-center"> {{ testResult.correct_ans }} </TableCell>
                      <TableCell class="p-4 text-center"> {{ testResult.incorrect_ans }} </TableCell>
-                     <TableCell class="p-4 text-center"> {{ testResult.total_ball }} </TableCell>
+                     <TableCell class="p-4 text-center"> {{ testResult?.total_ball }} </TableCell>
                   </TableRow>
                </TableBody>
             </Table>

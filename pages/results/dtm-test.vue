@@ -115,10 +115,10 @@ onBeforeUnmount(() => {
                <Table class="text-center whitespace-nowrap">
                   <TableBody>
                      <TableRow class="text-base">
-                        <TableHead class="p-4"> Blog fanlari </TableHead>
-                        <TableHead class="p-4"> To'g'ri javoblar </TableHead>
-                        <TableHead class="p-4"> Ball </TableHead>
-                        <TableHead class="p-4">To'plangan ball </TableHead>
+                        <TableHead class="p-4 text-center"> Blog fanlari </TableHead>
+                        <TableHead class="p-4 text-center"> To'g'ri javoblar </TableHead>
+                        <TableHead class="p-4 text-center"> Ball </TableHead>
+                        <TableHead class="p-4 text-center">To'plangan ball </TableHead>
                      </TableRow>
                      <TableRow class="font-medium" v-for="item in resultStore.testResultId?.blogs" :key="item.id">
                         <TableCell class="p-4">
@@ -128,22 +128,22 @@ onBeforeUnmount(() => {
                            <span class="text-green-600" style="font-size: large"> {{ item.correct_answers }} </span>
                         </TableCell>
                         <TableCell class="p-4"> {{ item.max_ball }} </TableCell>
-                        <TableCell class="p-4 text-green-600" style="font-size: large"> {{ item.total_ball }} </TableCell>
+                        <TableCell class="p-4 text-green-600" style="font-size: large"> {{ item.total_ball?.toFixed(1) }} </TableCell>
                      </TableRow>
                      <TableRow>
                         <TableCell class="p-4 font-bold text-base" colspan="4"> Natijalar</TableCell>
                      </TableRow>
                      <TableRow>
                         <TableCell class="p-4 font-semibold text-base" colspan="2"> Asosiy fandan to'plangan ball:</TableCell>
-                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ totalBasic }} </TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ totalBasic?.toFixed(1) }} </TableCell>
                      </TableRow>
                      <TableRow>
                         <TableCell class="p-4 font-semibold text-base" colspan="2"> Majburiy fandan to'plangan ball:</TableCell>
-                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ totalCompulsory }} </TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ totalCompulsory?.toFixed(1) }} </TableCell>
                      </TableRow>
                      <TableRow>
                         <TableCell class="p-4 font-semibold text-base" colspan="2"> 5 ta fandan to'plangan ball:</TableCell>
-                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ totalBasic + totalCompulsory }} </TableCell>
+                        <TableCell class="p-4 font-semibold text-base" colspan="2"> {{ (totalBasic + totalCompulsory).toFixed(1) }} </TableCell>
                      </TableRow>
                   </TableBody>
                </Table>
