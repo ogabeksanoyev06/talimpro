@@ -987,7 +987,7 @@ const _routes = [
     meta: __nuxt_page_meta$j || {},
     alias: (__nuxt_page_meta$j == null ? void 0 : __nuxt_page_meta$j.alias) || [],
     redirect: __nuxt_page_meta$j == null ? void 0 : __nuxt_page_meta$j.redirect,
-    component: () => import('./index-BMoLqKQt.mjs').then((m) => m.default || m)
+    component: () => import('./index-BBfgbEWe.mjs').then((m) => m.default || m)
   },
   {
     name: (__nuxt_page_meta$i == null ? void 0 : __nuxt_page_meta$i.name) ?? "courses-slug-lessons-lessonId",
