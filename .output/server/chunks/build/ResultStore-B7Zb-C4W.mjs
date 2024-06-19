@@ -1,0 +1,56 @@
+import { p as parseQuestion } from './parseQuestion-BnEt1owC.mjs';
+import { d as defineStore } from './server.mjs';
+import { ref } from 'vue';
+import { u as useApi } from './useApi-B16mdXqT.mjs';
+
+const useResultStore = defineStore("results", () => {
+  const api = useApi();
+  const testResultId = ref([]);
+  const answerLabels = ref(["A", "B", "C", "D", "E", "F", "G", "H"]);
+  const formatQuestions = (questions, science, type) => {
+    return questions.map((question) => ({
+      id: question.id,
+      question: parseQuestion(question.question),
+      answers: [parseQuestion(question.answer1), parseQuestion(question.answer2), parseQuestion(question.answer3), parseQuestion(question.answer4)],
+      is_correct: question.is_correct,
+      is_picked: question.is_picked,
+      answer: question.answer,
+      science: type === "compulsory" ? `${science} (majburiy fan)` : science
+    }));
+  };
+  const formatTest = (response, type) => {
+    const formattedData = response.map((item) => {
+      const science = item.type === "compulsory" ? `${item.science} (majburiy fan)` : item.science;
+      const questions = formatQuestions(item.questions, science, type);
+      const blogs = {
+        science,
+        type: item.type,
+        test_type: type,
+        question_count: item.question_count,
+        correct_answers: item.correct_answers,
+        max_ball: item.max_ball,
+        total_ball: item.total_ball
+      };
+      return { questions, blogs };
+    });
+    if (type === "dtm") {
+      const questions = formattedData.flatMap((item) => item.questions);
+      const blogs = formattedData.map((item) => item.blogs);
+      testResultId.value = { questions, blogs };
+    } else {
+      testResultId.value = formattedData;
+    }
+  };
+  const getResultTestId = async (data) => {
+    try {
+      const response = await api.get(`tests/tests-history/${data.id}/?type=${data.type}`);
+      formatTest(response, data.type);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return { getResultTestId, testResultId, answerLabels };
+});
+
+export { useResultStore as u };
+//# sourceMappingURL=ResultStore-B7Zb-C4W.mjs.map

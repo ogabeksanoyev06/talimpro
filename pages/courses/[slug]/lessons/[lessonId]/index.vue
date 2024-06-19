@@ -20,7 +20,7 @@ await courseStore.getLessonsId(lesson_id.value);
       <div class="space-y-4">
          <div class="relative aspect-video overflow-hidden border bg-muted">
             <div class="absolute inset-x-0 inset-y-0 h-full w-full">
-               <div class="absolute inset-0 flex flex-col items-center justify-center bg-muted gap-y-4" v-if="loading && lesson.is_free">
+               <div class="absolute inset-0 flex flex-col items-center justify-center bg-muted gap-y-4" v-if="!loading && lesson.is_free">
                   <svg
                      stroke="currentColor"
                      fill="none"
@@ -32,6 +32,7 @@ await courseStore.getLessonsId(lesson_id.value);
                      height="1em"
                      width="1em"
                      xmlns="http://www.w3.org/2000/svg"
+                     v-if="loading"
                   >
                      <line x1="12" y1="2" x2="12" y2="6"></line>
                      <line x1="12" y1="18" x2="12" y2="22"></line>
@@ -42,6 +43,13 @@ await courseStore.getLessonsId(lesson_id.value);
                      <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
                      <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
                   </svg>
+                  <iframe
+                     :src="'https://kinescope.io/embed/' + lesson.video"
+                     allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write"
+                     frameborder="0"
+                     allowfullscreen
+                     style="position: absolute; width: 100%; height: 100%; top: 0; left: 0"
+                  ></iframe>
                </div>
                <div class="absolute inset-0 flex flex-col items-center justify-center bg-muted gap-y-4" v-if="!lesson.is_free">
                   <svg

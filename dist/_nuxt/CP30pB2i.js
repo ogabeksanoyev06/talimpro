@@ -1,1 +1,0 @@
-import{Z as u,n as i,D as a}from"./CFo8F1Pj.js";const o=u(e=>{const t=i("access_token");if(t.value&&(e.path==="/auth/login"||e.path==="/auth/register"))return a("/");if(!t.value&&!["/auth/login","/auth/register"].includes(e.path))return a("/auth/login")});export{o as default};

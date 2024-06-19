@@ -59,7 +59,7 @@ await courseStore.getCoursesId(course_id.value);
                      <div class="relative col-span-3 aspect-video overflow-hidden rounded-md bg-primary/20">
                         <div class="absolute inset-x-0 inset-y-0 h-full w-full">
                            <iframe
-                              src="https://kinescope.io/embed/he2DfZYSQcEp37bsxDx6D8"
+                              src="https://kinescope.io/embed/gaUvZTsfNxG1DxxP4tNuhf"
                               allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write;"
                               frameborder="0"
                               allowfullscreen

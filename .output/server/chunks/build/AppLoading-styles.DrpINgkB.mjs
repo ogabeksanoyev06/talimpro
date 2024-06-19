@@ -1,0 +1,6 @@
+const AppLoading_vue_vue_type_style_index_0_scoped_cb8e7829_lang = ".preloader[data-v-cb8e7829]{align-items:center;background:linear-gradient(0deg,#f2f4f6,#f2f4f6),linear-gradient(0deg,#f9f9f9,#f9f9f9),#fff;display:flex;height:100%;justify-content:center;left:0;position:fixed;top:0;width:100%;z-index:9999999}.loader[data-v-cb8e7829]{display:block;font-size:0;margin-bottom:20px;overflow:hidden}.loader-item[data-v-cb8e7829]{animation-duration:1s;animation-iteration-count:infinite;animation-name:fade-cb8e7829;animation-timing-function:cubic-bezier(.645,.045,.355,1);background-color:#606266;color:#606266;display:inline-block;height:15px;margin-left:2.5px;margin-right:2.5px;width:15px}.loader-item[data-v-cb8e7829]:first-child{animation-delay:.1s}.loader-item[data-v-cb8e7829]:nth-child(2){animation-delay:.2s}.loader-item[data-v-cb8e7829]:nth-child(3){animation-delay:.3s}.loader-item[data-v-cb8e7829]:nth-child(4){animation-delay:.4s}@keyframes fade-cb8e7829{0%{opacity:0}50%{opacity:1}to{opacity:0}}";
+
+const AppLoadingStyles_DrpINgkB = [AppLoading_vue_vue_type_style_index_0_scoped_cb8e7829_lang];
+
+export { AppLoadingStyles_DrpINgkB as default };
+//# sourceMappingURL=AppLoading-styles.DrpINgkB.mjs.map
